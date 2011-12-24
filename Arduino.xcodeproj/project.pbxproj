@@ -1,0 +1,444 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		427F4AA414A57E2B003F3E53 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4AA314A57E2B003F3E53 /* UIKit.framework */; };
+		427F4AA614A57E2B003F3E53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4AA514A57E2B003F3E53 /* Foundation.framework */; };
+		427F4AA814A57E2B003F3E53 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4AA714A57E2B003F3E53 /* CoreGraphics.framework */; };
+		427F4AAE14A57E2B003F3E53 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 427F4AAC14A57E2B003F3E53 /* InfoPlist.strings */; };
+		427F4AB014A57E2B003F3E53 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 427F4AAF14A57E2B003F3E53 /* main.m */; };
+		427F4AB414A57E2B003F3E53 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 427F4AB314A57E2B003F3E53 /* AppDelegate.m */; };
+		427F4AB714A57E2B003F3E53 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 427F4AB514A57E2B003F3E53 /* MainStoryboard.storyboard */; };
+		427F4ABA14A57E2B003F3E53 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 427F4AB914A57E2B003F3E53 /* ViewController.m */; };
+		427F4AC214A57E2B003F3E53 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4AC114A57E2B003F3E53 /* SenTestingKit.framework */; };
+		427F4AC314A57E2B003F3E53 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4AA314A57E2B003F3E53 /* UIKit.framework */; };
+		427F4AC414A57E2B003F3E53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4AA514A57E2B003F3E53 /* Foundation.framework */; };
+		427F4ACC14A57E2B003F3E53 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 427F4ACA14A57E2B003F3E53 /* InfoPlist.strings */; };
+		427F4ACF14A57E2B003F3E53 /* ArduinoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 427F4ACE14A57E2B003F3E53 /* ArduinoTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		427F4AC514A57E2B003F3E53 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 427F4A9614A57E2B003F3E53 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 427F4A9E14A57E2B003F3E53;
+			remoteInfo = Arduino;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		427F4A9F14A57E2B003F3E53 /* Arduino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Arduino.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		427F4AA314A57E2B003F3E53 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		427F4AA514A57E2B003F3E53 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		427F4AA714A57E2B003F3E53 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		427F4AAB14A57E2B003F3E53 /* Arduino-Info.plist */ = {isa = PBXFileReference; path = "Arduino-Info.plist"; sourceTree = "<group>"; };
+		427F4AAD14A57E2B003F3E53 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		427F4AAF14A57E2B003F3E53 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		427F4AB114A57E2B003F3E53 /* Arduino-Prefix.pch */ = {isa = PBXFileReference; path = "Arduino-Prefix.pch"; sourceTree = "<group>"; };
+		427F4AB214A57E2B003F3E53 /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		427F4AB314A57E2B003F3E53 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		427F4AB614A57E2B003F3E53 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		427F4AB814A57E2B003F3E53 /* ViewController.h */ = {isa = PBXFileReference; path = ViewController.h; sourceTree = "<group>"; };
+		427F4AB914A57E2B003F3E53 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		427F4AC014A57E2B003F3E53 /* ArduinoTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArduinoTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		427F4AC114A57E2B003F3E53 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		427F4AC914A57E2B003F3E53 /* ArduinoTests-Info.plist */ = {isa = PBXFileReference; path = "ArduinoTests-Info.plist"; sourceTree = "<group>"; };
+		427F4ACB14A57E2B003F3E53 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		427F4ACD14A57E2B003F3E53 /* ArduinoTests.h */ = {isa = PBXFileReference; path = ArduinoTests.h; sourceTree = "<group>"; };
+		427F4ACE14A57E2B003F3E53 /* ArduinoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArduinoTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		427F4A9C14A57E2B003F3E53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				427F4AA414A57E2B003F3E53 /* UIKit.framework in Frameworks */,
+				427F4AA614A57E2B003F3E53 /* Foundation.framework in Frameworks */,
+				427F4AA814A57E2B003F3E53 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		427F4ABC14A57E2B003F3E53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				427F4AC214A57E2B003F3E53 /* SenTestingKit.framework in Frameworks */,
+				427F4AC314A57E2B003F3E53 /* UIKit.framework in Frameworks */,
+				427F4AC414A57E2B003F3E53 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		427F4A9414A57E2B003F3E53 = {
+			isa = PBXGroup;
+			children = (
+				427F4AA914A57E2B003F3E53 /* Arduino */,
+				427F4AC714A57E2B003F3E53 /* ArduinoTests */,
+				427F4AA214A57E2B003F3E53 /* Frameworks */,
+				427F4AA014A57E2B003F3E53 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		427F4AA014A57E2B003F3E53 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				427F4A9F14A57E2B003F3E53 /* Arduino.app */,
+				427F4AC014A57E2B003F3E53 /* ArduinoTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		427F4AA214A57E2B003F3E53 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				427F4AA314A57E2B003F3E53 /* UIKit.framework */,
+				427F4AA514A57E2B003F3E53 /* Foundation.framework */,
+				427F4AA714A57E2B003F3E53 /* CoreGraphics.framework */,
+				427F4AC114A57E2B003F3E53 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		427F4AA914A57E2B003F3E53 /* Arduino */ = {
+			isa = PBXGroup;
+			children = (
+				427F4AB214A57E2B003F3E53 /* AppDelegate.h */,
+				427F4AB314A57E2B003F3E53 /* AppDelegate.m */,
+				427F4AB514A57E2B003F3E53 /* MainStoryboard.storyboard */,
+				427F4AB814A57E2B003F3E53 /* ViewController.h */,
+				427F4AB914A57E2B003F3E53 /* ViewController.m */,
+				427F4AAA14A57E2B003F3E53 /* Supporting Files */,
+			);
+			path = Arduino;
+			sourceTree = "<group>";
+		};
+		427F4AAA14A57E2B003F3E53 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				427F4AAB14A57E2B003F3E53 /* Arduino-Info.plist */,
+				427F4AAC14A57E2B003F3E53 /* InfoPlist.strings */,
+				427F4AAF14A57E2B003F3E53 /* main.m */,
+				427F4AB114A57E2B003F3E53 /* Arduino-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		427F4AC714A57E2B003F3E53 /* ArduinoTests */ = {
+			isa = PBXGroup;
+			children = (
+				427F4ACD14A57E2B003F3E53 /* ArduinoTests.h */,
+				427F4ACE14A57E2B003F3E53 /* ArduinoTests.m */,
+				427F4AC814A57E2B003F3E53 /* Supporting Files */,
+			);
+			path = ArduinoTests;
+			sourceTree = "<group>";
+		};
+		427F4AC814A57E2B003F3E53 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				427F4AC914A57E2B003F3E53 /* ArduinoTests-Info.plist */,
+				427F4ACA14A57E2B003F3E53 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		427F4A9E14A57E2B003F3E53 /* Arduino */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 427F4AD214A57E2B003F3E53 /* Build configuration list for PBXNativeTarget "Arduino" */;
+			buildPhases = (
+				427F4A9B14A57E2B003F3E53 /* Sources */,
+				427F4A9C14A57E2B003F3E53 /* Frameworks */,
+				427F4A9D14A57E2B003F3E53 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Arduino;
+			productName = Arduino;
+			productReference = 427F4A9F14A57E2B003F3E53 /* Arduino.app */;
+			productType = "com.apple.product-type.application";
+		};
+		427F4ABF14A57E2B003F3E53 /* ArduinoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 427F4AD514A57E2B003F3E53 /* Build configuration list for PBXNativeTarget "ArduinoTests" */;
+			buildPhases = (
+				427F4ABB14A57E2B003F3E53 /* Sources */,
+				427F4ABC14A57E2B003F3E53 /* Frameworks */,
+				427F4ABD14A57E2B003F3E53 /* Resources */,
+				427F4ABE14A57E2B003F3E53 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				427F4AC614A57E2B003F3E53 /* PBXTargetDependency */,
+			);
+			name = ArduinoTests;
+			productName = ArduinoTests;
+			productReference = 427F4AC014A57E2B003F3E53 /* ArduinoTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		427F4A9614A57E2B003F3E53 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 427F4A9914A57E2B003F3E53 /* Build configuration list for PBXProject "Arduino" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 427F4A9414A57E2B003F3E53;
+			productRefGroup = 427F4AA014A57E2B003F3E53 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				427F4A9E14A57E2B003F3E53 /* Arduino */,
+				427F4ABF14A57E2B003F3E53 /* ArduinoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		427F4A9D14A57E2B003F3E53 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				427F4AAE14A57E2B003F3E53 /* InfoPlist.strings in Resources */,
+				427F4AB714A57E2B003F3E53 /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		427F4ABD14A57E2B003F3E53 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				427F4ACC14A57E2B003F3E53 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		427F4ABE14A57E2B003F3E53 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		427F4A9B14A57E2B003F3E53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				427F4AB014A57E2B003F3E53 /* main.m in Sources */,
+				427F4AB414A57E2B003F3E53 /* AppDelegate.m in Sources */,
+				427F4ABA14A57E2B003F3E53 /* ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		427F4ABB14A57E2B003F3E53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				427F4ACF14A57E2B003F3E53 /* ArduinoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		427F4AC614A57E2B003F3E53 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 427F4A9E14A57E2B003F3E53 /* Arduino */;
+			targetProxy = 427F4AC514A57E2B003F3E53 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		427F4AAC14A57E2B003F3E53 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				427F4AAD14A57E2B003F3E53 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		427F4AB514A57E2B003F3E53 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				427F4AB614A57E2B003F3E53 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+		427F4ACA14A57E2B003F3E53 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				427F4ACB14A57E2B003F3E53 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		427F4AD014A57E2B003F3E53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		427F4AD114A57E2B003F3E53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		427F4AD314A57E2B003F3E53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Arduino/Arduino-Prefix.pch";
+				INFOPLIST_FILE = "Arduino/Arduino-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		427F4AD414A57E2B003F3E53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Arduino/Arduino-Prefix.pch";
+				INFOPLIST_FILE = "Arduino/Arduino-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		427F4AD614A57E2B003F3E53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Arduino.app/Arduino";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Arduino/Arduino-Prefix.pch";
+				INFOPLIST_FILE = "ArduinoTests/ArduinoTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		427F4AD714A57E2B003F3E53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Arduino.app/Arduino";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Arduino/Arduino-Prefix.pch";
+				INFOPLIST_FILE = "ArduinoTests/ArduinoTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		427F4A9914A57E2B003F3E53 /* Build configuration list for PBXProject "Arduino" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				427F4AD014A57E2B003F3E53 /* Debug */,
+				427F4AD114A57E2B003F3E53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		427F4AD214A57E2B003F3E53 /* Build configuration list for PBXNativeTarget "Arduino" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				427F4AD314A57E2B003F3E53 /* Debug */,
+				427F4AD414A57E2B003F3E53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		427F4AD514A57E2B003F3E53 /* Build configuration list for PBXNativeTarget "ArduinoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				427F4AD614A57E2B003F3E53 /* Debug */,
+				427F4AD714A57E2B003F3E53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 427F4A9614A57E2B003F3E53 /* Project object */;
+}
