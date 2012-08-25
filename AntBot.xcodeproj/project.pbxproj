@@ -1,0 +1,595 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		420CC92D151639A6003B29D3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 420CC92C151639A6003B29D3 /* CoreLocation.framework */; };
+		421743851514D0830003BF49 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 421743831514D0830003BF49 /* InfoPlist.strings */; };
+		421EA9171591252A00D3B52E /* CableManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 421EA9161591252A00D3B52E /* CableManager.m */; };
+		423B95971530E65B00A26A03 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423B95961530E65B00A26A03 /* AVFoundation.framework */; };
+		423B959A1530E6CF00A26A03 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423B95991530E6CF00A26A03 /* CoreVideo.framework */; };
+		423B959C1530EFC100A26A03 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423B959B1530EFC100A26A03 /* CoreMedia.framework */; };
+		423B959E1530EFEC00A26A03 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423B959D1530EFEC00A26A03 /* CoreImage.framework */; };
+		423D2E191514CFEB00B5231E /* AbsoluteMotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 423D2E121514CFEB00B5231E /* AbsoluteMotion.m */; };
+		423D2E1A1514CFEB00B5231E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 423D2E141514CFEB00B5231E /* AppDelegate.m */; };
+		423D2E1C1514CFEB00B5231E /* MainController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 423D2E181514CFEB00B5231E /* MainController.mm */; };
+		423D2E251514D04700B5231E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 423D2E231514D04700B5231E /* main.m */; };
+		423F66A0152237A70001F9D3 /* ImageRecognition.mm in Sources */ = {isa = PBXBuildFile; fileRef = 423F669F152237A70001F9D3 /* ImageRecognition.mm */; };
+		42446FD115B9C9DD00E4E1BF /* libScannerKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42446FB615B9C9DD00E4E1BF /* libScannerKit.a */; };
+		42446FD215B9C9DD00E4E1BF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42446FB815B9C9DD00E4E1BF /* Localizable.strings */; };
+		42446FD315B9C9DD00E4E1BF /* ScannerKitActivitySpinner.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FBB15B9C9DD00E4E1BF /* ScannerKitActivitySpinner.png */; };
+		42446FD415B9C9DD00E4E1BF /* ScannerKitActivitySpinner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FBC15B9C9DD00E4E1BF /* ScannerKitActivitySpinner@2x.png */; };
+		42446FD515B9C9DD00E4E1BF /* ScannerKitBackIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FBD15B9C9DD00E4E1BF /* ScannerKitBackIcon.png */; };
+		42446FD615B9C9DD00E4E1BF /* ScannerKitBackIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FBE15B9C9DD00E4E1BF /* ScannerKitBackIcon@2x.png */; };
+		42446FD715B9C9DD00E4E1BF /* ScannerKitEmptyIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FBF15B9C9DD00E4E1BF /* ScannerKitEmptyIcon.png */; };
+		42446FD815B9C9DD00E4E1BF /* ScannerKitEmptyIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FC015B9C9DD00E4E1BF /* ScannerKitEmptyIcon@2x.png */; };
+		42446FD915B9C9DD00E4E1BF /* ScannerKitForwardIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FC115B9C9DD00E4E1BF /* ScannerKitForwardIcon.png */; };
+		42446FDA15B9C9DD00E4E1BF /* ScannerKitForwardIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FC215B9C9DD00E4E1BF /* ScannerKitForwardIcon@2x.png */; };
+		42446FDB15B9C9DD00E4E1BF /* ScannerKitHoldStillHandIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FC315B9C9DD00E4E1BF /* ScannerKitHoldStillHandIcon.png */; };
+		42446FDC15B9C9DD00E4E1BF /* ScannerKitHoldStillHandIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FC415B9C9DD00E4E1BF /* ScannerKitHoldStillHandIcon@2x.png */; };
+		42446FDD15B9C9DD00E4E1BF /* ScannerKitInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42446FC515B9C9DD00E4E1BF /* ScannerKitInfo.plist */; };
+		42446FDE15B9C9DD00E4E1BF /* ScannerKitLaser.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FC615B9C9DD00E4E1BF /* ScannerKitLaser.png */; };
+		42446FDF15B9C9DD00E4E1BF /* ScannerKitLaser@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FC715B9C9DD00E4E1BF /* ScannerKitLaser@2x.png */; };
+		42446FE015B9C9DD00E4E1BF /* ScannerKitLaserGlow.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FC815B9C9DD00E4E1BF /* ScannerKitLaserGlow.png */; };
+		42446FE115B9C9DD00E4E1BF /* ScannerKitLaserGlow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FC915B9C9DD00E4E1BF /* ScannerKitLaserGlow@2x.png */; };
+		42446FE215B9C9DD00E4E1BF /* ScannerKitLoadingLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FCA15B9C9DD00E4E1BF /* ScannerKitLoadingLogo@2x.png */; };
+		42446FE315B9C9DD00E4E1BF /* ScannerKitLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FCB15B9C9DD00E4E1BF /* ScannerKitLogo.png */; };
+		42446FE415B9C9DD00E4E1BF /* ScannerKitLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FCC15B9C9DD00E4E1BF /* ScannerKitLogo@2x.png */; };
+		42446FE515B9C9DD00E4E1BF /* ScannerKitOverlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FCD15B9C9DD00E4E1BF /* ScannerKitOverlay.png */; };
+		42446FE615B9C9DD00E4E1BF /* ScannerKitOverlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FCE15B9C9DD00E4E1BF /* ScannerKitOverlay@2x.png */; };
+		42446FE715B9C9DD00E4E1BF /* ScannerKitOverlayStretchable.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FCF15B9C9DD00E4E1BF /* ScannerKitOverlayStretchable.png */; };
+		42446FE815B9C9DD00E4E1BF /* ScannerKitOverlayStretchable@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42446FD015B9C9DD00E4E1BF /* ScannerKitOverlayStretchable@2x.png */; };
+		4256FE811579550C008FC425 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4256FE801579550C008FC425 /* libiconv.dylib */; };
+		4256FE841579559E008FC425 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4256FE831579559E008FC425 /* QuartzCore.framework */; };
+		4257B683159808A10072054D /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4257B682159808A10072054D /* MainStoryboard.storyboard */; };
+		4269662A15B9D07B00BF7597 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4269662715B9D06300BF7597 /* SystemConfiguration.framework */; };
+		42793026153108B900BCC097 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 42793022153108B900BCC097 /* Default.png */; };
+		42793027153108B900BCC097 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42793023153108B900BCC097 /* Default@2x.png */; };
+		42793028153108B900BCC097 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 42793024153108B900BCC097 /* Icon.png */; };
+		42793029153108B900BCC097 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42793025153108B900BCC097 /* Icon@2x.png */; };
+		427F3C0415B4909300C2CB85 /* OpenCV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42042CEE156E78780053FC41 /* OpenCV.framework */; };
+		427F3C0B15B4A60600C2CB85 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F3C0A15B4A60600C2CB85 /* libz.dylib */; };
+		427F3C0D15B4A82900C2CB85 /* RelativeMotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 427F3C0C15B4A82900C2CB85 /* RelativeMotion.m */; };
+		427F4AA414A57E2B003F3E53 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4AA314A57E2B003F3E53 /* UIKit.framework */; };
+		427F4AA614A57E2B003F3E53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4AA514A57E2B003F3E53 /* Foundation.framework */; };
+		427F4AA814A57E2B003F3E53 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4AA714A57E2B003F3E53 /* CoreGraphics.framework */; };
+		427F4ADD14A58001003F3E53 /* libRscMgrUniv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4ADC14A58001003F3E53 /* libRscMgrUniv.a */; };
+		427F4ADF14A58048003F3E53 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4ADE14A58048003F3E53 /* ExternalAccessory.framework */; };
+		428B31CE15E4093100503F68 /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 428B31CD15E4093100503F68 /* mask.png */; };
+		428C7AD315B5D3AF000AB355 /* squarePNG.png in Resources */ = {isa = PBXBuildFile; fileRef = 428C7AD215B5D3AF000AB355 /* squarePNG.png */; };
+		42BB468F153F07520034D665 /* Communication.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BB468E153F07520034D665 /* Communication.m */; };
+		42BC34DC14A98D5700692DDE /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42BC34DB14A98D5600692DDE /* CoreMotion.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		42042CEE156E78780053FC41 /* OpenCV.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCV.framework; path = AntBot/OpenCV.framework; sourceTree = "<group>"; };
+		420CC92C151639A6003B29D3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		421743841514D0830003BF49 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = AntBot/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		421EA9151591252900D3B52E /* CableManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CableManager.h; path = AntBot/CableManager.h; sourceTree = SOURCE_ROOT; };
+		421EA9161591252A00D3B52E /* CableManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CableManager.m; path = AntBot/CableManager.m; sourceTree = SOURCE_ROOT; };
+		423B95961530E65B00A26A03 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		423B95991530E6CF00A26A03 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		423B959B1530EFC100A26A03 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		423B959D1530EFEC00A26A03 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		423D2E111514CFEB00B5231E /* AbsoluteMotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AbsoluteMotion.h; path = AntBot/AbsoluteMotion.h; sourceTree = SOURCE_ROOT; };
+		423D2E121514CFEB00B5231E /* AbsoluteMotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AbsoluteMotion.m; path = AntBot/AbsoluteMotion.m; sourceTree = SOURCE_ROOT; };
+		423D2E131514CFEB00B5231E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = AntBot/AppDelegate.h; sourceTree = SOURCE_ROOT; };
+		423D2E141514CFEB00B5231E /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = AntBot/AppDelegate.m; sourceTree = SOURCE_ROOT; };
+		423D2E151514CFEB00B5231E /* RelativeMotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RelativeMotion.h; path = AntBot/RelativeMotion.h; sourceTree = SOURCE_ROOT; };
+		423D2E171514CFEB00B5231E /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainController.h; path = AntBot/MainController.h; sourceTree = SOURCE_ROOT; };
+		423D2E181514CFEB00B5231E /* MainController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MainController.mm; path = AntBot/MainController.mm; sourceTree = SOURCE_ROOT; };
+		423D2E211514D04700B5231E /* AntBot-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AntBot-Info.plist"; path = "AntBot/AntBot-Info.plist"; sourceTree = SOURCE_ROOT; };
+		423D2E221514D04700B5231E /* AntBot-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AntBot-Prefix.pch"; path = "AntBot/AntBot-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		423D2E231514D04700B5231E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = AntBot/main.m; sourceTree = SOURCE_ROOT; };
+		423F669E152237A70001F9D3 /* ImageRecognition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageRecognition.h; path = AntBot/ImageRecognition.h; sourceTree = SOURCE_ROOT; };
+		423F669F152237A70001F9D3 /* ImageRecognition.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ImageRecognition.mm; path = AntBot/ImageRecognition.mm; sourceTree = SOURCE_ROOT; };
+		4242975215B51F9700CD2A74 /* AmbientLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AmbientLight.h; path = AntBot/AmbientLight.h; sourceTree = SOURCE_ROOT; };
+		4242975315B51F9700CD2A74 /* AmbientLight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AmbientLight.m; path = AntBot/AmbientLight.m; sourceTree = SOURCE_ROOT; };
+		42446FA915B9C9DD00E4E1BF /* ScannerKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannerKit.h; sourceTree = "<group>"; };
+		42446FAA15B9C9DD00E4E1BF /* SKBarcodeCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKBarcodeCode.h; sourceTree = "<group>"; };
+		42446FAB15B9C9DD00E4E1BF /* SKCalendarEventQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKCalendarEventQRCode.h; sourceTree = "<group>"; };
+		42446FAC15B9C9DD00E4E1BF /* SKCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKCode.h; sourceTree = "<group>"; };
+		42446FAD15B9C9DD00E4E1BF /* SKContactInformationQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKContactInformationQRCode.h; sourceTree = "<group>"; };
+		42446FAE15B9C9DD00E4E1BF /* SKEmailTemplateQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKEmailTemplateQRCode.h; sourceTree = "<group>"; };
+		42446FAF15B9C9DD00E4E1BF /* SKGeographicLocationQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKGeographicLocationQRCode.h; sourceTree = "<group>"; };
+		42446FB015B9C9DD00E4E1BF /* SKPhoneNumberQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKPhoneNumberQRCode.h; sourceTree = "<group>"; };
+		42446FB115B9C9DD00E4E1BF /* SKScannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKScannerViewController.h; sourceTree = "<group>"; };
+		42446FB215B9C9DD00E4E1BF /* SKScannerViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKScannerViewControllerDelegate.h; sourceTree = "<group>"; };
+		42446FB315B9C9DD00E4E1BF /* SKSMSTemplateQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSMSTemplateQRCode.h; sourceTree = "<group>"; };
+		42446FB415B9C9DD00E4E1BF /* SKTextQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTextQRCode.h; sourceTree = "<group>"; };
+		42446FB515B9C9DD00E4E1BF /* SKURLQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKURLQRCode.h; sourceTree = "<group>"; };
+		42446FB615B9C9DD00E4E1BF /* libScannerKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libScannerKit.a; sourceTree = "<group>"; };
+		42446FB915B9C9DD00E4E1BF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		42446FBA15B9C9DD00E4E1BF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		42446FBB15B9C9DD00E4E1BF /* ScannerKitActivitySpinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ScannerKitActivitySpinner.png; sourceTree = "<group>"; };
+		42446FBC15B9C9DD00E4E1BF /* ScannerKitActivitySpinner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScannerKitActivitySpinner@2x.png"; sourceTree = "<group>"; };
+		42446FBD15B9C9DD00E4E1BF /* ScannerKitBackIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ScannerKitBackIcon.png; sourceTree = "<group>"; };
+		42446FBE15B9C9DD00E4E1BF /* ScannerKitBackIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScannerKitBackIcon@2x.png"; sourceTree = "<group>"; };
+		42446FBF15B9C9DD00E4E1BF /* ScannerKitEmptyIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ScannerKitEmptyIcon.png; sourceTree = "<group>"; };
+		42446FC015B9C9DD00E4E1BF /* ScannerKitEmptyIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScannerKitEmptyIcon@2x.png"; sourceTree = "<group>"; };
+		42446FC115B9C9DD00E4E1BF /* ScannerKitForwardIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ScannerKitForwardIcon.png; sourceTree = "<group>"; };
+		42446FC215B9C9DD00E4E1BF /* ScannerKitForwardIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScannerKitForwardIcon@2x.png"; sourceTree = "<group>"; };
+		42446FC315B9C9DD00E4E1BF /* ScannerKitHoldStillHandIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ScannerKitHoldStillHandIcon.png; sourceTree = "<group>"; };
+		42446FC415B9C9DD00E4E1BF /* ScannerKitHoldStillHandIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScannerKitHoldStillHandIcon@2x.png"; sourceTree = "<group>"; };
+		42446FC515B9C9DD00E4E1BF /* ScannerKitInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ScannerKitInfo.plist; sourceTree = "<group>"; };
+		42446FC615B9C9DD00E4E1BF /* ScannerKitLaser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ScannerKitLaser.png; sourceTree = "<group>"; };
+		42446FC715B9C9DD00E4E1BF /* ScannerKitLaser@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScannerKitLaser@2x.png"; sourceTree = "<group>"; };
+		42446FC815B9C9DD00E4E1BF /* ScannerKitLaserGlow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ScannerKitLaserGlow.png; sourceTree = "<group>"; };
+		42446FC915B9C9DD00E4E1BF /* ScannerKitLaserGlow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScannerKitLaserGlow@2x.png"; sourceTree = "<group>"; };
+		42446FCA15B9C9DD00E4E1BF /* ScannerKitLoadingLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScannerKitLoadingLogo@2x.png"; sourceTree = "<group>"; };
+		42446FCB15B9C9DD00E4E1BF /* ScannerKitLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ScannerKitLogo.png; sourceTree = "<group>"; };
+		42446FCC15B9C9DD00E4E1BF /* ScannerKitLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScannerKitLogo@2x.png"; sourceTree = "<group>"; };
+		42446FCD15B9C9DD00E4E1BF /* ScannerKitOverlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ScannerKitOverlay.png; sourceTree = "<group>"; };
+		42446FCE15B9C9DD00E4E1BF /* ScannerKitOverlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScannerKitOverlay@2x.png"; sourceTree = "<group>"; };
+		42446FCF15B9C9DD00E4E1BF /* ScannerKitOverlayStretchable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ScannerKitOverlayStretchable.png; sourceTree = "<group>"; };
+		42446FD015B9C9DD00E4E1BF /* ScannerKitOverlayStretchable@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScannerKitOverlayStretchable@2x.png"; sourceTree = "<group>"; };
+		4256FE801579550C008FC425 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		4256FE831579559E008FC425 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		4257B682159808A10072054D /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainStoryboard.storyboard; path = AntBot/MainStoryboard.storyboard; sourceTree = SOURCE_ROOT; };
+		4269662715B9D06300BF7597 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		42793022153108B900BCC097 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
+		42793023153108B900BCC097 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
+		42793024153108B900BCC097 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
+		42793025153108B900BCC097 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = SOURCE_ROOT; };
+		427F3C0A15B4A60600C2CB85 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		427F3C0C15B4A82900C2CB85 /* RelativeMotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RelativeMotion.m; path = AntBot/RelativeMotion.m; sourceTree = SOURCE_ROOT; };
+		427F3C0E15B4A8DB00C2CB85 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		427F4A9F14A57E2B003F3E53 /* AntBot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AntBot.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		427F4AA314A57E2B003F3E53 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		427F4AA514A57E2B003F3E53 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		427F4AA714A57E2B003F3E53 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		427F4AD914A58001003F3E53 /* redparkSerial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = redparkSerial.h; sourceTree = "<group>"; };
+		427F4ADA14A58001003F3E53 /* RscMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RscMgr.h; sourceTree = "<group>"; };
+		427F4ADC14A58001003F3E53 /* libRscMgrUniv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libRscMgrUniv.a; sourceTree = "<group>"; };
+		427F4ADE14A58048003F3E53 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		428B31CD15E4093100503F68 /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mask.png; sourceTree = SOURCE_ROOT; };
+		428C7AD215B5D3AF000AB355 /* squarePNG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = squarePNG.png; sourceTree = SOURCE_ROOT; };
+		42BB468D153F07520034D665 /* Communication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Communication.h; path = AntBot/Communication.h; sourceTree = SOURCE_ROOT; };
+		42BB468E153F07520034D665 /* Communication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Communication.m; path = AntBot/Communication.m; sourceTree = SOURCE_ROOT; };
+		42BC34DB14A98D5600692DDE /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		42F1E1EC15AD36BE00F1ADEB /* libIOKit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libIOKit.dylib; path = usr/lib/libIOKit.dylib; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		427F4A9C14A57E2B003F3E53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4269662A15B9D07B00BF7597 /* SystemConfiguration.framework in Frameworks */,
+				427F3C0B15B4A60600C2CB85 /* libz.dylib in Frameworks */,
+				4256FE841579559E008FC425 /* QuartzCore.framework in Frameworks */,
+				4256FE811579550C008FC425 /* libiconv.dylib in Frameworks */,
+				423B95971530E65B00A26A03 /* AVFoundation.framework in Frameworks */,
+				427F4AA814A57E2B003F3E53 /* CoreGraphics.framework in Frameworks */,
+				423B959E1530EFEC00A26A03 /* CoreImage.framework in Frameworks */,
+				420CC92D151639A6003B29D3 /* CoreLocation.framework in Frameworks */,
+				423B959C1530EFC100A26A03 /* CoreMedia.framework in Frameworks */,
+				42BC34DC14A98D5700692DDE /* CoreMotion.framework in Frameworks */,
+				423B959A1530E6CF00A26A03 /* CoreVideo.framework in Frameworks */,
+				427F4ADF14A58048003F3E53 /* ExternalAccessory.framework in Frameworks */,
+				427F3C0415B4909300C2CB85 /* OpenCV.framework in Frameworks */,
+				427F4AA614A57E2B003F3E53 /* Foundation.framework in Frameworks */,
+				427F4AA414A57E2B003F3E53 /* UIKit.framework in Frameworks */,
+				427F4ADD14A58001003F3E53 /* libRscMgrUniv.a in Frameworks */,
+				42446FD115B9C9DD00E4E1BF /* libScannerKit.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		42446FA715B9C9DD00E4E1BF /* ScannerKit-4.2.2 */ = {
+			isa = PBXGroup;
+			children = (
+				42446FA815B9C9DD00E4E1BF /* Headers */,
+				42446FB615B9C9DD00E4E1BF /* libScannerKit.a */,
+				42446FB715B9C9DD00E4E1BF /* Resources */,
+			);
+			name = "ScannerKit-4.2.2";
+			path = "AntBot/ScannerKit-4.2.2";
+			sourceTree = "<group>";
+		};
+		42446FA815B9C9DD00E4E1BF /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				42446FA915B9C9DD00E4E1BF /* ScannerKit.h */,
+				42446FAA15B9C9DD00E4E1BF /* SKBarcodeCode.h */,
+				42446FAB15B9C9DD00E4E1BF /* SKCalendarEventQRCode.h */,
+				42446FAC15B9C9DD00E4E1BF /* SKCode.h */,
+				42446FAD15B9C9DD00E4E1BF /* SKContactInformationQRCode.h */,
+				42446FAE15B9C9DD00E4E1BF /* SKEmailTemplateQRCode.h */,
+				42446FAF15B9C9DD00E4E1BF /* SKGeographicLocationQRCode.h */,
+				42446FB015B9C9DD00E4E1BF /* SKPhoneNumberQRCode.h */,
+				42446FB115B9C9DD00E4E1BF /* SKScannerViewController.h */,
+				42446FB215B9C9DD00E4E1BF /* SKScannerViewControllerDelegate.h */,
+				42446FB315B9C9DD00E4E1BF /* SKSMSTemplateQRCode.h */,
+				42446FB415B9C9DD00E4E1BF /* SKTextQRCode.h */,
+				42446FB515B9C9DD00E4E1BF /* SKURLQRCode.h */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		42446FB715B9C9DD00E4E1BF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				42446FB815B9C9DD00E4E1BF /* Localizable.strings */,
+				42446FBB15B9C9DD00E4E1BF /* ScannerKitActivitySpinner.png */,
+				42446FBC15B9C9DD00E4E1BF /* ScannerKitActivitySpinner@2x.png */,
+				42446FBD15B9C9DD00E4E1BF /* ScannerKitBackIcon.png */,
+				42446FBE15B9C9DD00E4E1BF /* ScannerKitBackIcon@2x.png */,
+				42446FBF15B9C9DD00E4E1BF /* ScannerKitEmptyIcon.png */,
+				42446FC015B9C9DD00E4E1BF /* ScannerKitEmptyIcon@2x.png */,
+				42446FC115B9C9DD00E4E1BF /* ScannerKitForwardIcon.png */,
+				42446FC215B9C9DD00E4E1BF /* ScannerKitForwardIcon@2x.png */,
+				42446FC315B9C9DD00E4E1BF /* ScannerKitHoldStillHandIcon.png */,
+				42446FC415B9C9DD00E4E1BF /* ScannerKitHoldStillHandIcon@2x.png */,
+				42446FC515B9C9DD00E4E1BF /* ScannerKitInfo.plist */,
+				42446FC615B9C9DD00E4E1BF /* ScannerKitLaser.png */,
+				42446FC715B9C9DD00E4E1BF /* ScannerKitLaser@2x.png */,
+				42446FC815B9C9DD00E4E1BF /* ScannerKitLaserGlow.png */,
+				42446FC915B9C9DD00E4E1BF /* ScannerKitLaserGlow@2x.png */,
+				42446FCA15B9C9DD00E4E1BF /* ScannerKitLoadingLogo@2x.png */,
+				42446FCB15B9C9DD00E4E1BF /* ScannerKitLogo.png */,
+				42446FCC15B9C9DD00E4E1BF /* ScannerKitLogo@2x.png */,
+				42446FCD15B9C9DD00E4E1BF /* ScannerKitOverlay.png */,
+				42446FCE15B9C9DD00E4E1BF /* ScannerKitOverlay@2x.png */,
+				42446FCF15B9C9DD00E4E1BF /* ScannerKitOverlayStretchable.png */,
+				42446FD015B9C9DD00E4E1BF /* ScannerKitOverlayStretchable@2x.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		427F4A9414A57E2B003F3E53 = {
+			isa = PBXGroup;
+			children = (
+				427F4AD814A58001003F3E53 /* inc */,
+				427F4ADB14A58001003F3E53 /* lib */,
+				427F4AA914A57E2B003F3E53 /* AntBot */,
+				427F4AA214A57E2B003F3E53 /* Frameworks */,
+				427F4AA014A57E2B003F3E53 /* Products */,
+				42446FA715B9C9DD00E4E1BF /* ScannerKit-4.2.2 */,
+			);
+			sourceTree = "<group>";
+		};
+		427F4AA014A57E2B003F3E53 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				427F4A9F14A57E2B003F3E53 /* AntBot.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		427F4AA214A57E2B003F3E53 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4269662715B9D06300BF7597 /* SystemConfiguration.framework */,
+				427F3C0A15B4A60600C2CB85 /* libz.dylib */,
+				42F1E1EC15AD36BE00F1ADEB /* libIOKit.dylib */,
+				4256FE801579550C008FC425 /* libiconv.dylib */,
+				4256FE831579559E008FC425 /* QuartzCore.framework */,
+				42042CEE156E78780053FC41 /* OpenCV.framework */,
+				423B95961530E65B00A26A03 /* AVFoundation.framework */,
+				427F4AA714A57E2B003F3E53 /* CoreGraphics.framework */,
+				423B959D1530EFEC00A26A03 /* CoreImage.framework */,
+				420CC92C151639A6003B29D3 /* CoreLocation.framework */,
+				423B959B1530EFC100A26A03 /* CoreMedia.framework */,
+				42BC34DB14A98D5600692DDE /* CoreMotion.framework */,
+				423B95991530E6CF00A26A03 /* CoreVideo.framework */,
+				427F4ADE14A58048003F3E53 /* ExternalAccessory.framework */,
+				427F4AA514A57E2B003F3E53 /* Foundation.framework */,
+				427F3C0E15B4A8DB00C2CB85 /* ImageIO.framework */,
+				427F4AA314A57E2B003F3E53 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		427F4AA914A57E2B003F3E53 /* AntBot */ = {
+			isa = PBXGroup;
+			children = (
+				423D2E111514CFEB00B5231E /* AbsoluteMotion.h */,
+				423D2E121514CFEB00B5231E /* AbsoluteMotion.m */,
+				4242975215B51F9700CD2A74 /* AmbientLight.h */,
+				4242975315B51F9700CD2A74 /* AmbientLight.m */,
+				423D2E131514CFEB00B5231E /* AppDelegate.h */,
+				423D2E141514CFEB00B5231E /* AppDelegate.m */,
+				421EA9151591252900D3B52E /* CableManager.h */,
+				421EA9161591252A00D3B52E /* CableManager.m */,
+				42BB468D153F07520034D665 /* Communication.h */,
+				42BB468E153F07520034D665 /* Communication.m */,
+				423F669E152237A70001F9D3 /* ImageRecognition.h */,
+				423F669F152237A70001F9D3 /* ImageRecognition.mm */,
+				423D2E151514CFEB00B5231E /* RelativeMotion.h */,
+				427F3C0C15B4A82900C2CB85 /* RelativeMotion.m */,
+				423D2E171514CFEB00B5231E /* MainController.h */,
+				423D2E181514CFEB00B5231E /* MainController.mm */,
+				4257B682159808A10072054D /* MainStoryboard.storyboard */,
+				427F4AAA14A57E2B003F3E53 /* Supporting Files */,
+			);
+			name = AntBot;
+			path = Arduino;
+			sourceTree = "<group>";
+		};
+		427F4AAA14A57E2B003F3E53 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				428B31CD15E4093100503F68 /* mask.png */,
+				428C7AD215B5D3AF000AB355 /* squarePNG.png */,
+				42793022153108B900BCC097 /* Default.png */,
+				42793023153108B900BCC097 /* Default@2x.png */,
+				42793024153108B900BCC097 /* Icon.png */,
+				42793025153108B900BCC097 /* Icon@2x.png */,
+				423D2E211514D04700B5231E /* AntBot-Info.plist */,
+				423D2E221514D04700B5231E /* AntBot-Prefix.pch */,
+				421743831514D0830003BF49 /* InfoPlist.strings */,
+				423D2E231514D04700B5231E /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		427F4AD814A58001003F3E53 /* inc */ = {
+			isa = PBXGroup;
+			children = (
+				427F4AD914A58001003F3E53 /* redparkSerial.h */,
+				427F4ADA14A58001003F3E53 /* RscMgr.h */,
+			);
+			path = inc;
+			sourceTree = "<group>";
+		};
+		427F4ADB14A58001003F3E53 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				427F4ADC14A58001003F3E53 /* libRscMgrUniv.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		427F4A9E14A57E2B003F3E53 /* AntBot */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 427F4AD214A57E2B003F3E53 /* Build configuration list for PBXNativeTarget "AntBot" */;
+			buildPhases = (
+				427F4A9B14A57E2B003F3E53 /* Sources */,
+				427F4A9C14A57E2B003F3E53 /* Frameworks */,
+				427F4A9D14A57E2B003F3E53 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AntBot;
+			productName = Arduino;
+			productReference = 427F4A9F14A57E2B003F3E53 /* AntBot.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		427F4A9614A57E2B003F3E53 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0440;
+			};
+			buildConfigurationList = 427F4A9914A57E2B003F3E53 /* Build configuration list for PBXProject "AntBot" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				de,
+			);
+			mainGroup = 427F4A9414A57E2B003F3E53;
+			productRefGroup = 427F4AA014A57E2B003F3E53 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				427F4A9E14A57E2B003F3E53 /* AntBot */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		427F4A9D14A57E2B003F3E53 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				421743851514D0830003BF49 /* InfoPlist.strings in Resources */,
+				42793026153108B900BCC097 /* Default.png in Resources */,
+				42793027153108B900BCC097 /* Default@2x.png in Resources */,
+				42793028153108B900BCC097 /* Icon.png in Resources */,
+				42793029153108B900BCC097 /* Icon@2x.png in Resources */,
+				4257B683159808A10072054D /* MainStoryboard.storyboard in Resources */,
+				428C7AD315B5D3AF000AB355 /* squarePNG.png in Resources */,
+				42446FD215B9C9DD00E4E1BF /* Localizable.strings in Resources */,
+				42446FD315B9C9DD00E4E1BF /* ScannerKitActivitySpinner.png in Resources */,
+				42446FD415B9C9DD00E4E1BF /* ScannerKitActivitySpinner@2x.png in Resources */,
+				42446FD515B9C9DD00E4E1BF /* ScannerKitBackIcon.png in Resources */,
+				42446FD615B9C9DD00E4E1BF /* ScannerKitBackIcon@2x.png in Resources */,
+				42446FD715B9C9DD00E4E1BF /* ScannerKitEmptyIcon.png in Resources */,
+				42446FD815B9C9DD00E4E1BF /* ScannerKitEmptyIcon@2x.png in Resources */,
+				42446FD915B9C9DD00E4E1BF /* ScannerKitForwardIcon.png in Resources */,
+				42446FDA15B9C9DD00E4E1BF /* ScannerKitForwardIcon@2x.png in Resources */,
+				42446FDB15B9C9DD00E4E1BF /* ScannerKitHoldStillHandIcon.png in Resources */,
+				42446FDC15B9C9DD00E4E1BF /* ScannerKitHoldStillHandIcon@2x.png in Resources */,
+				42446FDD15B9C9DD00E4E1BF /* ScannerKitInfo.plist in Resources */,
+				42446FDE15B9C9DD00E4E1BF /* ScannerKitLaser.png in Resources */,
+				42446FDF15B9C9DD00E4E1BF /* ScannerKitLaser@2x.png in Resources */,
+				42446FE015B9C9DD00E4E1BF /* ScannerKitLaserGlow.png in Resources */,
+				42446FE115B9C9DD00E4E1BF /* ScannerKitLaserGlow@2x.png in Resources */,
+				42446FE215B9C9DD00E4E1BF /* ScannerKitLoadingLogo@2x.png in Resources */,
+				42446FE315B9C9DD00E4E1BF /* ScannerKitLogo.png in Resources */,
+				42446FE415B9C9DD00E4E1BF /* ScannerKitLogo@2x.png in Resources */,
+				42446FE515B9C9DD00E4E1BF /* ScannerKitOverlay.png in Resources */,
+				42446FE615B9C9DD00E4E1BF /* ScannerKitOverlay@2x.png in Resources */,
+				42446FE715B9C9DD00E4E1BF /* ScannerKitOverlayStretchable.png in Resources */,
+				42446FE815B9C9DD00E4E1BF /* ScannerKitOverlayStretchable@2x.png in Resources */,
+				428B31CE15E4093100503F68 /* mask.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		427F4A9B14A57E2B003F3E53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				423D2E191514CFEB00B5231E /* AbsoluteMotion.m in Sources */,
+				423D2E1A1514CFEB00B5231E /* AppDelegate.m in Sources */,
+				423D2E1C1514CFEB00B5231E /* MainController.mm in Sources */,
+				423D2E251514D04700B5231E /* main.m in Sources */,
+				423F66A0152237A70001F9D3 /* ImageRecognition.mm in Sources */,
+				42BB468F153F07520034D665 /* Communication.m in Sources */,
+				421EA9171591252A00D3B52E /* CableManager.m in Sources */,
+				427F3C0D15B4A82900C2CB85 /* RelativeMotion.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		421743831514D0830003BF49 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				421743841514D0830003BF49 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		42446FB815B9C9DD00E4E1BF /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				42446FB915B9C9DD00E4E1BF /* de */,
+				42446FBA15B9C9DD00E4E1BF /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		427F4AD014A57E2B003F3E53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		427F4AD114A57E2B003F3E53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		427F4AD314A57E2B003F3E53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/AntBot\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AntBot/AntBot-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/AntBot\"";
+				INFOPLIST_FILE = "AntBot/AntBot-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/lib\"",
+					"\"$(SRCROOT)/AntBot/ScannerKit-4.2.2\"",
+				);
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				PRODUCT_NAME = AntBot;
+				TARGETED_DEVICE_FAMILY = 1;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/AntBot\"";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		427F4AD414A57E2B003F3E53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/AntBot\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AntBot/AntBot-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/AntBot\"";
+				INFOPLIST_FILE = "AntBot/AntBot-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/lib\"",
+					"\"$(SRCROOT)/AntBot/ScannerKit-4.2.2\"",
+				);
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				PRODUCT_NAME = AntBot;
+				TARGETED_DEVICE_FAMILY = 1;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/AntBot\"";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		427F4A9914A57E2B003F3E53 /* Build configuration list for PBXProject "AntBot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				427F4AD014A57E2B003F3E53 /* Debug */,
+				427F4AD114A57E2B003F3E53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		427F4AD214A57E2B003F3E53 /* Build configuration list for PBXNativeTarget "AntBot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				427F4AD314A57E2B003F3E53 /* Debug */,
+				427F4AD414A57E2B003F3E53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 427F4A9614A57E2B003F3E53 /* Project object */;
+}
