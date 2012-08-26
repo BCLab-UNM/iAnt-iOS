@@ -107,9 +107,9 @@ bail:
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
     int pixelDifference;
     unichar data [2];
-    UIImage *img = [UIImage imageNamed:@"IMG_0233.jpg"];
-    BOOL flag = [imgRecog locateQRFinderPatternIn:img];
-    Cartesian2D center;// = [imgRecog findColorCentroidIn:sampleBuffer usingThreshold:HSV_THRESHOLD_RED];
+    UIImage *img = [UIImage imageNamed:@"IMG_0165.jpg"];
+    [imgRecog locateQRFinderPatternsIn:img];
+    CvPoint center;// = [imgRecog findColorCentroidIn:sampleBuffer usingThreshold:HSV_THRESHOLD_RED];
     
     [CATransaction begin];
     [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
@@ -278,7 +278,7 @@ bail:
     [super viewDidAppear:animated];
     //[ambLight start];
     [self setupAVCapture];
-}
+ }
 
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];

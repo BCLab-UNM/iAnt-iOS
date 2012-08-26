@@ -8,14 +8,8 @@
 
 #import <AVFoundation/AVFoundation.h>
 
-typedef struct
-{
-    double x,y;
-} Cartesian2D;
-
 @interface ImageRecognition: NSObject
 
-@property Cartesian2D center;
 @property UIImage* imgThresholdUI;
 @property IplImage* imgIpl;
 @property IplImage* imgGrayBGRA;
@@ -24,9 +18,9 @@ typedef struct
 - (ImageRecognition*)imageRecognition;
 
 //Higher-level vision functions
-- (Cartesian2D)findColorCentroidIn:(CMSampleBufferRef)buffer usingThreshold:(NSArray*)ranges;
-- (BOOL)locateQRFinderPatternIn:(UIImage*)buffer;
-- (BOOL)checkFinderRatioFor:(int[5])stateCount;
+- (CvPoint)findColorCentroidIn:(CMSampleBufferRef)buffer usingThreshold:(NSArray*)ranges;
+- (int)locateQRFinderPatternsIn:(UIImage*)buffer;
+- (int)checkFinderRatioFor:(int[5])stateCount;
 
 //UIImage <--> IplImage functions
 - (void)createIplImageFromCMSampleBuffer:(CMSampleBufferRef)buffer;
@@ -35,15 +29,33 @@ typedef struct
 
 @end
 
-@interface ThresholdRange: NSObject
-{
+@interface LineSegment2D : NSObject {
+    CvPoint start;
+    CvPoint end;
+}
+
+- (LineSegment2D*)initStartTo:(CvPoint)start andEndTo:(CvPoint)end;
+
+- (CvPoint)getStart;
+- (CvPoint)getEnd;
+
+@end
+
+@interface FinderPattern : NSObject
+
+@property NSMutableArray *segments;
+@property BOOL modifiedFlag;
+
+@end
+
+@interface ThresholdRange: NSObject {
     CvScalar min;
     CvScalar max;
 }
 
 - (ThresholdRange*)initMinTo:(CvScalar)min andMaxTo:(CvScalar)max;
 
-- (CvScalar) getMin;
-- (CvScalar) getMax;
+- (CvScalar)getMin;
+- (CvScalar)getMax;
 
 @end

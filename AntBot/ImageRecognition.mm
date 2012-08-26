@@ -12,7 +12,6 @@
 
 @implementation ImageRecognition
 
-@synthesize center;
 @synthesize imgThresholdUI;
 @synthesize imgIpl;
 @synthesize imgGrayBGRA;
@@ -25,7 +24,7 @@
 
 #pragma mark - Higher-level vision functions
 
-- (Cartesian2D)findColorCentroidIn:(CMSampleBufferRef)buffer usingThreshold:(NSArray*)ranges {    
+- (CvPoint)findColorCentroidIn:(CMSampleBufferRef)buffer usingThreshold:(NSArray*)ranges {
     //Convert CMSampleBuffer to IplImage
     [self createIplImageFromCMSampleBuffer:buffer];
     
@@ -93,7 +92,7 @@
     imgThresholdUI = [self createUIImageFromIplImage:imgGrayBGRA];
     
     //Calculate centroid of thresholded image
-    Cartesian2D c;
+    CvPoint c;
     CvMoments* moments = (CvMoments*)malloc(sizeof(CvMoments)); 
     cvMoments(imgThresholdUnion, moments, 1);
     c.x = cvGetSpatialMoment(moments, 1, 0) / cvGetSpatialMoment(moments, 0, 0); 
@@ -108,7 +107,7 @@
     return c;
 }
 
-- (BOOL)locateQRFinderPatternIn:(UIImage*)buffer
+- (int)locateQRFinderPatternsIn:(UIImage*)buffer
 {
     //Convert CMSampleBuffer to IplImage
     //[self createIplImageFromCMSampleBuffer:buffer];
@@ -123,48 +122,103 @@
     cvCvtColor(imgIpl, imgGray, CV_BGRA2GRAY);
     
     //Convert to bi-level (i.e. binary)
-    cvThreshold(imgGray, imgGray, 180, 255, CV_THRESH_BINARY);
+    //cvThreshold(imgGray, imgGray, 180, 255, CV_THRESH_BINARY);
+    cvAdaptiveThreshold(imgGray, imgGray, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY, 49);
     
-    int stateCount[5] = {0};
-    int currentState = 0;
+    //Create storage variables for finder pattern search
+    int stateCount[5]; //counters for each of five regions in the finder pattern
+    int currentState; //holds current state
+    NSMutableArray *finderPatterns = [[NSMutableArray alloc] init]; //array of discovered finder patterns
+    int numberOfFinderPatterns = 0; //number of legitimate finder patterns discovered; returned at function end
+    
+    //Perform pixel-by-pixel nested loop search through image
     for (int row=0; row<imgGray->height; row++) {
-        stateCount[0] = 0;
-        stateCount[1] = 0;
-        stateCount[2] = 0;
-        stateCount[3] = 0;
-        stateCount[4] = 0;
+        //Erase storage
         currentState = 0;
+        memset(stateCount, 0, sizeof(stateCount));
         
         for(int col=0; col<imgGray->width; col++) {
             uchar *ptr = (uchar*)(imgGray->imageData + row*imgGray->widthStep + col);
+            //If pixel is black
             if (ptr[0] < 128) {
-                // We're at a black pixel
-                if((currentState & 0x1)==1)
-                {
-                    // We were counting white pixels
-                    // So change the state now
-                    
-                    // W->B transition
+                //And current state is a white (i.e. odd)
+                if (currentState % 2) {
+                    //Then the state should be changed (W->B transition)
                     currentState++;
                 }
-                
-                // Works for boths W->B and B->B
+                //Regardless of state, we increase the state count
                 stateCount[currentState]++;
             }
+            //Otherwise, pixel is white
             else {
-                // We got to a white pixel...
-                if((currentState & 0x1)==1) {
-                    // W->W change
+                //If state is white (i.e. odd)
+                if (currentState % 2) {
+                    //Then increase the state count
                     stateCount[currentState]++;
                 }
+                //Otherwise, state is black (i.e. even)
                 else {
-                    // ...but, we were counting black pixels
-                    if(currentState==4) {
-                        
-                        // We found the 'white' area AFTER the finder patter
-                        // Do processing for it here
-                        if([self checkFinderRatioFor:stateCount]) {
-                            NSLog(@"found");
+                    //If in final state (i.e. the "accept state" of an FSM)
+                    if (currentState == 4) {
+                        //Check the ratio for the discovered pixels. If the ratio is correct, proceed by searching for the proper location to store the segment
+                        if (int finderSize = [self checkFinderRatioFor:stateCount]) {
+                            //Create line segment
+                            CvPoint end = cvPoint(row, col);
+                            CvPoint start = cvPoint(row, col - finderSize);
+                            LineSegment2D *line = [[LineSegment2D alloc] initStartTo:start andEndTo:end];
+                            
+                            //Create block object for creating and storing a new pattern
+                            void (^createPattern)(LineSegment2D*) = ^(LineSegment2D *line) {
+                                //If not, create new pattern array and store line segment
+                                FinderPattern *pattern = [[FinderPattern alloc] init];
+                                [[pattern segments] addObject:line];
+                                //Mark pattern as modified
+                                [pattern setModifiedFlag:YES];
+                                //Initialize patterns array with new pattern
+                                [finderPatterns addObject:pattern];
+                            };
+                            
+                            //Check to see if any patterns have been recorded
+                            if ([finderPatterns count] > 0) {
+                                int counter = 0;
+                                //Enumerate through patterns
+                                for (; counter < [finderPatterns count]; counter++) {
+                                    //Load pattern
+                                    FinderPattern *pattern = [finderPatterns objectAtIndex:counter];
+                                    //Retrieve newest segment (the segment found on the last iteration of for loop)
+                                    LineSegment2D *mostRecentSegment = [[pattern segments] lastObject];
+                                    
+                                    //If center of the new segment lies above the most recently found segment
+                                    if (([line getStart].y + finderSize/2) < [mostRecentSegment getStart].y) {
+                                        //Create a new pattern and store the new segment in it
+                                        createPattern(line);
+                                        //And exit the pattern search
+                                        break;
+                                    }
+                                    //If center of new segment lies within previous segment
+                                    else if (([line getStart].y + finderSize/2) < [mostRecentSegment getEnd].y) {
+                                        //Append new segment to current pattern
+                                        [[pattern segments] addObject:line];
+                                        //Mark pattern as modified and update the object
+                                        [pattern setModifiedFlag:YES];
+                                        [finderPatterns replaceObjectAtIndex:[finderPatterns indexOfObject:pattern]
+                                                                  withObject:pattern];
+                                        //Quit pattern search
+                                        break;
+                                    }                                    
+                                }
+                                
+                                //If all patterns have been checked, the new segment must be below current patterns
+                                if (counter == [finderPatterns count]) {
+                                    //Create a new pattern and store the new segment in it
+                                    createPattern(line);
+                                }
+                            }
+                            //If no patterns have been found
+                            else {
+                                //Create a new pattern and store the new segment in it
+                                createPattern(line);
+                            }
                         }
                         else {
                             currentState = 3;
@@ -176,20 +230,57 @@
                             continue;
                         }
                         currentState = 0;
-                        stateCount[0] = 0;
-                        stateCount[1] = 0;
-                        stateCount[2] = 0;
-                        stateCount[3] = 0;
-                        stateCount[4] = 0;
+                        memset(stateCount, 0, sizeof(stateCount));
                     }
+                    //Otherwise, the end of the pattern has not been reached
                     else {
-                        // We still haven't go 'out' of the finder pattern yet
-                        // So increment the state
-                        // B->W transition
+                        // So increment the state (B->W transition)
                         currentState++;
+                        //And the state count
                         stateCount[currentState]++;
                     }
                 }
+            }
+        }
+        
+        //Scan all discovered finder patterns
+        int segmentThreshold = 10;
+        int counter = 0;
+        
+        for (; counter < [finderPatterns count]; counter++) {
+            //Load pattern
+            FinderPattern *pattern = [finderPatterns objectAtIndex:counter];
+            //If pattern was not modified in previous loop iteration
+            if (![pattern modifiedFlag]) {
+                //Remove pattern from array
+                [finderPatterns removeObjectAtIndex:[finderPatterns indexOfObject:pattern]];
+                
+                NSLog(@"Number of segments: %d",[[pattern segments] count]);
+                
+                int xsum = 0;
+                int ysum = 0;
+                for (int i = 0; i < [[pattern segments] count]; i++) {
+                    xsum += (([[[pattern segments] objectAtIndex:i] getEnd].x -
+                              [[[pattern segments] objectAtIndex:i] getStart].x) / 2) +
+                    [[[pattern segments] objectAtIndex:i] getStart].x;
+                    ysum += (([[[pattern segments] objectAtIndex:i] getEnd].y -
+                              [[[pattern segments] objectAtIndex:i] getStart].y) / 2) +
+                    [[[pattern segments] objectAtIndex:i] getStart].y;
+                }
+                
+                NSLog(@"Centroid: %d,%d",xsum/[[pattern segments] count],ysum/[[pattern segments] count]);
+                
+                //If the number of segments found for the pattern is above a defined threshold
+                if ([[pattern segments] count] > segmentThreshold) {
+                    //Then increment the total
+                    numberOfFinderPatterns++;
+                }
+            }
+            //Otherwise, it was modified
+            else {
+                //Reset flag and update the object
+                [pattern setModifiedFlag:NO];
+                [finderPatterns replaceObjectAtIndex:[finderPatterns indexOfObject:pattern] withObject:pattern];
             }
         }
     }
@@ -203,33 +294,39 @@
     imgThresholdUI = [self createUIImageFromIplImage:imgGrayBGRA];
     
     cvReleaseImage(&imgGray);
-    return NO;
+    return numberOfFinderPatterns;
 }
 
-- (BOOL)checkFinderRatioFor:(int[5])stateCount {
-    int totalFinderSize = 0;
-    for(int i=0; i<5; i++)
-    {
-        int count = stateCount[i];
-        totalFinderSize += count;
-        if(count==0)
-            return false;
+- (int)checkFinderRatioFor:(int[5])stateCount {
+    int finderSize = 0;
+    
+    for (int i=0; i<5; i++) {
+        if (stateCount[i] == 0) {
+            return 0;
+        }
+        finderSize += stateCount[i];
     }
     
-    if(totalFinderSize<7)
-        return false;
+    if (finderSize < 7) {
+        return 0;
+    }
     
     // Calculate the size of one module
-    int moduleSize = ceil(totalFinderSize / 7.0);
+    int moduleSize = ceil(finderSize / 7.0);
     int maxVariance = moduleSize/2;
     
-    bool retVal= ((abs(moduleSize - (stateCount[0])) < maxVariance) &&
+    bool retVal = ((abs(moduleSize - (stateCount[0])) < maxVariance) &&
                   (abs(moduleSize - (stateCount[1])) < maxVariance) &&
                   (abs(3*moduleSize - (stateCount[2])) < 3*maxVariance) &&
                   (abs(moduleSize - (stateCount[3])) < maxVariance) &&
                   (abs(moduleSize - (stateCount[4])) < maxVariance));
     
-    return retVal;
+    if (retVal) {
+        return finderSize;
+    }
+    else {
+        return 0;
+    }
 }
 
 #pragma mark - UIImage <--> IplImage functions
@@ -302,7 +399,46 @@
 }
 @end
 
-# pragma mark - ThresholdRange interface
+# pragma mark - LineSegment2D implementation
+
+@implementation LineSegment2D
+
+- (LineSegment2D*)initStartTo:(CvPoint)startPoint andEndTo:(CvPoint)endPoint {
+    self = [super init];
+    start = startPoint;
+    end = endPoint;
+    
+    return self;
+}
+
+- (CvPoint)getStart {
+    return start;
+}
+
+- (CvPoint)getEnd {
+    return end;
+}
+
+@end
+
+#pragma mark - FinderPattern implementation
+
+@implementation FinderPattern
+
+@synthesize segments;
+@synthesize modifiedFlag;
+
+- (id)init {
+    self = [super init];
+    segments = [[NSMutableArray alloc] init];
+    modifiedFlag = false;
+    
+    return self;
+}
+
+@end
+
+# pragma mark - ThresholdRange implementation
 
 @implementation ThresholdRange
 
@@ -315,12 +451,12 @@
     return self;
 }
 
-- (CvScalar) getMin;
+- (CvScalar)getMin;
 {
     return min;
 }
 
-- (CvScalar) getMax;
+- (CvScalar)getMax;
 {
     return max;
 }
