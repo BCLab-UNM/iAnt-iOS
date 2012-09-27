@@ -6,8 +6,7 @@
 //  Moses Lab, Department of Computer Science, University of New Mexico.
 //
 
-@interface Communication : NSObject <NSStreamDelegate>
-{
+@interface Communication : NSObject <NSStreamDelegate> {
     CFReadStreamRef readStream;
     CFWriteStreamRef writeStream;
     NSInputStream *inputStream;

@@ -29,7 +29,7 @@
 - (void)receive:(int)numBytes
 {
     //If needed, intialize buffer
-    if (rxBuffer == nil) rxBuffer = [[NSMutableArray alloc] init];
+    if (rxBuffer == nil) rxBuffer = [NSMutableArray new];
     
     //Load numBytes of data into buffer
     uint8_t buffer[1024];
@@ -42,8 +42,10 @@
     NSString *delimiter = @"\r\n";
     NSMutableArray *messages = [[data componentsSeparatedByString:delimiter] mutableCopy];
     
-    //If there are messages remaining in the buffer
-    if (([rxBuffer count] > 0)
+    //If there were messages received
+    if (([messages count] > 0)
+        //and there are messages remaining in the buffer
+        && ([rxBuffer count] > 0)
         //and the final message in the buffer is not the empty string
         && (![[rxBuffer lastObject] isEqualToString:@""]))
     {
@@ -79,9 +81,8 @@
     
     //If only one message is found in the buffer
     else if (([rxBuffer count] > 0)
-        //and the final message in the buffer is the empty string
-        && ([[rxBuffer lastObject] isEqualToString:@""]))
-    {
+             //and the final message in the buffer is the empty string
+             && ([[rxBuffer lastObject] isEqualToString:@""])) {
         //Then we remove it
         [rxBuffer removeObjectAtIndex:0];
     }

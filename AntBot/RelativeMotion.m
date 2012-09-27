@@ -57,7 +57,7 @@
     
     if (motionManager.deviceMotionAvailable) {
         motionManager.showsDeviceMovementDisplay = YES;
-        motionManager.deviceMotionUpdateInterval = 1.0/60.0;
+        motionManager.deviceMotionUpdateInterval = 1.0/20.0;
         [motionManager startDeviceMotionUpdates];
         
         motionManager.gyroUpdateInterval = 1.0/20.0;
@@ -80,7 +80,7 @@
                         [cblMgr send:[NSString stringWithCharacters:data length:2]];
                     }];
         
-        while (motionManager.deviceMotion == nil) {}
+        //while (motionManager.deviceMotion == nil) {}
     }
     else {
         NSLog(@"Device-motion service is not available on this device");

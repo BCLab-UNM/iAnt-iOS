@@ -7,55 +7,22 @@
 //
 
 #import <AVFoundation/AVFoundation.h>
+#import "Conversions.h"
+#import "FinderPattern.h"
+#import "ThresholdRange.h"
 
-@interface ImageRecognition: NSObject
-
-@property UIImage* imgThresholdUI;
-@property IplImage* imgIpl;
-@property IplImage* imgGrayBGRA;
-@property IplImage* maskIpl;
-
-- (ImageRecognition*)imageRecognition;
-
-//Higher-level vision functions
-- (CvPoint)findColorCentroidIn:(CMSampleBufferRef)buffer usingThreshold:(NSArray*)ranges;
-- (int)locateQRFinderPatternsIn:(UIImage*)buffer;
-- (int)checkFinderRatioFor:(int[5])stateCount;
-
-//UIImage <--> IplImage functions
-- (void)createIplImageFromCMSampleBuffer:(CMSampleBufferRef)buffer;
-- (UIImage*)createUIImageFromIplImage:(IplImage *)image;
-- (IplImage*)createIplImageFromUIImage:(UIImage*)image;
-
-@end
-
-@interface LineSegment2D : NSObject {
-    CvPoint start;
-    CvPoint end;
+@interface ImageRecognition: NSObject {
+    Conversions *converter;
+    IplImage *imgGray;
+    IplImage *imgGrayBGRA;
+    IplImage *maskIpl;
 }
 
-- (LineSegment2D*)initStartTo:(CvPoint)start andEndTo:(CvPoint)end;
+- (id)initResolutionTo:(int)vertical by:(int)horizontal;
 
-- (CvPoint)getStart;
-- (CvPoint)getEnd;
+- (UIImage*)getImgThresholdUI;
 
-@end
-
-@interface FinderPattern : NSObject
-
-@property NSMutableArray *segments;
-@property BOOL modifiedFlag;
-
-@end
-
-@interface ThresholdRange: NSObject {
-    CvScalar min;
-    CvScalar max;
-}
-
-- (ThresholdRange*)initMinTo:(CvScalar)min andMaxTo:(CvScalar)max;
-
-- (CvScalar)getMin;
-- (CvScalar)getMax;
+- (NSMutableArray*)findColorCentroidIn:(CMSampleBufferRef)buffer usingThreshold:(NSArray*)ranges;
+- (NSMutableArray*)locateQRFinderPatternsIn:(CMSampleBufferRef)buffer;
 
 @end

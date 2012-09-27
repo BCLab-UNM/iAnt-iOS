@@ -1,5 +1,5 @@
 //
-//  Controller.m
+//  MainController.mm
 //  AntBot
 //
 //  Created by Joshua Hecker on 12/23/11.
@@ -13,7 +13,7 @@
 @interface MainController ()
 
 //AVCaptureSession functions
-- (void)setupAVCapture;
+- (void)setupAVCaptureAt:(AVCaptureDevicePosition)position;
 - (void)teardownAVCapture;
 
 //QR reader function
@@ -29,21 +29,21 @@
 #pragma mark - AVCapture methods
 
 //Setup capture
-- (void)setupAVCapture {
+- (void)setupAVCaptureAt:(AVCaptureDevicePosition)position {
 	NSError *error = nil;
 	
-	AVCaptureSession *session = [AVCaptureSession new];
-	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-	    [session setSessionPreset:AVCaptureSessionPreset640x480];
+	session = [[AVCaptureSession alloc] init];
+	if (position == AVCaptureDevicePositionBack) {
+	    [session setSessionPreset:AVCaptureSessionPreset352x288];
     }
-	else {
-	    [session setSessionPreset:AVCaptureSessionPresetPhoto];
+	else if (position == AVCaptureDevicePositionFront){
+	    [session setSessionPreset:AVCaptureSessionPresetLow];
     }
 	
     // Select a video device, make an input
     AVCaptureDeviceInput *deviceInput;
     for (AVCaptureDevice *d in [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo]) {
-		if ([d position] == AVCaptureDevicePositionBack) {
+		if ([d position] == position) {
             deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:(AVCaptureDevice*)d error:nil];
         }
     }
@@ -53,7 +53,7 @@
     }
 	
     // Make a video data output
-	videoDataOutput = [AVCaptureVideoDataOutput new];
+	videoDataOutput = [[AVCaptureVideoDataOutput alloc] init];
 	
     // we want BGRA, both CoreGraphics and OpenGL work well with 'BGRA'
 	NSDictionary *rgbOutputSettings = [NSDictionary dictionaryWithObject:
@@ -97,88 +97,233 @@ bail:
 
 //Clean up capture setup
 - (void)teardownAVCapture {
+    [session stopRunning];
 	if (videoDataOutputQueue)
 		dispatch_release(videoDataOutputQueue);
 	[previewLayer removeFromSuperlayer];
     [[videoDataOutput connectionWithMediaType:AVMediaTypeVideo] setEnabled:NO];
 }
 
-//AVCapture callback, triggered when a new frame arrives from video stream
+//AVCapture callback, triggered when a new frame (i.e. image) arrives from video stream
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
-    int pixelDifference;
-    unichar data [2];
-    UIImage *img = [UIImage imageNamed:@"IMG_0165.jpg"];
-    [imgRecog locateQRFinderPatternsIn:img];
-    CvPoint center;// = [imgRecog findColorCentroidIn:sampleBuffer usingThreshold:HSV_THRESHOLD_RED];
-    
-    [CATransaction begin];
-    [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
-    
-    //if (!std::isnan(center.x)) {
-        CALayer *featureLayer = nil;
-        UIImage *square = [UIImage imageNamed:@"squarePNG"];
-        UIImage *imgThreshold = [imgRecog imgThresholdUI];
-    
+    //Wrap all instructions in autoreleasepool
+    //This ensures release of objects from background thread
+    @autoreleasepool {
+        //Create storage variables
+        unichar data[2] = {0};
+        int numberOfCentroids;
+        NSMutableArray *centroidList = [[NSMutableArray alloc] init];
         
-        if ([[previewLayer sublayers] count] > 1) {
-            featureLayer = [[previewLayer sublayers] objectAtIndex:1];
+        //If searching for tags
+        if ([sensorState isEqualToString:@"TAG ON"]) {
+            //Retrieve list of finder pattern centroids
+            centroidList = [imgRecog locateQRFinderPatternsIn:sampleBuffer];
+        }
+        //If searching for nest
+        else if ([sensorState isEqualToString:@"NEST ON"]) {
+            //Retrieve nest centroid
+            centroidList = [imgRecog findColorCentroidIn:sampleBuffer usingThreshold:HSV_THRESHOLD_RED];
+        }
+        
+        [CATransaction begin];
+        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+        
+        //If centroids were found
+        if ((numberOfCentroids = [centroidList count])) {
+            CALayer *featureLayer = nil;
+            //Load relevant images
+            UIImage *square = [UIImage imageNamed:@"squarePNG"];
+            UIImage *imgThreshold = [imgRecog getImgThresholdUI];
+            
+            //If at least two sublayers exist
+            if ([[previewLayer sublayers] count] >= 2) {
+                //Load the top layer (layer two, currently stores the thresholded image received in the last capture)
+                featureLayer = [[previewLayer sublayers] objectAtIndex:1];
+            }
+            //If only one sublayer exists (true on first execution of method, only the root layer exists)
+            else if ([[previewLayer sublayers] count] >= 1) {
+                //Create a layer for the thresholded image and add to preview
+                featureLayer = [[CALayer alloc] init];
+                [previewLayer addSublayer:featureLayer];
+                //If using front camera to search for nest
+                if ([sensorState isEqualToString:@"NEST ON"]) {
+                    //Rotate layer by 90 degrees clockwise and vertically flip it
+                    [featureLayer setTransform:CATransform3DScale(CATransform3DMakeRotation(M_PI_2, 0, 0, 1),
+                                                                  1, -1, 1)];
+                }
+                //If using back camera to search for tags
+                else if ([sensorState isEqualToString:@"TAG ON"]) {
+                    //Rotate layer by 90 degrees clockwise
+                    [featureLayer setTransform:CATransform3DScale(CATransform3DMakeRotation(M_PI_2, 0, 0, 1),
+                                                                  1, 1, 1)];
+                }
+                //Set the layer frame size
+                CGRect rect = CGRectMake(0, 0,[previewView frame].size.width, [previewView frame].size.height);
+                [featureLayer setFrame:rect];
+            }
+            //Otherwise, there must be zero sublayers, meaning our AVCapture session has been torn down, so we exit
+            else {
+                [CATransaction commit];
+                return;
+            }
+            
+            //Add new thresholded image to frame, replacing the previous found
             [featureLayer setContents:(id)[imgThreshold CGImage]];
             
-            featureLayer = [[previewLayer sublayers] objectAtIndex:2];
-            CGRect rect = CGRectMake((VIDEO_REZ_HOR-center.y)*([previewView frame].size.width/VIDEO_REZ_HOR)-20,
-                                     center.x*([previewView frame].size.height/VIDEO_REZ_VERT)-20,
-                                     40,40);
-            [featureLayer setFrame:rect];
+            //Ensure thresholded image layer is visible
+            if ([[previewLayer sublayers] count] > 1) {
+                [[[previewLayer sublayers] objectAtIndex:1] setHidden:NO];
+            }
             
-            [[[previewLayer sublayers] objectAtIndex:1] setHidden:NO];
-            [[[previewLayer sublayers] objectAtIndex:2] setHidden:NO];
-        }
-        else {
-            featureLayer = [CALayer new];
-            [previewLayer addSublayer:featureLayer];
-            [featureLayer setTransform:CATransform3DScale(CATransform3DMakeRotation(M_PI_2, 0.0f, 0.0f, 1.0f),
-                                                           1, -1, 1)];
-            CGRect rect = CGRectMake(0, 0,[previewView frame].size.width, [previewView frame].size.height);
-            [featureLayer setFrame:rect];
-            [featureLayer setContents:(id)[imgThreshold CGImage]];
+            //Enumerate through sublayers
+            NSEnumerator *index = [[previewLayer sublayers] objectEnumerator];
+            Point2D *center = nil;
+            Point2D *meanCenter = [[Point2D alloc] init];
+            [index nextObject]; [index nextObject]; //advance enumerator two spots, start at layer three
+            while (featureLayer = [index nextObject]) {
+                //Copy center from list
+                center = [centroidList lastObject];
+                //If list is empty (all centroids have been added to layers)
+                if (!center) {
+                    //Hide current layer
+                    [featureLayer setHidden:YES];
+                    //Skip to next iteration; don't break because we need to hide subsequent layers
+                    continue;
+                }
+                //Remove from list
+                if ([centroidList count] > 0) {
+                    [centroidList removeLastObject];
+                }
+                //Update summation
+                meanCenter = [[Point2D alloc] initXTo:([meanCenter getX] + [center getX])
+                                               andYTo:([meanCenter getY] + [center getY])];
+                
+                CGRect rect;
+                //If using front camera to search for nest
+                if ([sensorState isEqualToString:@"NEST ON"]) {
+                    //Create frame for square image
+                    rect = CGRectMake([center getY]*([previewView frame].size.width/FRONT_REZ_HOR)-20,
+                                      [center getX]*([previewView frame].size.height/FRONT_REZ_VERT)-20,
+                                             40,40);
+                }
+                //If using back camera to search for tags
+                if ([sensorState isEqualToString:@"TAG ON"]) {
+                    //Create frame for square image
+                    rect = CGRectMake((BACK_REZ_HOR-[center getX])*([previewView frame].size.width/BACK_REZ_HOR)-20,
+                                      [center getY]*([previewView frame].size.height/BACK_REZ_VERT)-20,
+                                      40,40);
+                }
+                [featureLayer setFrame:rect];
+                //Ensure layer is visible
+                [featureLayer setHidden:NO];
+            }
             
-            featureLayer = [CALayer new];
-            [previewLayer addSublayer:featureLayer];
-            rect = CGRectMake((VIDEO_REZ_HOR-center.y)*([previewView frame].size.width/VIDEO_REZ_HOR)-20,
-                              center.x*([previewView frame].size.height/VIDEO_REZ_VERT)-20,
-                              40,40);
-            [featureLayer setFrame:rect];
-            [featureLayer setContents:(id)[square CGImage]];
-        }
-        
-        pixelDifference = VIDEO_REZ_HOR/2-center.y;
-        data[1] = MIN(3*abs(pixelDifference),127);
-        
-        if (pixelDifference > 0) {
-            data[0] = 'l';
-        }
-        else if (pixelDifference < 0) {
-           data[0] = 'r'; 
-        }
-        else {
-            data[0] = 's';
-            data[1] = 0;
-        }
-    //}
-    
-//    else {
-//        if ([[previewLayer sublayers] count] > 1) {
-//            [[[previewLayer sublayers] objectAtIndex:1] setHidden:YES];
-//            [[[previewLayer sublayers] objectAtIndex:2] setHidden:YES];
-//        }
-//        
-//        data[0] = 'l';
-//        data[1] = 0;
-//    }
-    
-    [CATransaction commit];
+            //Enumerate through remaining centroids
+            index = [centroidList objectEnumerator];
+            while (center = [index nextObject]) {
+                //Create new layer and add to preview
+                featureLayer = [[CALayer alloc] init];
+                [previewLayer addSublayer:featureLayer];
+                
+                CGRect rect;
+                //If using front camera to search for nest
+                if ([sensorState isEqualToString:@"NEST ON"]) {
+                    //Create frame for square image
+                    rect = CGRectMake([center getY]*([previewView frame].size.width/FRONT_REZ_HOR)-20,
+                                      [center getX]*([previewView frame].size.height/FRONT_REZ_VERT)-20,
+                                      40,40);
+                }
+                //If using back camera to search for tags
+                if ([sensorState isEqualToString:@"TAG ON"]) {
+                    //Create frame for square image
+                    rect = CGRectMake((BACK_REZ_HOR-[center getX])*([previewView frame].size.width/BACK_REZ_HOR)-20,
+                                      [center getY]*([previewView frame].size.height/BACK_REZ_VERT)-20,
+                                      40,40);
+                }
+                [featureLayer setFrame:rect];
+                
+                //Add new thresholded image to frame, replacing the previous found
+                [featureLayer setContents:(id)[square CGImage]];
+                
+                //Update summation
+                meanCenter = [[Point2D alloc] initXTo:([meanCenter getX] + [center getX])
+                                               andYTo:([meanCenter getY] + [center getY])];
+            }
+            
+            //Calulate mean centroid
+            meanCenter = [[Point2D alloc] initXTo:([meanCenter getX]/numberOfCentroids)
+                                           andYTo:([meanCenter getY]/numberOfCentroids)];
+            
+            //Compute number of pixels between true center and centroid
+            int horizontalPixelDifference;
+            
+            if ([sensorState isEqualToString:@"NEST ON"]) {
+                horizontalPixelDifference = FRONT_REZ_HOR/2 - [meanCenter getY];
+                data[1] = MIN(3*abs(horizontalPixelDifference),127);
+                
+                if (horizontalPixelDifference > 5) {
+                    data[0] = 'l';
+                }
+                else if (horizontalPixelDifference < -5) {
+                    data[0] = 'r';
+                }
+                else {
+                    data[0] = 's';
+                    data[1] = 0;
+                }
+            }
+            if ([sensorState isEqualToString:@"TAG ON"]) {
+                horizontalPixelDifference = BACK_REZ_HOR/2 - [meanCenter getX];
+                data[1] = MIN(3*abs(horizontalPixelDifference),127);
+                
+                if (horizontalPixelDifference > 5) {
+                    data[0] = 'r';
+                }
+                else if (horizontalPixelDifference < -5) {
+                    data[0] = 'l';
+                }
+                else {
+                    int verticalPixelDifference = BACK_REZ_VERT/2 - [meanCenter getY];
+                    data[1] = MIN(0.5*abs(verticalPixelDifference),127);
+                    
+                    if (verticalPixelDifference > 5) {
+                        data[0] = 'f';
+                    }
+                    else if (verticalPixelDifference < -5) {
+                        data[0] = 'b';
+                    }
+                    else {
+                        data[0] = 's';
+                        data[1] = 0;
+                    }
+                }
+            }
 
-    //[cblMgr send:[NSString stringWithCharacters:data length:2]];
+            [cblMgr send:[NSString stringWithCharacters:data length:2]];
+        }
+        
+        //If no centroids were found
+        else {
+            NSEnumerator *index = [[previewLayer sublayers] objectEnumerator];
+            CALayer *featureLayer = nil;
+            [index nextObject]; //drop first layer, start at layer two
+            //Enumerate through sublayers
+            while (featureLayer = [index nextObject]) {
+                //Hide layer
+                [featureLayer setHidden:YES];
+            }
+            
+            //If searching for nest
+            if ([sensorState isEqualToString:@"NEST ON"]) {
+                //Construct and transmit maintenance message to continue search
+                data[0] = 'l';
+                data[1] = 0;
+                [cblMgr send:[NSString stringWithCharacters:data length:2]];
+            }
+        }
+
+        [CATransaction commit];
+    }
 }
 
 #pragma mark - ScannerKit methods
@@ -201,7 +346,7 @@ bail:
 }
 
 //ScannerKit callback, triggered when QR code is read
-- (void) scannerViewController:(SKScannerViewController *)scanner didRecognizeCode:(SKCode *)qrCode {
+- (void)scannerViewController:(SKScannerViewController *)scanner didRecognizeCode:(SKCode *)qrCode {
     //Create copy of qrCode
     code = qrCode;
     
@@ -213,7 +358,7 @@ bail:
 }
 
 //Called periodically to check the Communications rxBuffer for incoming tag message ("new" or "old") from the ABS
--(void) checkBufferForTagMessage:(id)object {
+-(void)checkBufferForTagMessage:(id)object {
     //If message has been received from ABS
     if ([[comm rxBuffer] length] > 0) {
         //If message is "new", i.e. QR tag had not been found before
@@ -222,10 +367,6 @@ bail:
             [cblMgr send:@"yes"];
             [cblMgr send:code.rawContent];
         }
-        
-        //Restart QR reader
-        [self teardownQRReader];
-        [self setupQRReader];
         
         //Remove timer
         [timer invalidate];
@@ -255,7 +396,6 @@ bail:
     //absMotion = [[AbsoluteMotion alloc] init];
     //ambLight = [[AmbientLight alloc] init];
     comm = [[Communication alloc] init];
-    imgRecog = [[ImageRecognition alloc] init];
     relMotion = [[RelativeMotion alloc] init];
     skScanner = [[SKScannerViewController alloc] init];
 
@@ -277,8 +417,7 @@ bail:
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     //[ambLight start];
-    [self setupAVCapture];
- }
+}
 
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
@@ -302,22 +441,39 @@ bail:
 
 //RscMgr callback, triggered when serial data is available for reading
 - (void)readBytesAvailable:(UInt32)numBytes {
-    NSString *message;
+    NSString *message = nil;
     
     //Read bytes into buffer
     [cblMgr receive:numBytes];
     
     while ((message = [cblMgr getMessage]) != nil) {
         
+        //Check for null characters at beginning of string (artifact of serial communication from Arduino)
+        if ([message length] > 0) {
+            
+            unichar character [1] = {0};
+            int nullCount = 0;
+            
+            [message getCharacters:character range:NSMakeRange(0,1)];
+            while (character[0] == 0) {
+                nullCount++;
+                [message getCharacters:character range:NSMakeRange(nullCount,1)];
+            }
+            
+            //If there are additional characters after the null characters
+            if ([message length] > nullCount) {
+                //Simply remove the null character
+                message = [message substringFromIndex:nullCount];
+            }
+            //Otherwise
+            else {
+                //Continue to next loop iteration
+                continue;
+            }
+        }
+        
         //Log command
         NSLog(@"%@",message);
-        
-        //Check for null character, clear buffer and exit current iteration if found
-        if ([message length] == 1) {
-            unichar character [1];
-            [message getCharacters:character range:NSMakeRange(0,1)];
-            if (character[0] == 0) continue;
-        }
         
         if ([message isEqualToString:@"fence"]) {
             int wordLength = 5;
@@ -329,16 +485,19 @@ bail:
         }
         
         else if ([message isEqualToString:@"gyro on"]) {
-            if (![[infoBox text] isEqualToString:@"GYRO ON"]) {
+            if (![sensorState isEqualToString:@"GYRO ON"]) {
                 [relMotion start];
                 [infoBox setText:@"GYRO ON"];
+                sensorState = @"GYRO ON";
             }
+            [cblMgr send:@"gyro on"];
         }
         
         else if ([message isEqualToString:@"gyro off"]) {
-            if (![[infoBox text] isEqualToString:@"GYRO OFF"]) {
+            if (![sensorState isEqualToString:@"GYRO OFF"]) {
                 [relMotion stop];
                 [infoBox setText:@"GYRO OFF"];
+                sensorState = @"GYRO OFF";
             }
         }
         
@@ -360,16 +519,20 @@ bail:
         }
         
         else if ([message isEqualToString:@"nest on"]) {
-            if (![[infoBox text] isEqualToString:@"NEST ON"]) {
-                [self setupAVCapture];
+            if (![sensorState isEqualToString:@"NEST ON"]) {
+                imgRecog = [[ImageRecognition alloc] initResolutionTo:FRONT_REZ_VERT by:FRONT_REZ_HOR];
+                [self setupAVCaptureAt:AVCaptureDevicePositionFront];
                 [infoBox setText:@"NEST ON"];
+                sensorState = @"NEST ON";
             }
+            [cblMgr send:@"nest on"];
         }
         
         else if ([message isEqualToString:@"nest off"]) {
-            if (![[infoBox text] isEqualToString:@"NEST OFF"]) {
+            if (![sensorState isEqualToString:@"NEST OFF"]) {
                 [self teardownAVCapture];
                 [infoBox setText:@"NEST OFF"];
+                sensorState = @"NEST OFF";
             }
         }
         
@@ -398,6 +561,21 @@ bail:
             [comm send:message];
         }
         
+        else if ([message isEqualToString:@"read on"]) {
+            if (![sensorState isEqualToString:@"READ ON"]) {
+                [self setupQRReader];
+                sensorState = @"READ ON";
+            }
+            [cblMgr send:@"read on"];
+        }
+        
+        else if ([message isEqualToString:@"read off"]) {
+            if (![sensorState isEqualToString:@"READ OFF"]) {
+                [self teardownQRReader];
+                sensorState = @"READ OFF";
+            }
+        }
+        
         else if ([message isEqualToString:@"seed"]) {
             [cblMgr send:@"seed"];
             int seed = arc4random();
@@ -405,23 +583,30 @@ bail:
         }
         
         else if ([message isEqualToString:@"tag on"]) {
-            if (![[infoBox text] isEqualToString:@"TAG ON"]) {
-                [self setupQRReader];
+            if (![sensorState isEqualToString:@"TAG ON"]) {
+                imgRecog = [[ImageRecognition alloc] initResolutionTo:BACK_REZ_VERT by:BACK_REZ_HOR];
+                [self setupAVCaptureAt:AVCaptureDevicePositionBack];
                 [infoBox setText:@"TAG ON"];
+                sensorState = @"TAG ON";
             }
+            [cblMgr send:@"tag on"];
         }
         
         else if ([message isEqualToString:@"tag off"]) {
-            if (![[infoBox text] isEqualToString:@"TAG OFF"]) {
-                [self teardownQRReader];
+            if (![sensorState isEqualToString:@"TAG OFF"]) {
+                [self teardownAVCapture];
                 [infoBox setText:@"TAG OFF"];
+                sensorState = @"TAG OFF";
             }
         }
         else {
-            NSLog(@"Error - The command \"%@\" is not recognized",message);
+            //NSLog(@"Error - The command \"%@\" is not recognized",message);
+            for (int i=0; i<[message length]; i++) {
+                unichar character [1];
+                [message getCharacters:character range:NSMakeRange(i,1)];
+                NSLog(@"%d",character[0]);
+            }
         }
-        
-        message = [cblMgr getMessage];
     }
 }
 

@@ -48,7 +48,9 @@
     port=number;
     
     //Initialize txBuffer, where we put messages to send later if we aren't connected
-    if (txBuffer == nil) txBuffer = [[NSMutableArray alloc] init];
+    if (txBuffer == nil) {
+        txBuffer = [[NSMutableArray alloc] init];
+    }
 }
 
 - (void)closeConnection {
@@ -78,7 +80,9 @@
         return YES;
     }
     else {
-        [txBuffer insertObject:message atIndex:0];
+        if (txBuffer != nil) {
+           [txBuffer addObject:message]; 
+        }
     }
     return NO;
 }
@@ -171,22 +175,20 @@
 	}
 }
 
--(void) reconnect:(id)object
-{
+-(void) reconnect:(id)object {
     [self closeConnection];
     [self connectTo:host onPort:port];
     NSLog(@"Attempting to reconnect...");
 }
 
-- (NSString*)getMacAddress
-{
+- (NSString*)getMacAddress {
     int                 mgmtInfoBase[6];
     char                *msgBuffer = NULL;
     size_t              length;
     unsigned char       macAddress[6];
     struct if_msghdr    *interfaceMsgStruct;
     struct sockaddr_dl  *socketStruct;
-    NSString            *errorFlag = NULL;
+    NSString            *errorFlag = nil;
     
     // Setup the management Information Base (mib)
     mgmtInfoBase[0] = CTL_NET;        // Request network subsystem
@@ -196,30 +198,31 @@
     mgmtInfoBase[4] = NET_RT_IFLIST;  // Request all configured interfaces
     
     // With all configured interfaces requested, get handle index
-    if ((mgmtInfoBase[5] = if_nametoindex("en0")) == 0)
+    if ((mgmtInfoBase[5] = if_nametoindex("en0")) == 0) {
         errorFlag = @"if_nametoindex failure";
+    }
     else
     {
         // Get the size of the data available (store in len)
-        if (sysctl(mgmtInfoBase, 6, NULL, &length, NULL, 0) < 0)
+        if (sysctl(mgmtInfoBase, 6, NULL, &length, NULL, 0) < 0) {
             errorFlag = @"sysctl mgmtInfoBase failure";
-        else
-        {
+        }
+        else {
             // Alloc memory based on above call
-            if ((msgBuffer = malloc(length)) == NULL)
+            if ((msgBuffer = malloc(length)) == NULL) {
                 errorFlag = @"buffer allocation failure";
-            else
-            {
+            }
+            else {
                 // Get system information, store in buffer
-                if (sysctl(mgmtInfoBase, 6, msgBuffer, &length, NULL, 0) < 0)
+                if (sysctl(mgmtInfoBase, 6, msgBuffer, &length, NULL, 0) < 0) {
                     errorFlag = @"sysctl msgBuffer failure";
+                }
             }
         }
     }
     
     // Befor going any further...
-    if (errorFlag != NULL)
-    {
+    if (errorFlag != nil) {
         free(msgBuffer);
         NSLog(@"Error: %@", errorFlag);
         return errorFlag;
