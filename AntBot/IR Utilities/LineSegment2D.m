@@ -10,7 +10,7 @@
 
 @implementation LineSegment2D
 
-- (id)initStartTo:(Point2D*)startPoint andEndTo:(Point2D*)endPoint {
+- (id)initStartTo:(Rect2D*)startPoint andEndTo:(Rect2D*)endPoint {
     if (self = [super init]) {
         start = startPoint;
         end = endPoint;
@@ -19,11 +19,11 @@
     return self;
 }
 
-- (Point2D*)getStart {
+- (Rect2D*)getStart {
     return start;
 }
 
-- (Point2D*)getEnd {
+- (Rect2D*)getEnd {
     return end;
 }
 

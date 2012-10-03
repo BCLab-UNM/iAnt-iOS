@@ -6,7 +6,9 @@
 //  Moses Lab, Department of Computer Science, University of New Mexico.
 //
 
-@interface Communication : NSObject <NSStreamDelegate> {
+#import <GameKit/GameKit.h>
+
+@interface Communication : NSObject <NSStreamDelegate, GKSessionDelegate> {
     CFReadStreamRef readStream;
     CFWriteStreamRef writeStream;
     NSInputStream *inputStream;
@@ -15,6 +17,7 @@
     int port;
     NSTimer* reconnectTimer;
     NSMutableArray* txBuffer;
+    GKSession* bluetoothSession;
 }
 
 - (void)connectTo:(NSString*)server onPort:(int)number;

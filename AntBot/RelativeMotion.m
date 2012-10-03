@@ -62,25 +62,12 @@
         
         motionManager.gyroUpdateInterval = 1.0/20.0;
         [motionManager startGyroUpdatesToQueue:[NSOperationQueue currentQueue]
-                    withHandler: ^(CMGyroData *gyroData, NSError *error)
-                    {
-                        CMRotationRate rotate = gyroData.rotationRate;
-                        
-                        unichar data [2];
-                        data[0] = 0;
-                        data[1] = 0;
-                        
-                        if (rotate.z <= -.02) {
-                            data[0] = MIN((fabs(rotate.z) * (180.0/M_PI)),127);
-                        }
-                        else if (rotate.z >= .02) {
-                            data[1] = MIN((rotate.z * (180.0/M_PI)),127);
-                        }
-                        
-                        [cblMgr send:[NSString stringWithCharacters:data length:2]];
-                    }];
-        
-        //while (motionManager.deviceMotion == nil) {}
+                                   withHandler: ^(CMGyroData *gyroData, NSError *error) {
+                                       CMRotationRate rotationRate = gyroData.rotationRate; //we only care about rotation around z-axis
+                                       int rate = MAX(MIN((rotationRate.z * (180.0/M_PI)),127),-127); //bound at [-127,127]
+                                       [cblMgr send:[NSString stringWithFormat:@"%d",rate]]; //transmit rate
+                                       [cblMgr send:@"\n"];
+                                   }];
     }
     else {
         NSLog(@"Device-motion service is not available on this device");

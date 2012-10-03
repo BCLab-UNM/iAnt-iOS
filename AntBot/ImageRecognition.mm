@@ -40,14 +40,14 @@
     //convert CMSampleBuffer to IplImage
     [converter createIplImageFromCMSampleBuffer:buffer];
     
-//    //Make copy of original image and wipe it (set all pixels to black)
-//    IplImage *temp = cvCreateImage(cvGetSize([converter imgIpl]), IPL_DEPTH_8U, 4);
-//    cvCopy([converter imgIpl], temp);
-//    cvSet([converter imgIpl], CV_RGB(0, 0, 0));
-//    
-//    //Apply mask to copy to generate final image
-//    cvCopy(temp, [converter imgIpl], maskIpl);
-//    cvReleaseImage(&temp);
+    //Make copy of original image and wipe it (set all pixels to black)
+    IplImage *temp = cvCreateImage(cvGetSize([converter imgIpl]), IPL_DEPTH_8U, 4);
+    cvCopy([converter imgIpl], temp);
+    cvSet([converter imgIpl], CV_RGB(0, 0, 0));
+    
+    //Apply mask to copy to generate final image
+    cvCopy(temp, [converter imgIpl], maskIpl);
+    cvReleaseImage(&temp);
     
     //convert BGRA to BGR format
     IplImage* imgBGR = cvCreateImage(cvGetSize([converter imgIpl]), IPL_DEPTH_8U, 3);
@@ -93,15 +93,50 @@
     [converter createUIImageFromIplImage:imgGrayBGRA];
     
     //Calculate centroid of thresholded image
+    NSMutableArray *centroidList = nil;
     CvMoments* moments = (CvMoments*)malloc(sizeof(CvMoments)); 
     cvMoments(imgThresholdUnion, moments, 1);
-    Point2D *c = [[Point2D alloc] initXTo:(cvGetSpatialMoment(moments, 1, 0) / cvGetSpatialMoment(moments, 0, 0))
-                                   andYTo:(cvGetSpatialMoment(moments, 0, 1) / cvGetSpatialMoment(moments, 0, 0))];
-
-    //If centroid is valid, add to array for output
-    NSMutableArray *centroidList = nil;
+    //If zeroth moment is greater than 0 (i.e. if any white pixels are found in sample image)
     if (cvGetSpatialMoment(moments, 0, 0) > 0) {
+        //Calculate centroid
+        int x = cvGetSpatialMoment(moments, 1, 0) / cvGetSpatialMoment(moments, 0, 0);
+        int y = cvGetSpatialMoment(moments, 0, 1) / cvGetSpatialMoment(moments, 0, 0);
+        
+        //Locate contours
+        CvSeq *contour = 0;
+        CvMemStorage *storage = cvCreateMemStorage(0);
+        cvFindContours(imgThresholdUnion, storage, &contour, sizeof(CvContour), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE);
+        
+        //Find largest contour
+        double largestArea = 0;
+        CvSeq *largestContour = nil;
+        for (; contour != 0; contour = contour->h_next) {
+            double contourArea = cvContourArea(contour);
+            if (contourArea > largestArea) {
+                largestArea = contourArea;
+                largestContour = contour;
+            }
+        }
+        
+        Rect2D *c = nil;
+        //If largest contour exists
+        if (largestContour != nil) {
+            //Calculate bounding box for largest contour
+            CvRect boundingBox = cvBoundingRect(largestContour);
+            
+            //Create centroid structure
+            c = [[Rect2D alloc] initXTo:x yTo:y widthTo:boundingBox.width heightTo:boundingBox.height];
+        }
+        
+        else {
+            c = [[Rect2D alloc] initXTo:x andYTo:y];
+        }
+        
+        //And add it to the array for output
         centroidList = [[NSMutableArray alloc] initWithObjects:c, nil];
+        
+        //Free memory
+        cvReleaseMemStorage(&storage);
     }
     
     //Free memory
@@ -168,8 +203,8 @@
                             //Check the ratio for the discovered pixels. If the ratio is correct, proceed by searching for the proper location to store the segment
                             if (int finderSize = [FinderPattern checkFinderRatioFor:stateCount]) {
                                 //Create line segment
-                                Point2D *end = [[Point2D alloc] initXTo:row andYTo:col];
-                                Point2D *start = [[Point2D alloc] initXTo:row andYTo:col - finderSize];
+                                Rect2D *end = [[Rect2D alloc] initXTo:row andYTo:col];
+                                Rect2D *start = [[Rect2D alloc] initXTo:row andYTo:col - finderSize];
                                 LineSegment2D *line = [[LineSegment2D alloc] initStartTo:start andEndTo:end];
                                 
                                 //Create block object for creating and storing a new pattern
@@ -292,8 +327,8 @@
                                       [[[[pattern segments] objectAtIndex:i] getStart] getY]) / 2) +
                                         [[[[pattern segments] objectAtIndex:i] getStart] getY];
                         }
-                        Point2D *c = [[Point2D alloc] initXTo:xsum / [[pattern segments] count]
-                                                       andYTo:ysum / [[pattern segments] count]];
+                        Rect2D *c = [[Rect2D alloc] initXTo:xsum / [[pattern segments] count]
+                                                     andYTo:ysum / [[pattern segments] count]];
                         
                         if (centroidList != nil) {
                             [centroidList addObject:c];

@@ -6,16 +6,16 @@
 //  Moses Lab, Department of Computer Science, University of New Mexico
 //
 
-#import "Point2D.h"
+#import "Rect2D.h"
 
 @interface LineSegment2D : NSObject {
-    Point2D *start;
-    Point2D *end;
+    Rect2D *start;
+    Rect2D *end;
 }
 
-- (id)initStartTo:(Point2D*)start andEndTo:(Point2D*)end;
+- (id)initStartTo:(Rect2D*)start andEndTo:(Rect2D*)end;
 
-- (Point2D*)getStart;
-- (Point2D*)getEnd;
+- (Rect2D*)getStart;
+- (Rect2D*)getEnd;
 
 @end
