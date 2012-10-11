@@ -2,7 +2,7 @@
 //  MainController.h
 //  AntBot
 //
-//  Created by Joshua Hecker on 12/23/11.
+//  Created by Joshua Hecker
 //  Moses Lab, Department of Computer Science, University of New Mexico
 //
 
@@ -12,13 +12,17 @@
 #import "Communication.h"
 #import "ImageRecognition.h"
 #import "RelativeMotion.h"
-#import "ScannerKit.h"
+#import <Decoder.h>
+#import <QRCodeReader.h>
+#import "TwoDDecoderResult.h"
 
-@interface MainController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, RscMgrDelegate, SKScannerViewControllerDelegate> {
+@interface MainController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, RscMgrDelegate, DecoderDelegate> {
+    
     AbsoluteMotion *absMotion;
     //AmbientLight *ambLight;
     CableManager *cblMgr;
     Communication *comm;
+    Decoder *qrDecoder;
     ImageRecognition *imgRecog;
     RelativeMotion *relMotion;
     
@@ -29,11 +33,10 @@
     AVCaptureSession *session;
     
     NSTimer *timer;
-    SKCode *code;
     NSString *sensorState;
+    int qrCode;
 }
 
-@property SKScannerViewController* skScanner;
 @property IBOutlet UITextView *infoBox;
 
 @end

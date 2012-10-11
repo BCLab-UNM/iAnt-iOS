@@ -1,6 +1,6 @@
 //
 //  ImageRecognition.mm
-//  AntBot
+//  AntBot-iOS
 //
 //  Created by Joshua Hecker on 3/27/12.
 //  Moses Lab, Department of Computer Science, University of New Mexico
@@ -36,7 +36,7 @@
 
 #pragma mark - Higher-level vision functions
 
-- (NSMutableArray*)findColorCentroidIn:(CMSampleBufferRef)buffer usingThreshold:(NSArray*)ranges {
+- (NSMutableArray*)findColorCentroidIn:(CMSampleBufferRef)buffer usingThreshold:(int)threshold {
     //convert CMSampleBuffer to IplImage
     [converter createIplImageFromCMSampleBuffer:buffer];
     
@@ -49,64 +49,29 @@
     cvCopy(temp, [converter imgIpl], maskIpl);
     cvReleaseImage(&temp);
     
-    //convert BGRA to BGR format
-    IplImage* imgBGR = cvCreateImage(cvGetSize([converter imgIpl]), IPL_DEPTH_8U, 3);
-    cvCvtColor([converter imgIpl], imgBGR, CV_BGRA2BGR);
-    
-    //convert BGR to HSV format
-    IplImage* imgHSV = cvCreateImage(cvGetSize([converter imgIpl]), IPL_DEPTH_8U, 3);
-    cvCvtColor(imgBGR, imgHSV, CV_BGR2HSV);
-    
-    //Union of all thresholded images produced using the provided ranges
-    IplImage* imgThresholdUnion = cvCreateImage(cvGetSize([converter imgIpl]), IPL_DEPTH_8U, 1);
+    //converter to grayscale
+    cvCvtColor([converter imgIpl], imgGray, CV_BGRA2GRAY);
 
-    //Do for all range pairs in ranges
-    for (int index=0; index<[ranges count]; index++) {
-        //Get range at current index
-        ThresholdRange *range = [ranges objectAtIndex:index];
-        
-        //Threshold image
-        IplImage* imgThreshold = cvCreateImage(cvGetSize([converter imgIpl]), IPL_DEPTH_8U, 1);
-        cvInRangeS(imgHSV, [range getMin], [range getMax], imgThreshold);
-        
-        //Create negative of thresholded image
-        IplImage* imgThresholdInverse = cvCreateImage(cvGetSize([converter imgIpl]), IPL_DEPTH_8U, 1);
-        cvNot(imgThresholdUnion, imgThresholdInverse);
-        
-        //Merge into final thresholded image
-        //We use the inverse as a mask to ensure that the white pixels are not overwritten
-        cvCopy(imgThreshold, imgThresholdUnion, imgThresholdInverse);
-        
-        //Free memory
-        cvReleaseImage(&imgThreshold);
-        cvReleaseImage(&imgThresholdInverse);
-    }
+    //Threshold image
+    IplImage* imgThreshold = cvCreateImage(cvGetSize([converter imgIpl]), IPL_DEPTH_8U, 1);
+    cvThreshold(imgGray, imgThreshold, threshold, 255, CV_THRESH_BINARY);
     
     //convert thresholded image back to BGRA for display (see captureOutput callback in MainController)
     if (imgGrayBGRA != nil) {
         cvReleaseImage(&imgGrayBGRA);
     }
     imgGrayBGRA = cvCreateImage(cvGetSize([converter imgIpl]), IPL_DEPTH_8U, 4);
-    cvCvtColor(imgThresholdUnion, imgGrayBGRA, CV_GRAY2BGRA);
+    cvCvtColor(imgThreshold, imgGrayBGRA, CV_GRAY2BGRA);
     
     //convert IplImage to UIImage and store
     [converter createUIImageFromIplImage:imgGrayBGRA];
-    
-    //Calculate centroid of thresholded image
+     
+    //Locate contours
     NSMutableArray *centroidList = nil;
-    CvMoments* moments = (CvMoments*)malloc(sizeof(CvMoments)); 
-    cvMoments(imgThresholdUnion, moments, 1);
-    //If zeroth moment is greater than 0 (i.e. if any white pixels are found in sample image)
-    if (cvGetSpatialMoment(moments, 0, 0) > 0) {
-        //Calculate centroid
-        int x = cvGetSpatialMoment(moments, 1, 0) / cvGetSpatialMoment(moments, 0, 0);
-        int y = cvGetSpatialMoment(moments, 0, 1) / cvGetSpatialMoment(moments, 0, 0);
-        
-        //Locate contours
-        CvSeq *contour = 0;
-        CvMemStorage *storage = cvCreateMemStorage(0);
-        cvFindContours(imgThresholdUnion, storage, &contour, sizeof(CvContour), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE);
-        
+    CvSeq *contour = 0;
+    CvMemStorage *storage = cvCreateMemStorage(0);
+    if (cvFindContours(imgThreshold, storage, &contour, sizeof(CvContour), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE)) {
+    
         //Find largest contour
         double largestArea = 0;
         CvSeq *largestContour = nil;
@@ -117,7 +82,7 @@
                 largestContour = contour;
             }
         }
-        
+    
         Rect2D *c = nil;
         //If largest contour exists
         if (largestContour != nil) {
@@ -125,25 +90,19 @@
             CvRect boundingBox = cvBoundingRect(largestContour);
             
             //Create centroid structure
-            c = [[Rect2D alloc] initXTo:x yTo:y widthTo:boundingBox.width heightTo:boundingBox.height];
+            c = [[Rect2D alloc] initXTo:boundingBox.y+(boundingBox.height/2) yTo:boundingBox.x+(boundingBox.width/2)
+                                widthTo:boundingBox.width heightTo:boundingBox.height];
+            
+            //And add it to the array for output
+            centroidList = [[NSMutableArray alloc] initWithObjects:c, nil];
         }
-        
-        else {
-            c = [[Rect2D alloc] initXTo:x andYTo:y];
-        }
-        
-        //And add it to the array for output
-        centroidList = [[NSMutableArray alloc] initWithObjects:c, nil];
-        
-        //Free memory
-        cvReleaseMemStorage(&storage);
     }
     
     //Free memory
-    cvReleaseImage(&imgBGR);
-    cvReleaseImage(&imgHSV);
-    cvReleaseImage(&imgThresholdUnion);    
-    free(moments);
+    cvReleaseMemStorage(&storage);
+    
+    //Free memory
+    cvReleaseImage(&imgThreshold);    
     
     return centroidList;
 }
@@ -152,13 +111,13 @@
     //Wrap all instructions in autoreleasepool
     //This ensures release of objects from background thread
     @autoreleasepool {
-        //converter CMSampleBuffer to IplImage
+        //convert CMSampleBuffer to IplImage
         [converter createIplImageFromCMSampleBuffer:buffer];
        
-        //converter to grayscale
+        //convert to grayscale
         cvCvtColor([converter imgIpl], imgGray, CV_BGRA2GRAY);
         
-        //converter to bi-level (i.e. binary)
+        //convert to bi-level (i.e. binary)
         cvThreshold(imgGray, imgGray, 128, 255, CV_THRESH_BINARY);
         //cvAdaptiveThreshold(imgGray, imgGray, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY, 101);
         
@@ -290,8 +249,8 @@
             }
             
             //Scan all discovered finder patterns
-            int segmentThreshold = 2;
-            int modifiedThreshold = 2;
+            int segmentThreshold = 4;
+            int modifiedThreshold = 4;
             
             for (int counter = 0; counter < [finderPatterns count]; counter++) {
                 FinderPattern *pattern = nil;

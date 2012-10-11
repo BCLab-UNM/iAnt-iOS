@@ -1,6 +1,6 @@
 //
 //  AbsoluteMotion.m
-//  AntBot
+//  AntBot-iOS
 //
 //  Created by Joshua Hecker on 3/17/12.
 //  Moses Lab, Department of Computer Science, University of New Mexico.

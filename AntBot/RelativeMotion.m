@@ -1,8 +1,8 @@
 //
 //  RelativeMotion.m
-//  AntBot
+//  AntBot-iOS
 //
-//  Created by Joshua Hecker on 12/29/11.
+//  Created by Joshua Hecker
 //  Moses Lab, Department of Computer Science, University of New Mexico
 //
 
@@ -63,10 +63,12 @@
         motionManager.gyroUpdateInterval = 1.0/20.0;
         [motionManager startGyroUpdatesToQueue:[NSOperationQueue currentQueue]
                                    withHandler: ^(CMGyroData *gyroData, NSError *error) {
-                                       CMRotationRate rotationRate = gyroData.rotationRate; //we only care about rotation around z-axis
-                                       int rate = MAX(MIN((rotationRate.z * (180.0/M_PI)),127),-127); //bound at [-127,127]
-                                       [cblMgr send:[NSString stringWithFormat:@"%d",rate]]; //transmit rate
-                                       [cblMgr send:@"\n"];
+                                       CMRotationRate rotationRate = gyroData.rotationRate;
+                                       int rate = rotationRate.z * (180.0/M_PI);
+                                       [cblMgr send:[NSString stringWithFormat:@"%d",rate]];
+                                       [cblMgr send:@"\n"]; //delimiter
+                                       [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"GYRO - %d",rate]
+                                                                                           object:self];
                                    }];
     }
     else {

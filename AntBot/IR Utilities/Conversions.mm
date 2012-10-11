@@ -1,6 +1,6 @@
 //
 //  Conversions.mm
-//  AntBot
+//  AntBot-iOS
 //
 //  Created by Joshua Hecker on 8/29/12.
 //
@@ -30,8 +30,33 @@
     //Setup IplImage
     imgIpl->widthStep = bytesPerRow;
     imgIpl->imageSize = bytesPerRow * height;
-    memcpy(imgIpl->imageData, baseAddress, height * bytesPerRow);
+    memmove(imgIpl->imageData, baseAddress, height * bytesPerRow);
     CVPixelBufferUnlockBaseAddress(imageBuffer,0);
+}
+
+//Create a UIImage from sample buffer data
++ (UIImage*)createUIImageFromCMSampleBuffer:(CMSampleBufferRef)buffer {
+    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(buffer);
+    CVPixelBufferLockBaseAddress(imageBuffer,0); // Lock the image buffer
+    
+    //Get information of the image
+    uint8_t *baseAddress = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(imageBuffer, 0);
+    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
+    size_t width = CVPixelBufferGetWidth(imageBuffer);
+    size_t height = CVPixelBufferGetHeight(imageBuffer);
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    
+    CGContextRef newContext = CGBitmapContextCreate(baseAddress, width, height, 8, bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+    CGImageRef newImage = CGBitmapContextCreateImage(newContext);
+    CGContextRelease(newContext);
+    
+    UIImage *outputImage = [UIImage imageWithCGImage:newImage];
+    
+    CGColorSpaceRelease(colorSpace);
+    CVPixelBufferUnlockBaseAddress(imageBuffer,0);
+    CGImageRelease(newImage);
+    
+    return outputImage;
 }
 
 //Convert IplImage (standard OpenCV image format) to UIImage (standard Obj-C image format)

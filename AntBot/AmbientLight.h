@@ -1,6 +1,6 @@
 //
 //  AmbientLight.h
-//  AntBot
+//  AntBot-iOS
 //
 //  Created by Joshua Hecker on 7/10/12.
 //  Moses Lab, Department of Computer Science, University of New Mexico.

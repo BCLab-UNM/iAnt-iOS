@@ -1,6 +1,6 @@
 //
 //  Conversions.h
-//  AntBot
+//  AntBot-iOS
 //
 //  Created by Joshua Hecker on 8/29/12.
 //
@@ -15,6 +15,7 @@
 @property NSMutableData *imgData;
 
 - (void)createIplImageFromCMSampleBuffer:(CMSampleBufferRef)buffer;
++ (UIImage*)createUIImageFromCMSampleBuffer:(CMSampleBufferRef)buffer;
 - (void)createUIImageFromIplImage:(IplImage *)image;
 - (IplImage*)createIplImageFromUIImage:(UIImage*)image;
 

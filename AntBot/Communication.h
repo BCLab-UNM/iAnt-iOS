@@ -1,6 +1,6 @@
 //
 //  Communication.h
-//  AntBot
+//  AntBot-iOS
 //
 //  Created by Joshua Hecker on 4/18/12.
 //  Moses Lab, Department of Computer Science, University of New Mexico.

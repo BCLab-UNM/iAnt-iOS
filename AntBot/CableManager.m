@@ -1,6 +1,6 @@
 //
 //  CableManager.m
-//  AntBot
+//  AntBot-iOS
 //
 //  Created by Joshua Hecker on 6/19/12.
 //  Moses Lab, Department of Computer Science, University of New Mexico.

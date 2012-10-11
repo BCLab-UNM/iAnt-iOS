@@ -1,8 +1,8 @@
 //
 //  RelativeMotion.h
-//  AntBot
+//  AntBot-iOS
 //
-//  Created by Joshua Hecker on 12/29/11.
+//  Created by Joshua Hecker
 //  Moses Lab, Department of Computer Science, University of New Mexico
 //
 

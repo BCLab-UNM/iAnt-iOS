@@ -1,6 +1,6 @@
 //
 //  ImageRecognition.h
-//  AntBot
+//  AntBot-iOS
 //
 //  Created by Joshua Hecker on 3/27/12.
 //  Moses Lab, Department of Computer Science, University of New Mexico
@@ -22,7 +22,7 @@
 
 - (UIImage*)getImgThresholdUI;
 
-- (NSMutableArray*)findColorCentroidIn:(CMSampleBufferRef)buffer usingThreshold:(NSArray*)ranges;
+- (NSMutableArray*)findColorCentroidIn:(CMSampleBufferRef)buffer usingThreshold:(int)threshold;
 - (NSMutableArray*)locateQRFinderPatternsIn:(CMSampleBufferRef)buffer;
 
 @end
