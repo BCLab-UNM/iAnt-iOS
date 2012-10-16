@@ -10,8 +10,7 @@
 
 @implementation ThresholdRange
 
-- (id)initMinTo:(CvScalar)minimum andMaxTo:(CvScalar)maximum
-{
+- (id)initMinTo:(CvScalar)minimum andMaxTo:(CvScalar)maximum {
     if (self = [super init]) {
         min = minimum;
         max = maximum;
@@ -20,13 +19,11 @@
     return self;
 }
 
-- (CvScalar)getMin;
-{
+- (CvScalar)getMin {
     return min;
 }
 
-- (CvScalar)getMax;
-{
+- (CvScalar)getMax {
     return max;
 }
 

@@ -92,8 +92,8 @@ const NSString* sessionID = @"Colony";
         return YES;
     }
     else {
-        if (txBuffer != nil) {
-           [txBuffer addObject:message]; 
+        if (message != nil) {
+           [txBuffer addObject:message];
         }
     }
     return NO;

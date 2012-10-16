@@ -67,8 +67,9 @@
                                        int rate = rotationRate.z * (180.0/M_PI);
                                        [cblMgr send:[NSString stringWithFormat:@"%d",rate]];
                                        [cblMgr send:@"\n"]; //delimiter
-                                       [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"GYRO - %d",rate]
-                                                                                           object:self];
+                                       [[NSNotificationCenter defaultCenter] postNotificationName:@"infoBox text" object:nil
+                                                                                         userInfo:[NSDictionary dictionaryWithObject:
+                                                                                                   [NSString stringWithFormat:@"GYRO - %d",rate] forKey:@"text"]];
                                    }];
     }
     else {

@@ -113,7 +113,7 @@
     @autoreleasepool {
         //convert CMSampleBuffer to IplImage
         [converter createIplImageFromCMSampleBuffer:buffer];
-       
+        
         //convert to grayscale
         cvCvtColor([converter imgIpl], imgGray, CV_BGRA2GRAY);
         
@@ -249,8 +249,8 @@
             }
             
             //Scan all discovered finder patterns
-            int segmentThreshold = 4;
-            int modifiedThreshold = 4;
+            int segmentThreshold = 2;
+            int modifiedThreshold = 2;
             
             for (int counter = 0; counter < [finderPatterns count]; counter++) {
                 FinderPattern *pattern = nil;

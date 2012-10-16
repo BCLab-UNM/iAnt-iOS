@@ -30,7 +30,11 @@
     //Setup IplImage
     imgIpl->widthStep = bytesPerRow;
     imgIpl->imageSize = bytesPerRow * height;
-    memmove(imgIpl->imageData, baseAddress, height * bytesPerRow);
+    
+    //Ensure original buffer and new IplImage container are equal in size
+    if (imgIpl->imageSize == height * bytesPerRow) {
+        memmove(imgIpl->imageData, baseAddress, height * bytesPerRow);
+    }
     CVPixelBufferUnlockBaseAddress(imageBuffer,0);
 }
 

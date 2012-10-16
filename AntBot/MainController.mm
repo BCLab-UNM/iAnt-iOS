@@ -1,6 +1,6 @@
 //
 //  MainController.mm
-//  AntBot
+//  AntBot-iOS
 //
 //  Created by Joshua Hecker
 //  Moses Lab, Department of Computer Science, University of New Mexico
@@ -180,14 +180,13 @@ bail:
                     //Update display
                     dispatch_async (dispatch_get_main_queue(), ^{
                         [[self infoBox] setText:@"TAG FOUND"];
-                        sensorState = @"TAG FOUND";
-                        
                     });
+                    sensorState = @"TAG FOUND";
                     
                     //Transmit stop messages to Arduino (two are required)
                     [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
                     [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
-                    
+
                     //Hide all layers
                     hideAllLayers();
                 }
@@ -385,7 +384,7 @@ bail:
         qrCode = [[result text] intValue];
         
         //Transmit QR code to ABS
-        [comm send:[NSString stringWithFormat:@"%d",qrCode]];
+        [comm send:[NSString stringWithFormat:@"%d\n",qrCode]];
         
         //Schedule a timer to trigger a buffer check every 100 ms
         timer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(checkBufferForTagMessage:) userInfo:nil repeats:YES];
@@ -395,7 +394,7 @@ bail:
 //Called periodically to check the Communications rxBuffer for incoming tag message ("new" or "old") from the ABS
 -(void)checkBufferForTagMessage:(id)object {
     //If message has been received from ABS
-    if ([[comm rxBuffer] length] > 0){
+    if ([[comm rxBuffer] length] > 0) {
         //If message is "new", i.e. QR tag *has not* been found before
         if ([[comm rxBuffer] isEqualToString:@"new"]) {
             //Update display
@@ -447,7 +446,7 @@ bail:
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:@"Stream opened" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:@"Stream closed" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:@"GYRO" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateInfoBox:) name:@"infoBox text" object:nil];
 }
 
 - (void)viewDidUnload {
@@ -468,8 +467,8 @@ bail:
 	[super viewWillDisappear:animated];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-	[super viewDidDisappear:animated];
+- (void)viewDidDisappear:(BOOL)animated {    
+    [super viewDidDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -485,7 +484,7 @@ bail:
 
 #pragma mark - Notification Center
 
-- (void) receiveNotification:(NSNotification *) notification {
+- (void)receiveNotification:(NSNotification *) notification {
     if ([[notification name] isEqualToString:@"Stream opened"]) {
         [[self infoBox] setBackgroundColor:[UIColor clearColor]];
         [[self infoBox] setTextColor:[UIColor blackColor]];
@@ -494,9 +493,10 @@ bail:
         [[self infoBox] setBackgroundColor:[UIColor redColor]];
         [[self infoBox] setTextColor:[UIColor whiteColor]];
     }
-    else if ([[notification name] hasPrefix:@"GYRO"]) {
-        [[self infoBox] setText:[notification name]];
-    }
+}
+
+- (void)updateInfoBox:(NSNotification*) notification {
+    [[self infoBox] setText:[[notification userInfo] objectForKey:@"text"]];
 }
 
 
@@ -568,7 +568,7 @@ bail:
         
         else if ([message isEqualToString:@"heading"]) {
             int wordLength = 7;
-            NSString* goalHeading;
+            NSString* goalHeading = nil;
             
             goalHeading = [message substringWithRange:NSMakeRange(wordLength, [message length] - wordLength)];
             
@@ -585,6 +585,10 @@ bail:
         
         else if ([message isEqualToString:@"nest on"]) {
             if (![sensorState isEqualToString:@"NEST ON"]) {
+                if (imgRecog != nil) {
+                    [self teardownAVCapture];
+                    imgRecog = nil;
+                }
                 imgRecog = [[ImageRecognition alloc] initResolutionTo:FRONT_REZ_VERT by:FRONT_REZ_HOR];
                 [self setupAVCaptureAt:AVCaptureDevicePositionFront];
                 [[self infoBox] setText:@"NEST ON"];
@@ -596,6 +600,7 @@ bail:
         else if ([message isEqualToString:@"nest off"]) {
             if (![sensorState isEqualToString:@"NEST OFF"]) {
                 [self teardownAVCapture];
+                imgRecog = nil;
                 [[self infoBox] setText:@"NEST OFF"];
                 sensorState = @"NEST OFF";
             }
@@ -633,18 +638,24 @@ bail:
         }
         
         else if ([message isEqualToString:@"tag on"]) {
-            if (![sensorState isEqualToString:@"TAG ON"]) {
+            if (![sensorState isEqualToString:@"TAG ON"] && ![sensorState isEqualToString:@"TAG FOUND"]) {
+                if (imgRecog != nil) {
+                    [self teardownAVCapture];
+                    imgRecog = nil;
+                }
                 imgRecog = [[ImageRecognition alloc] initResolutionTo:BACK_REZ_VERT by:BACK_REZ_HOR];
                 [self setupAVCaptureAt:AVCaptureDevicePositionBack];
-                [[self infoBox] setText:@"TAG ON"];
-                sensorState = @"TAG ON";
             }
+            [[self infoBox] setText:@"TAG ON"];
+            sensorState = @"TAG ON";
             [cblMgr send:@"tag on"];
+            qrCode = -1;
         }
         
         else if ([message isEqualToString:@"tag off"]) {
             if (![sensorState isEqualToString:@"TAG OFF"]) {
                 [self teardownAVCapture];
+                imgRecog = nil;
                 [[self infoBox] setText:@"TAG OFF"];
                 sensorState = @"TAG OFF";
             }
