@@ -2,15 +2,14 @@
 //  AmbientLight.h
 //  AntBot-iOS
 //
-//  Created by Joshua Hecker on 7/10/12.
+//  Created by Joshua Hecker
 //  Moses Lab, Department of Computer Science, University of New Mexico.
 //
 
 #import <UIKit/UIKit.h>
 #import <IOKit/hid/IOHIDEventSystem.h>
 
-@interface AmbientLight : NSObject
-{
+@interface AmbientLight : NSObject {
     //IOHIDEventSystemRef system;
 }
 

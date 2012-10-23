@@ -2,8 +2,8 @@
 //  Conversions.h
 //  AntBot-iOS
 //
-//  Created by Joshua Hecker on 8/29/12.
-//
+//  Created by Joshua Hecker
+//  Moses Lab, Department of Computer Science, University of New Mexico
 //
 
 #import <AVFoundation/AVFoundation.h>

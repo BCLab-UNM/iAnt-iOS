@@ -2,7 +2,7 @@
 //  AmbientLight.m
 //  AntBot-iOS
 //
-//  Created by Joshua Hecker on 7/10/12.
+//  Created by Joshua Hecker
 //  Moses Lab, Department of Computer Science, University of New Mexico.
 //
 
@@ -21,26 +21,22 @@ void handleEvent(void* target, void* refcon, IOHIDServiceRef service, IOHIDEvent
 
 @implementation AmbientLight
 
-- (void)start
-{
+- (void)start {
     [self startAmbientLightSensing];
 }
 
-- (void)stop
-{
+- (void)stop {
     [self stopAmbientLightSensing];
 }
 
-- (AmbientLight*)ambientLight
-{
+- (AmbientLight*)ambientLight {
     AmbientLight* ambLight = [[AmbientLight alloc] init];
     return ambLight;
 }
 
 #pragma mark - Internal start/stop methods
 
-- (void)startAmbientLightSensing
-{
+- (void)startAmbientLightSensing {
     mach_port_t master;
     IOMasterPort(MACH_PORT_NULL, &master);
     
@@ -79,18 +75,15 @@ void handleEvent(void* target, void* refcon, IOHIDServiceRef service, IOHIDEvent
     IOHIDEventSystemOpen(system, handleEvent, NULL, NULL, NULL);
 }
 
-- (void)stopAmbientLightSensing
-{
+- (void)stopAmbientLightSensing {
     //IOHIDEventSystemClose(system, NULL);
     CFRelease(system);
 }
 
 #pragma mark - Callback delagate
 
-void handleEvent (void* target, void* refcon, IOHIDServiceRef service, IOHIDEventRef event)
-{
-    if (IOHIDEventGetType(event)==kIOHIDEventTypeAmbientLightSensor)
-    {        
+void handleEvent (void* target, void* refcon, IOHIDServiceRef service, IOHIDEventRef event) {
+    if (IOHIDEventGetType(event)==kIOHIDEventTypeAmbientLightSensor) {        
         int luxValue=IOHIDEventGetIntegerValue(event, (IOHIDEventField)kIOHIDEventFieldAmbientLightSensorLevel); // lux Event Field
         int channel0=IOHIDEventGetIntegerValue(event, (IOHIDEventField)kIOHIDEventFieldAmbientLightSensorRawChannel0); // ch0 Event Field
         int channel1=IOHIDEventGetIntegerValue(event, (IOHIDEventField)kIOHIDEventFieldAmbientLightSensorRawChannel1); // ch1 Event Field

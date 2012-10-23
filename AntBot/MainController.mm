@@ -9,7 +9,6 @@
 #import "MainController.h"
 
 //Constants
-const int BUFFER_LEN = 1024;
 const int BACK_REZ_VERT = 352;
 const int BACK_REZ_HOR = 288;
 const int FRONT_REZ_VERT = 192;
@@ -177,12 +176,6 @@ bail:
                 
                 //If we are searching for tags, and a tag has been found in the image
                 if ([sensorState isEqualToString:@"TAG ON"] && [qrDecoder decodeImage:imgThreshold]) {
-                    //Update display
-                    dispatch_async (dispatch_get_main_queue(), ^{
-                        [[self infoBox] setText:@"TAG FOUND"];
-                    });
-                    sensorState = @"TAG FOUND";
-                    
                     //Transmit stop messages to Arduino (two are required)
                     [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
                     [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
@@ -394,7 +387,7 @@ bail:
 //Called periodically to check the Communications rxBuffer for incoming tag message ("new" or "old") from the ABS
 -(void)checkBufferForTagMessage:(id)object {
     //If message has been received from ABS
-    if ([[comm rxBuffer] length] > 0) {
+    if ([sensorState isEqualToString:@"TAG FOUND"] && [[comm rxBuffer] length] > 0) {
         //If message is "new", i.e. QR tag *has not* been found before
         if ([[comm rxBuffer] isEqualToString:@"new"]) {
             //Update display
@@ -614,7 +607,7 @@ bail:
         }
         
         else if ([message isEqualToString:@"pheromone off"]) {
-            //If timer has not already been removed by the selector method
+            //If pheromone timer has not already been removed by the selector method
             if (timer != nil) {
                 //Remove timer
                 [timer invalidate];
@@ -650,6 +643,13 @@ bail:
             sensorState = @"TAG ON";
             [cblMgr send:@"tag on"];
             qrCode = -1;
+            
+            //If tag message timer has not already been removed by the selector method
+            if (timer != nil) {
+                //Remove timer
+                [timer invalidate];
+                timer = nil;
+            }
         }
         
         else if ([message isEqualToString:@"tag off"]) {
@@ -660,6 +660,15 @@ bail:
                 sensorState = @"TAG OFF";
             }
         }
+        
+        else if ([message isEqualToString:@"tag found"]) {
+            //Update display
+            [[self infoBox] setText:@"TAG FOUND"];
+            sensorState = @"TAG FOUND";
+            //Reply with current tag number
+            [cblMgr send:@"tag found"];
+        }
+        
         else {
             NSLog(@"Error - The command \"%@\" is not recognized",message);
         }
