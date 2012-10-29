@@ -35,6 +35,7 @@
     NSTimer *timer;
     NSString *sensorState;
     int qrCode;
+    int nestDistance;
 }
 
 @property IBOutlet UITextView *infoBox;

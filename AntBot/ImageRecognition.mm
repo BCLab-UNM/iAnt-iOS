@@ -78,8 +78,12 @@
         for (; contour != 0; contour = contour->h_next) {
             double contourArea = cvContourArea(contour);
             if (contourArea > largestArea) {
-                largestArea = contourArea;
-                largestContour = contour;
+                //Check dimensions of bounding box
+                CvRect boundingBox = cvBoundingRect(contour);
+                if (boundingBox.height <= 2*boundingBox.width) {
+                    largestArea = contourArea;
+                    largestContour = contour;
+                }
             }
         }
     

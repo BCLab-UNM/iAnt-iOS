@@ -324,6 +324,9 @@ bail:
                         
                         //Transmit data
                         [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
+                        
+                        //Update estimate of distance from nest
+                        nestDistance = -37.84*log([meanCenter getWidth] * [meanCenter getHeight]) + 274.2;
                     }
                     else if ([sensorState isEqualToString:@"TAG ON"]) {
                         //Number of pixels between observed and true center
@@ -454,6 +457,17 @@ bail:
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    if (![sensorState isEqualToString:@"NEST ON"]) {
+        if (imgRecog != nil) {
+            [self teardownAVCapture];
+            imgRecog = nil;
+        }
+        imgRecog = [[ImageRecognition alloc] initResolutionTo:FRONT_REZ_VERT by:FRONT_REZ_HOR];
+        [self setupAVCaptureAt:AVCaptureDevicePositionFront];
+        [[self infoBox] setText:@"NEST ON"];
+        sensorState = @"NEST ON";
+    }
+    [cblMgr send:@"nest on"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -489,7 +503,9 @@ bail:
 }
 
 - (void)updateInfoBox:(NSNotification*) notification {
-    [[self infoBox] setText:[[notification userInfo] objectForKey:@"text"]];
+    dispatch_async (dispatch_get_main_queue(), ^{
+        [[self infoBox] setText:[[notification userInfo] objectForKey:@"text"]];
+    });
 }
 
 
@@ -586,6 +602,7 @@ bail:
                 [self setupAVCaptureAt:AVCaptureDevicePositionFront];
                 [[self infoBox] setText:@"NEST ON"];
                 sensorState = @"NEST ON";
+                nestDistance = -1;
             }
             [cblMgr send:@"nest on"];
         }
@@ -596,9 +613,10 @@ bail:
                 imgRecog = nil;
                 [[self infoBox] setText:@"NEST OFF"];
                 sensorState = @"NEST OFF";
+                [cblMgr send:[NSString stringWithFormat:@"%d",nestDistance]];
             }
         }
-        
+
         else if ([message isEqualToString:@"pheromone on"]) {
             //Schedule a timer to trigger a buffer check every 100 ms
             timer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(checkBufferForPheromone:) userInfo:nil repeats:YES];
