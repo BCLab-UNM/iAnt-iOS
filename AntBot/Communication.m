@@ -82,7 +82,7 @@ const NSString* sessionID = @"Colony";
 - (BOOL)send:(NSString*)message {
     //Ensure output stream is open
     if ([outputStream streamStatus] == NSStreamStatusOpen) {
-        while ([txBuffer count] > 0) {
+        if ([txBuffer count] > 0) {
             NSString* str = [txBuffer objectAtIndex:0];
             [txBuffer removeObjectAtIndex:0];
             [self send:str];
@@ -184,11 +184,6 @@ const NSString* sessionID = @"Colony";
 		case NSStreamEventOpenCompleted:
 			NSLog(@"Stream opened");
             [[NSNotificationCenter defaultCenter] postNotificationName:@"Stream opened" object:self];
-            
-            //If we managed to successfully connect, stop the reconnect timer.
-            [reconnectTimer invalidate];
-            reconnectTimer = nil;
-            
 			break;
             
         //If remote host has sent data, read everything into a buffer
@@ -216,44 +211,9 @@ const NSString* sessionID = @"Colony";
             break;
             
 		case NSStreamEventErrorOccurred:
-            /*
-             * Attempt to handle known errors.
-             * If it is an unknown/unhandled error, just print it out raw.
-             * todo: Handle "connection reset" case, clean up this part (lots of repeated code here)
-             */
             [[NSNotificationCenter defaultCenter] postNotificationName:@"Stream closed" object:self];
-            
-            if([[NSString stringWithFormat:@"%@",[theStream streamError]] rangeOfString:@"Connection refused"].location != NSNotFound) {
-                if(reconnectTimer == nil) {
-                    NSLog(@"Connecting to server failed.");
-                    reconnectTimer = [NSTimer scheduledTimerWithTimeInterval:5.f target:self selector:@selector(reconnect:) userInfo:nil repeats:YES];
-                    [reconnectTimer fire];
-                }
-            }
-            else if([[NSString stringWithFormat:@"%@",[theStream streamError]] rangeOfString:@"Broken pipe"].location != NSNotFound) {
-                if(reconnectTimer == nil) {
-                    NSLog(@"Connection to server closed.");
-                    reconnectTimer = [NSTimer scheduledTimerWithTimeInterval:4.f target:self selector:@selector(reconnect:) userInfo:nil repeats:YES];
-                    [reconnectTimer fire];
-                }
-            }
-            else if([[NSString stringWithFormat:@"%@",[theStream streamError]] rangeOfString:@"No route to host"].location != NSNotFound) {
-                if(reconnectTimer == nil) {
-                    NSLog(@"No route to host.");
-                    reconnectTimer = [NSTimer scheduledTimerWithTimeInterval:3.f target:self selector:@selector(reconnect:) userInfo:nil repeats:YES];
-                    [reconnectTimer fire];
-                }
-            }
-            else if([[NSString stringWithFormat:@"%@",[theStream streamError]] rangeOfString:@"Connection reset"].location != NSNotFound) {
-                if(reconnectTimer == nil) {
-                    NSLog(@"Connection to server reset.");
-                    reconnectTimer = [NSTimer scheduledTimerWithTimeInterval:2.5f target:self selector:@selector(reconnect:) userInfo:nil repeats:YES];
-                    [reconnectTimer fire];
-                }
-            }
-            else {
-                NSLog(@"Error: %@",[[theStream streamError] localizedDescription]);
-            }
+            NSLog(@"Error: %@",[[theStream streamError] localizedDescription]);
+            reconnectTimer = [NSTimer scheduledTimerWithTimeInterval:5.f target:self selector:@selector(reconnect:) userInfo:nil repeats:NO];
 			break;
             
         //If remote host closes the connection, close stream on this end and remove from schedule
