@@ -248,7 +248,8 @@ bail:
                         meanCenter = [[Rect2D alloc] initXTo:([meanCenter getX] + [center getX])
                                                          yTo:([meanCenter getY] + [center getY])
                                                      widthTo:[center getWidth]
-                                                    heightTo:[center getHeight]];
+                                                    heightTo:[center getHeight]
+                                                      areaTo:[center getArea]];
                         
                         CGRect rect;
                         //If using front camera to search for nest
@@ -303,18 +304,25 @@ bail:
                         
                         //Update summation
                         meanCenter = [[Rect2D alloc] initXTo:([meanCenter getX] + [center getX])
-                                                       andYTo:([meanCenter getY] + [center getY])];
+                                                         yTo:([meanCenter getY] + [center getY])
+                                                     widthTo:[center getWidth]
+                                                    heightTo:[center getHeight]
+                                                      areaTo:[center getArea]];
                     }
                     
                     //Calulate mean centroid
                     meanCenter = [[Rect2D alloc] initXTo:([meanCenter getX]/numberOfCentroids)
                                                      yTo:([meanCenter getY]/numberOfCentroids)
                                                  widthTo:[meanCenter getWidth]
-                                                heightTo:[meanCenter getHeight]];
+                                                heightTo:[meanCenter getHeight]
+                                                  areaTo:[meanCenter getArea]];
                     
                     if ([sensorState isEqualToString:@"NEST ON"]) {
                         //Number of pixels between observed and true center
                         data[0] = FRONT_REZ_HOR/2 - [meanCenter getX];
+                        
+                        //Update estimate of distance from nest
+                        nestDistance = 1481 * pow([meanCenter getArea],-0.5127) - 50;
                         
                         //Update display
                         short int *temp = data; //pointer to data array (because we can't directly refer to C arrays within blocks, see below)
@@ -324,9 +332,6 @@ bail:
                         
                         //Transmit data
                         [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
-                        
-                        //Update estimate of distance from nest
-                        nestDistance = -37.84*log([meanCenter getWidth] * [meanCenter getHeight]) + 274.2;
                     }
                     else if ([sensorState isEqualToString:@"TAG ON"]) {
                         //Number of pixels between observed and true center
@@ -457,17 +462,6 @@ bail:
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (![sensorState isEqualToString:@"NEST ON"]) {
-        if (imgRecog != nil) {
-            [self teardownAVCapture];
-            imgRecog = nil;
-        }
-        imgRecog = [[ImageRecognition alloc] initResolutionTo:FRONT_REZ_VERT by:FRONT_REZ_HOR];
-        [self setupAVCaptureAt:AVCaptureDevicePositionFront];
-        [[self infoBox] setText:@"NEST ON"];
-        sensorState = @"NEST ON";
-    }
-    [cblMgr send:@"nest on"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

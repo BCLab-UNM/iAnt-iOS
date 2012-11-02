@@ -16,17 +16,19 @@
         y = _y;
         width = 40;
         height = 40;
+        area = 1600;
     }
     
     return self;
 }
 
-- (id)initXTo:(int)_x yTo:(int)_y widthTo:(int)_width heightTo:(int)_height {
+- (id)initXTo:(int)_x yTo:(int)_y widthTo:(int)_width heightTo:(int)_height  areaTo:(double)_area{
     if (self = [super init]) {
         x = _x;
         y = _y;
         width = _width;
         height = _height;
+        area = _area;
     }
     
     return self;
@@ -46,6 +48,10 @@
 
 - (int)getHeight {
     return height;
+}
+
+- (double)getArea {
+    return area;
 }
 
 @end

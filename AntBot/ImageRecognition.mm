@@ -70,20 +70,15 @@
     NSMutableArray *centroidList = nil;
     CvSeq *contour = 0;
     CvMemStorage *storage = cvCreateMemStorage(0);
-    if (cvFindContours(imgThreshold, storage, &contour, sizeof(CvContour), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE)) {
-    
+    if (cvFindContours(imgThreshold, storage, &contour, sizeof(CvContour), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE)) {    
         //Find largest contour
         double largestArea = 0;
         CvSeq *largestContour = nil;
         for (; contour != 0; contour = contour->h_next) {
             double contourArea = cvContourArea(contour);
             if (contourArea > largestArea) {
-                //Check dimensions of bounding box
-                CvRect boundingBox = cvBoundingRect(contour);
-                if (boundingBox.height <= 2*boundingBox.width) {
-                    largestArea = contourArea;
-                    largestContour = contour;
-                }
+                largestArea = contourArea;
+                largestContour = contour;
             }
         }
     
@@ -95,8 +90,8 @@
             
             //Create centroid structure
             c = [[Rect2D alloc] initXTo:boundingBox.y+(boundingBox.height/2) yTo:boundingBox.x+(boundingBox.width/2)
-                                widthTo:boundingBox.width heightTo:boundingBox.height];
-            
+                                widthTo:boundingBox.width heightTo:boundingBox.height areaTo:largestArea];
+
             //And add it to the array for output
             centroidList = [[NSMutableArray alloc] initWithObjects:c, nil];
         }

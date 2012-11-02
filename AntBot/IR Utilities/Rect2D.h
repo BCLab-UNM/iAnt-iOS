@@ -11,14 +11,16 @@
     int y;
     int width;
     int height;
+    double area;
 }
 
 - (id)initXTo:(int)x andYTo:(int)y;
-- (id)initXTo:(int)x yTo:(int)y widthTo:(int)width heightTo:(int)height;
+- (id)initXTo:(int)x yTo:(int)y widthTo:(int)width heightTo:(int)height areaTo:(double)area;
 
 - (int)getX;
 - (int)getY;
 - (int)getWidth;
 - (int)getHeight;
+- (double)getArea;
 
 @end
