@@ -481,10 +481,7 @@
 				);
 				INFOPLIST_FILE = "AntBot/AntBot-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/lib\"",
-					"\"$(SRCROOT)/AntBot/ScannerKit-4.2.2\"",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/lib\"";
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = AntBot;
@@ -512,10 +509,7 @@
 				);
 				INFOPLIST_FILE = "AntBot/AntBot-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/lib\"",
-					"\"$(SRCROOT)/AntBot/ScannerKit-4.2.2\"",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/lib\"";
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = AntBot;
