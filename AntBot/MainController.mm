@@ -327,7 +327,7 @@ bail:
                         //Update display
                         short int *temp = data; //pointer to data array (because we can't directly refer to C arrays within blocks, see below)
                         dispatch_async (dispatch_get_main_queue(), ^{
-                            [[self infoBox] setText:[NSString stringWithFormat:@"NEST - (%d,%d)",temp[0],temp[1]]];
+                            [[self infoBox] setText:[NSString stringWithFormat:@"NEST   (%d,%d)",temp[0],temp[1]]];
                         });
                         
                         //Transmit data
@@ -341,7 +341,7 @@ bail:
                         //Update display
                         short int *temp = data; //pointer to data array (because we can't directly refer to C arrays within blocks, see below)
                         dispatch_async (dispatch_get_main_queue(), ^{
-                            [[self infoBox] setText:[NSString stringWithFormat:@"TAG - (%d,%d)",temp[0],temp[1]]];
+                            [[self infoBox] setText:[NSString stringWithFormat:@"TAG     (%d,%d)",temp[0],temp[1]]];
                         });
                         
                         //Transmit data
@@ -362,7 +362,7 @@ bail:
                     //Update display
                     short int *temp = data; //pointer to data array (because we can't directly refer to C arrays within blocks, see below)
                     dispatch_async (dispatch_get_main_queue(), ^{
-                        [[self infoBox] setText:[NSString stringWithFormat:@"NEST - (%d,%d)",temp[0],temp[1]]];
+                        [[self infoBox] setText:[NSString stringWithFormat:@"NEST     (%d,%d)",temp[0],temp[1]]];
                     });
                     
                     //Transmit data
@@ -399,7 +399,7 @@ bail:
         //If message is "new", i.e. QR tag *has not* been found before
         if ([[comm rxBuffer] isEqualToString:@"new"]) {
             //Update display
-            [[self infoBox] setText:[NSString stringWithFormat:@"TAG FOUND - %d (NEW)",qrCode]];
+            [[self infoBox] setText:[NSString stringWithFormat:@"TAG FOUND     %d (NEW)",qrCode]];
             //Alert Arduino to new tag
             [cblMgr send:@"yes"];
             //Transmit tag number
@@ -409,7 +409,7 @@ bail:
         //If message is "old", i.e. QR tag *has* been found before
         if ([[comm rxBuffer] isEqualToString:@"old"]) {
             //Update display
-            [[self infoBox] setText:[NSString stringWithFormat:@"TAG FOUND - %d (OLD)",qrCode]];
+            [[self infoBox] setText:[NSString stringWithFormat:@"TAG FOUND     %d (OLD)",qrCode]];
             //Alert Arduino to old tag
             [cblMgr send:@"no"];
         }
@@ -607,8 +607,9 @@ bail:
                 imgRecog = nil;
                 [[self infoBox] setText:@"NEST OFF"];
                 sensorState = @"NEST OFF";
-                [cblMgr send:[NSString stringWithFormat:@"%d",nestDistance]];
             }
+            [cblMgr send:@"nest off"];
+            [cblMgr send:[NSString stringWithFormat:@"%d\n",nestDistance]];
         }
 
         else if ([message isEqualToString:@"pheromone on"]) {

@@ -69,7 +69,7 @@
                                        [cblMgr send:@"\n"]; //delimiter
                                        [[NSNotificationCenter defaultCenter] postNotificationName:@"infoBox text" object:nil
                                                                                          userInfo:[NSDictionary dictionaryWithObject:
-                                                                                                   [NSString stringWithFormat:@"GYRO - %d",rate] forKey:@"text"]];
+                                                                                                   [NSString stringWithFormat:@"GYRO     %d",rate] forKey:@"text"]];
                                    }];
     }
     else {
