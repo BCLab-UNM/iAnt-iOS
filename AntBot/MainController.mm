@@ -539,11 +539,18 @@ bail:
         }
         
         //Log command
-#ifdef DEBUG
+        #ifdef DEBUG
         NSLog(@"%@",message);
-#endif
+        #endif
         
-        if ([message isEqualToString:@"fence"]) {
+        //Check command against series of options
+        if ([message hasPrefix:@"display"]) {
+            int wordLength = 7;
+            NSString* data = [message substringWithRange:NSMakeRange(wordLength, [message length] - wordLength)];
+            [[self infoBox] setText:data];
+        }
+         
+        else if ([message isEqualToString:@"fence"]) {
             int wordLength = 5;
             NSString* radius;
             
