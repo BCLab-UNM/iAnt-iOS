@@ -46,6 +46,7 @@
 		427F4ADF14A58048003F3E53 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4ADE14A58048003F3E53 /* ExternalAccessory.framework */; };
 		42AFA50216234685009355CD /* libZXingWidget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AFA4FE1623358B009355CD /* libZXingWidget.a */; };
 		42BC34DC14A98D5700692DDE /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42BC34DB14A98D5600692DDE /* CoreMotion.framework */; };
+		42BEFEC216BC7FE80095EE7C /* Utilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 42BEFEC116BC7FE80095EE7C /* Utilities.mm */; };
 		42D1C2191618FFDC00A7A8E7 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D1C2171618FFB200A7A8E7 /* GameKit.framework */; };
 		42F799FA161807FE007C2421 /* Communication.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F799F9161807FE007C2421 /* Communication.m */; };
 /* End PBXBuildFile section */
@@ -127,6 +128,8 @@
 		42AFA4F51623358B009355CD /* ZXingWidget.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ZXingWidget.xcodeproj; path = AntBot/zxing/iphone/ZXingWidget/ZXingWidget.xcodeproj; sourceTree = "<group>"; };
 		42BB468D153F07520034D665 /* Communication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Communication.h; path = AntBot/Communication.h; sourceTree = SOURCE_ROOT; };
 		42BC34DB14A98D5600692DDE /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		42BEFEC016BC7FE80095EE7C /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utilities.h; path = AntBot/Utilities.h; sourceTree = SOURCE_ROOT; };
+		42BEFEC116BC7FE80095EE7C /* Utilities.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Utilities.mm; path = AntBot/Utilities.mm; sourceTree = SOURCE_ROOT; };
 		42D1C2171618FFB200A7A8E7 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		42F1E1EC15AD36BE00F1ADEB /* libIOKit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libIOKit.dylib; path = usr/lib/libIOKit.dylib; sourceTree = SDKROOT; };
 		42F799F9161807FE007C2421 /* Communication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Communication.m; path = AntBot/Communication.m; sourceTree = SOURCE_ROOT; };
@@ -243,6 +246,8 @@
 				42388E6515EF1974009F0D7E /* IR Utilities */,
 				423D2E151514CFEB00B5231E /* RelativeMotion.h */,
 				427F3C0C15B4A82900C2CB85 /* RelativeMotion.m */,
+				42BEFEC016BC7FE80095EE7C /* Utilities.h */,
+				42BEFEC116BC7FE80095EE7C /* Utilities.mm */,
 				423D2E171514CFEB00B5231E /* MainController.h */,
 				423D2E181514CFEB00B5231E /* MainController.mm */,
 				4257B682159808A10072054D /* MainStoryboard.storyboard */,
@@ -322,7 +327,7 @@
 		427F4A9614A57E2B003F3E53 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0460;
 			};
 			buildConfigurationList = 427F4A9914A57E2B003F3E53 /* Build configuration list for PBXProject "AntBot" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -402,6 +407,7 @@
 				423B0EA415EF216C00DC71CD /* Conversions.mm in Sources */,
 				423B0EA815EF250300DC71CD /* ThresholdRange.mm in Sources */,
 				42F799FA161807FE007C2421 /* Communication.m in Sources */,
+				42BEFEC216BC7FE80095EE7C /* Utilities.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,6 +431,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -438,6 +448,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
@@ -450,12 +461,17 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";

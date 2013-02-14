@@ -169,6 +169,14 @@ bail:
             
             //If centroids were found
             if ((numberOfCentroids = [centroidList count])) {
+                //Ensure mocapHeading observer has been removed
+                @try {
+                    [comm removeObserver:self forKeyPath:@"mocapHeading"];
+                }
+                @catch (NSException *exception) {
+                    //do nothing, observer was already removed
+                }
+                
                 CALayer *featureLayer = nil;
                 //Load relevant images
                 UIImage *square = [UIImage imageNamed:@"squarePNG"];
@@ -182,6 +190,8 @@ bail:
 
                     //Hide all layers
                     hideAllLayers();
+                    
+                    sensorState = @"TAG FOUND";
                 }
                 //Otherwise
                 else {
@@ -268,9 +278,13 @@ bail:
                                               [center getHeight]*([previewView frame].size.width/BACK_REZ_HOR),
                                               [center getWidth]*([previewView frame].size.height/BACK_REZ_VERT));
                         }
-                        [featureLayer setFrame:rect];
-                        //Ensure layer is visible
-                        [featureLayer setHidden:NO];
+                        //Check for valid numbers before applying rectangle
+                        if ((rect.origin.x == rect.origin.x) && (rect.origin.y == rect.origin.y) &&
+                            (rect.size.height == rect.size.height) && (rect.size.width == rect.size.width)) {
+                            [featureLayer setFrame:rect];
+                            //Ensure layer is visible
+                            [featureLayer setHidden:NO];
+                        }
                     }
                     
                     //Enumerate through remaining centroids
@@ -297,7 +311,11 @@ bail:
                                               [center getHeight]*([previewView frame].size.width/BACK_REZ_HOR),
                                               [center getWidth]*([previewView frame].size.height/BACK_REZ_VERT));
                         }
-                        [featureLayer setFrame:rect];
+                        //Check for valid numbers before applying rectangle
+                        if ((rect.origin.x == rect.origin.x) && (rect.origin.y == rect.origin.y) &&
+                            (rect.size.height == rect.size.height) && (rect.size.width == rect.size.width)) {
+                            [featureLayer setFrame:rect];
+                        }
                         
                         //Add new thresholded image to frame, replacing the previous found
                         [featureLayer setContents:(id)[square CGImage]];
@@ -385,44 +403,9 @@ bail:
         qrCode = [[result text] intValue];
         
         //Transmit QR code to ABS
-        [comm send:[NSString stringWithFormat:@"%d\n",qrCode]];
-        
-        //Schedule a timer to trigger a buffer check every 100 ms
-        timer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(checkBufferForTagMessage:) userInfo:nil repeats:YES];
+        [comm send:[NSString stringWithFormat:@"%@,%d\n",[comm getMacAddress],qrCode]];
     }
 }
-
-//Called periodically to check the Communications rxBuffer for incoming tag message ("new" or "old") from the ABS
--(void)checkBufferForTagMessage:(id)object {
-    //If message has been received from ABS
-    if ([sensorState isEqualToString:@"TAG FOUND"] && [[comm rxBuffer] length] > 0) {
-        //If message is "new", i.e. QR tag *has not* been found before
-        if ([[comm rxBuffer] isEqualToString:@"new"]) {
-            //Update display
-            [[self infoBox] setText:[NSString stringWithFormat:@"TAG FOUND     %d (NEW)",qrCode]];
-            //Alert Arduino to new tag
-            [cblMgr send:@"yes"];
-            //Transmit tag number
-            [cblMgr send:[NSString stringWithFormat:@"%d",qrCode]];
-        }
-        
-        //If message is "old", i.e. QR tag *has* been found before
-        if ([[comm rxBuffer] isEqualToString:@"old"]) {
-            //Update display
-            [[self infoBox] setText:[NSString stringWithFormat:@"TAG FOUND     %d (OLD)",qrCode]];
-            //Alert Arduino to old tag
-            [cblMgr send:@"no"];
-        }
-        
-        //Remove timer
-        [timer invalidate];
-        timer = nil;
-        
-        //Reset buffer
-        [comm setRxBuffer:nil];
-    }
-}
-
 
 #pragma mark - UIView callbacks
 
@@ -434,7 +417,7 @@ bail:
     
     //Set up QR code reader
     qrDecoder = [[Decoder alloc] init];
-    NSMutableSet *readers = [[NSMutableSet alloc ] init];
+    NSMutableSet *readers = [[NSMutableSet alloc] init];
     QRCodeReader* qrcodeReader = [[QRCodeReader alloc] init];
     [readers addObject:qrcodeReader];
     [qrDecoder setReaders:readers];
@@ -443,11 +426,18 @@ bail:
     cblMgr = [CableManager cableManager];
     [cblMgr setDelegate:self];
     
-    [comm connectTo:@"192.168.33.1" onPort:2223];
+    //Connect to ABS and send MAC address for I/O stream identification
+    [comm connectTo:@"192.168.1.5" onPort:2223];
+    [comm send:[NSString stringWithFormat:@"%@\n",[comm getMacAddress]]];
     
+    //Set up notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:@"Stream opened" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:@"Stream closed" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateInfoBox:) name:@"infoBox text" object:nil];
+    
+    //Set up property observations
+    [comm addObserver:self forKeyPath:@"pheromoneLocation" options:NSKeyValueObservingOptionNew context:NULL];
+    [comm addObserver:self forKeyPath:@"tagStatus" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)viewDidUnload {
@@ -503,6 +493,37 @@ bail:
 }
 
 
+#pragma mark - Observation methods
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"mocapHeading"]) {
+        //Create storage variables
+        short int data[2] = {0,0};
+        data[0] = 2 * (int)[Utilities angleFrom:(int)context to:[[comm mocapHeading] intValue]];
+        
+        //Transmit data to Arduino
+        [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
+        
+        //If angle is small enough, we transmit an additional command to Arduino to stop alignment
+        if (abs(data[0]) < 2) {
+            [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
+            [comm removeObserver:self forKeyPath:@"mocapHeading"];
+        }
+    }
+    else if ([keyPath isEqualToString:@"pheromoneLocation"] && [sensorState isEqualToString:@"PHEROMONE"]) {
+        [cblMgr send:@"pheromone"];
+        [cblMgr send:[NSString stringWithFormat:@"%@\n",[comm pheromoneLocation]]];
+    }
+    else if ([keyPath isEqualToString:@"tagStatus"]) {
+        [[self infoBox] setText:[NSString stringWithFormat:@"%@ TAG FOUND     %d",[[comm tagStatus] uppercaseString],qrCode]];
+        [cblMgr send:[comm tagStatus]];
+        if ([[comm tagStatus] isEqualToString:@"new"]) {
+            [cblMgr send:[NSString stringWithFormat:@"%d\n",qrCode]];
+        }
+    }
+}
+
+
 #pragma mark - RscMgrDelegate methods
 
 //RscMgr callback, triggered when serial data is available for reading
@@ -544,7 +565,21 @@ bail:
         #endif
         
         //Check command against series of options
-        if ([message hasPrefix:@"display"]) {
+        if ([message hasPrefix:@"align"]) {
+            //Ensure mocapHeading is not already being observed
+            @try {
+                [comm removeObserver:self forKeyPath:@"mocapHeading"];
+            }
+            @catch (NSException *exception) {
+                //do nothing, mocapHeading was not being observed
+            }
+            int wordLength = 5;
+            int heading = [[message substringWithRange:NSMakeRange(wordLength, [message length] - wordLength)] intValue];
+            [comm addObserver:self forKeyPath:@"mocapHeading" options:NSKeyValueObservingOptionNew context:(void*)heading];
+            [cblMgr send:@"align"];
+        }
+      
+        else if ([message hasPrefix:@"display"]) {
             int wordLength = 7;
             NSString* data = [message substringWithRange:NSMakeRange(wordLength, [message length] - wordLength)];
             [[self infoBox] setText:data];
@@ -575,22 +610,12 @@ bail:
                 sensorState = @"GYRO OFF";
             }
         }
-        
+      
         else if ([message isEqualToString:@"heading"]) {
-            int wordLength = 7;
-            NSString* goalHeading = nil;
-            
-            goalHeading = [message substringWithRange:NSMakeRange(wordLength, [message length] - wordLength)];
-            
-            double angle = atan2(cos([absMotion currentHeading]), sin([absMotion currentHeading])) -
-                           atan2(cos([goalHeading intValue]),sin([goalHeading intValue]));
-            
-            if (angle < 0)
-                [cblMgr send:@"left"];
-            else if (angle > 0)
-                [cblMgr send:@"right"];
-            else
-                [cblMgr send:@"stop"];
+            //Transmit heading to Arduino
+            if ([comm mocapHeading] != nil) {
+                [cblMgr send:[NSString stringWithFormat:@"%@\n",[comm mocapHeading]]];
+            }
         }
         
         else if ([message isEqualToString:@"nest on"]) {
@@ -619,22 +644,9 @@ bail:
             [cblMgr send:[NSString stringWithFormat:@"%d\n",nestDistance]];
         }
 
-        else if ([message isEqualToString:@"pheromone on"]) {
-            //Schedule a timer to trigger a buffer check every 100 ms
-            timer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(checkBufferForPheromone:) userInfo:nil repeats:YES];
-            [[self infoBox] setText:@"PHEROMONE ON"];
-            sensorState = @"PHEROMONE ON";
-        }
-        
-        else if ([message isEqualToString:@"pheromone off"]) {
-            //If pheromone timer has not already been removed by the selector method
-            if (timer != nil) {
-                //Remove timer
-                [timer invalidate];
-                timer = nil;
-            }
-            [[self infoBox] setText:@"PHEROMONE OFF"];
-            sensorState = @"PHEROMONE OFF";
+        else if ([message isEqualToString:@"pheromone"]) {
+            [[self infoBox] setText:@"PHEROMONE"];
+            sensorState = @"PHEROMONE";
         }
         
         else if ([message hasPrefix:@"print"]) {
@@ -663,13 +675,6 @@ bail:
             sensorState = @"TAG ON";
             [cblMgr send:@"tag on"];
             qrCode = -1;
-            
-            //If tag message timer has not already been removed by the selector method
-            if (timer != nil) {
-                //Remove timer
-                [timer invalidate];
-                timer = nil;
-            }
         }
         
         else if ([message isEqualToString:@"tag off"]) {
@@ -681,34 +686,9 @@ bail:
             }
         }
         
-        else if ([message isEqualToString:@"tag found"]) {
-            //Update display
-            [[self infoBox] setText:@"TAG FOUND"];
-            sensorState = @"TAG FOUND";
-            //Reply with current tag number
-            [cblMgr send:@"tag found"];
-        }
-        
         else {
             NSLog(@"Error - The command \"%@\" is not recognized",message);
         }
-    }
-}
-
-//Called periodically to check the Communications rxBuffer for incoming virtual pheromone location from the ABS
-- (void)checkBufferForPheromone:(id)object {
-    //If message has been received by ABS
-    if ([[comm rxBuffer] length] > 0) {
-        //Transmit pheromone location to Arduino
-        [cblMgr send:@"pheromone"];
-        [cblMgr send:[comm rxBuffer]];
-      
-        //Remove timer
-        [timer invalidate];
-        timer = nil;
-        
-        //Reset buffer
-        [comm setRxBuffer:nil];
     }
 }
 

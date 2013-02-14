@@ -13,10 +13,11 @@
 #include <net/if_dl.h>
 
 const NSString* sessionID = @"Colony";
+const int MAX_RX_BUFFER_SIZE = 100;
 
 @implementation Communication
 
-@synthesize rxBuffer;
+@synthesize mocapHeading, pheromoneLocation, tagStatus;
 
 - (id)init {
     if (self = [super init]) {
@@ -53,7 +54,7 @@ const NSString* sessionID = @"Colony";
     [outputStream open];
     
     //Initialize buffer
-    rxBuffer = [[NSString alloc] init];
+    rxBuffer = [[NSMutableArray alloc] init];
     
     //Keep track of the host and the port so we can reconnect to it if needed
     host=server;
@@ -81,7 +82,7 @@ const NSString* sessionID = @"Colony";
 
 - (BOOL)send:(NSString*)message {
     //Ensure output stream is open
-    if ([outputStream streamStatus] == NSStreamStatusOpen) {
+    //if ([outputStream streamStatus] == NSStreamStatusOpen) {
         if ([txBuffer count] > 0) {
             NSString* str = [txBuffer objectAtIndex:0];
             [txBuffer removeObjectAtIndex:0];
@@ -90,17 +91,93 @@ const NSString* sessionID = @"Colony";
         NSData *data = [[NSData alloc] initWithData:[message dataUsingEncoding:NSASCIIStringEncoding]];
         [outputStream write:[data bytes] maxLength:[data length]];
         return YES;
-    }
-    else {
-        if (message != nil) {
-           [txBuffer addObject:message];
-        }
-    }
-    return NO;
+    //}
+    //else {
+        //if (message != nil) {
+         //  [txBuffer addObject:message];
+        //}
+    //}
+    //return NO;
 }
 
-- (void)receive:(NSString *)message {
-    rxBuffer = message;
+- (void)receive:(NSString *)message {    
+    //Split string around occurances of delimiter
+    NSString *delimiter = @"\n";
+    NSMutableArray *messages = [[message componentsSeparatedByString:delimiter] mutableCopy];
+    
+    //If there were messages received
+    if (([messages count] > 0)
+        //and there are messages remaining in the buffer
+        && ([rxBuffer count] > 0)
+        //and the final message in the buffer is not the empty string
+        && (![[rxBuffer lastObject] isEqualToString:@""]))
+    {
+        //Then the final message must be incomplete, so we concatenate it with the first message in the new array,
+        //then we remove both message fragments
+        NSString *concatenatedMessage = [[rxBuffer lastObject] stringByAppendingString:[messages objectAtIndex:0]];
+        [rxBuffer removeLastObject];
+        [messages removeObjectAtIndex:0];
+        
+        //Split string around occurances of delimiter
+        NSMutableArray *splitMessage = [[concatenatedMessage componentsSeparatedByString:delimiter] mutableCopy];
+        
+        //Append
+        [rxBuffer addObjectsFromArray:splitMessage];
+    }
+    
+    //Append new messages onto buffer
+    [rxBuffer addObjectsFromArray:messages];
+    
+    NSString* msg = nil;
+    while ((msg = [self getMessage]) != nil) {
+        NSArray* splitMessage = [msg componentsSeparatedByString:@","];
+        
+        if ([splitMessage count] == 2) {
+            NSString* msgTag = [splitMessage objectAtIndex:0];
+            NSString* msgInfo = [splitMessage objectAtIndex:1];
+            
+            if ([msgTag isEqualToString:@"heading"]) {
+                [self setMocapHeading:msgInfo];
+            }
+            else if ([msgTag isEqualToString:@"tag"]) {
+                [self setTagStatus:msgInfo];
+            }
+        }
+
+        else if ([splitMessage count] == 3) {
+            NSString* msgTag = [splitMessage objectAtIndex:0];
+            NSString* msgInfo = [NSString stringWithFormat:@"%@,%@",[splitMessage objectAtIndex:1],[splitMessage objectAtIndex:2]];
+            
+            if ([msgTag isEqualToString:@"pheromone"]) {
+                [self setPheromoneLocation:msgInfo];
+            }
+        }
+    }
+}
+
+- (NSString*)getMessage
+{
+    //If there are at least 2 messages remaining in the buffer
+    if ([rxBuffer count] > 1)
+    {
+        //Copy and remove the first message
+        NSString *message = [rxBuffer objectAtIndex:0];
+        [rxBuffer removeObjectAtIndex:0];
+        
+        //Then return it
+        return message;
+    }
+    
+    //If only one message is found in the buffer
+    else if (([rxBuffer count] > 0)
+             //and the final message in the buffer is the empty string
+             && ([[rxBuffer lastObject] isEqualToString:@""])) {
+        //Then we remove it
+        [rxBuffer removeObjectAtIndex:0];
+    }
+    
+    //Return nil for all other cases
+    return nil;
 }
 
 - (void)reconnect:(id)object {
@@ -196,9 +273,7 @@ const NSString* sessionID = @"Colony";
                     len = [inputStream read:buffer maxLength:sizeof(buffer)];
                     if (len > 0) {
                         NSString *data = [[NSString alloc] initWithBytes:buffer length:len encoding:NSASCIIStringEncoding];
-                        
                         if (data != nil) {
-                            NSLog(@"server said: %@", data);
                             [self receive:data];
                         }
                     }
@@ -207,7 +282,7 @@ const NSString* sessionID = @"Colony";
             break;
             
         case NSStreamEventHasSpaceAvailable:
-            NSLog(@"Server has space available for writing");
+            //NSLog(@"Server has space available for writing");
             break;
             
 		case NSStreamEventErrorOccurred:

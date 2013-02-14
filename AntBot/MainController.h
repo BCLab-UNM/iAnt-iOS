@@ -12,9 +12,11 @@
 #import "Communication.h"
 #import "ImageRecognition.h"
 #import "RelativeMotion.h"
+#import "Utilities.h"
 #import <Decoder.h>
 #import <QRCodeReader.h>
 #import "TwoDDecoderResult.h"
+#import <math.h>
 
 @interface MainController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, RscMgrDelegate, DecoderDelegate> {
     
@@ -32,7 +34,6 @@
     dispatch_queue_t videoDataOutputQueue;
     AVCaptureSession *session;
     
-    NSTimer *timer;
     NSString *sensorState;
     int qrCode;
     int nestDistance;

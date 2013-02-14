@@ -16,6 +16,7 @@
     NSString* host;
     int port;
     NSTimer* reconnectTimer;
+    NSMutableArray* rxBuffer;
     NSMutableArray* txBuffer;
     GKSession* bluetoothSession;
 }
@@ -25,9 +26,12 @@
 
 - (BOOL)send:(NSString*)message;
 - (void)receive:(NSString*)message;
+- (NSString*)getMessage;
 
 - (NSString*) getMacAddress;
 
-@property NSString* rxBuffer;
+@property NSString* mocapHeading;
+@property NSString* pheromoneLocation;
+@property NSString* tagStatus;
 
 @end
