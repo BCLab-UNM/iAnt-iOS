@@ -510,12 +510,28 @@ bail:
             [comm removeObserver:self forKeyPath:@"mocapHeading"];
         }
     }
-    else if ([keyPath isEqualToString:@"pheromoneLocation"] && [sensorState isEqualToString:@"PHEROMONE"]) {
+    else if ([keyPath isEqualToString:@"pheromoneLocation"]) {
         [cblMgr send:@"pheromone"];
         [cblMgr send:[NSString stringWithFormat:@"%@\n",[comm pheromoneLocation]]];
     }
     else if ([keyPath isEqualToString:@"tagStatus"]) {
         [[self infoBox] setText:[NSString stringWithFormat:@"%@ TAG FOUND     %d",[[comm tagStatus] uppercaseString],qrCode]];
+        
+        @try {
+            //If we receive tag information while the mocapHeading is being monitored,
+            //  then we need to remove the mocapHeading observer and send a stop message to the Arduino
+            [comm removeObserver:self forKeyPath:@"mocapHeading"];
+            
+            //If mocapHeading is *not* being monitored, @catch will handle the exception
+            //   and the stop message will never be sent
+            short int data[2] = {0,0};
+            [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
+            [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
+        }
+        @catch (NSException *exception) {
+            //do nothing, mocapHeading was not being observed
+        }
+
         [cblMgr send:[comm tagStatus]];
         if ([[comm tagStatus] isEqualToString:@"new"]) {
             [cblMgr send:[NSString stringWithFormat:@"%d\n",qrCode]];
@@ -644,11 +660,6 @@ bail:
             [cblMgr send:[NSString stringWithFormat:@"%d\n",nestDistance]];
         }
 
-        else if ([message isEqualToString:@"pheromone"]) {
-            [[self infoBox] setText:@"PHEROMONE"];
-            sensorState = @"PHEROMONE";
-        }
-        
         else if ([message hasPrefix:@"print"]) {
             int wordLength = 5;
             NSString* data = [message substringWithRange:NSMakeRange(wordLength, [message length] - wordLength)];
