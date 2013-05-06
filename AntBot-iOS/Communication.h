@@ -1,11 +1,3 @@
-//
-//  Communication.h
-//  AntBot-iOS
-//
-//  Created by Joshua Hecker
-//  Moses Lab, Department of Computer Science, University of New Mexico.
-//
-
 #import <GameKit/GameKit.h>
 
 @interface Communication : NSObject <NSStreamDelegate, GKSessionDelegate> {
@@ -33,5 +25,6 @@
 @property NSString* mocapHeading;
 @property NSString* pheromoneLocation;
 @property NSString* tagStatus;
+@property NSString* evolvedParameters;
 
 @end

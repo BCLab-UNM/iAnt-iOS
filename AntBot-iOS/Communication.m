@@ -131,26 +131,20 @@ const int MAX_RX_BUFFER_SIZE = 100;
     NSString* msg = nil;
     while ((msg = [self getMessage]) != nil) {
         NSArray* splitMessage = [msg componentsSeparatedByString:@","];
+        NSString* msgTag = [splitMessage objectAtIndex:0];
+        NSString* msgInfo = [[splitMessage subarrayWithRange:NSMakeRange(1, [splitMessage count] - 1)] componentsJoinedByString:@","];
         
-        if ([splitMessage count] == 2) {
-            NSString* msgTag = [splitMessage objectAtIndex:0];
-            NSString* msgInfo = [splitMessage objectAtIndex:1];
-            
-            if ([msgTag isEqualToString:@"heading"]) {
-                [self setMocapHeading:msgInfo];
-            }
-            else if ([msgTag isEqualToString:@"tag"]) {
-                [self setTagStatus:msgInfo];
-            }
+        if ([msgTag isEqualToString:@"heading"]) {
+            [self setMocapHeading:msgInfo];
         }
-
-        else if ([splitMessage count] == 3) {
-            NSString* msgTag = [splitMessage objectAtIndex:0];
-            NSString* msgInfo = [NSString stringWithFormat:@"%@,%@",[splitMessage objectAtIndex:1],[splitMessage objectAtIndex:2]];
-            
-            if ([msgTag isEqualToString:@"pheromone"]) {
-                [self setPheromoneLocation:msgInfo];
-            }
+        else if ([msgTag isEqualToString:@"tag"]) {
+            [self setTagStatus:msgInfo];
+        }
+        else if ([msgTag isEqualToString:@"pheromone"]) {
+            [self setPheromoneLocation:msgInfo];
+        }
+        else if ([msgTag isEqualToString:@"parameters"]) {
+            [self setEvolvedParameters:msgInfo];
         }
     }
 }
