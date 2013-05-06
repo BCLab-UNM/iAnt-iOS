@@ -659,6 +659,12 @@ bail:
             [cblMgr send:@"nest off"];
             [cblMgr send:[NSString stringWithFormat:@"%d\n",nestDistance]];
         }
+        
+        else if ([message isEqualToString:@"parameters"]) {
+            if ([comm evolvedParameters] != nil) {
+                [cblMgr send:[NSString stringWithFormat:@"%@\n",[comm evolvedParameters]]];
+            }
+        }
 
         else if ([message hasPrefix:@"print"]) {
             int wordLength = 5;
