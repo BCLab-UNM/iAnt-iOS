@@ -17,7 +17,7 @@ const int MAX_RX_BUFFER_SIZE = 100;
 
 @implementation Communication
 
-@synthesize mocapHeading, pheromoneLocation, tagStatus;
+@synthesize mocapHeading, pheromoneLocation, tagStatus, evolvedParameters;
 
 - (id)init {
     if (self = [super init]) {
