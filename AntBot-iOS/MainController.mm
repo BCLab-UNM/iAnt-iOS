@@ -13,7 +13,7 @@ const int BACK_REZ_VERT = 352;
 const int BACK_REZ_HOR = 288;
 const int FRONT_REZ_VERT = 192;
 const int FRONT_REZ_HOR = 144;
-const int NEST_THRESHOLD = 252;
+const int NEST_THRESHOLD = 240;
 
 #pragma MainController extension
 
