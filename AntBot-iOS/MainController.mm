@@ -662,6 +662,7 @@ bail:
         
         else if ([message isEqualToString:@"parameters"]) {
             if ([comm evolvedParameters] != nil) {
+                [cblMgr send:@"parameters"];
                 [cblMgr send:[NSString stringWithFormat:@"%@\n",[comm evolvedParameters]]];
             }
         }
