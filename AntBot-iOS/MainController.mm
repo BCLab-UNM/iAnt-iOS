@@ -48,7 +48,7 @@ const int NEST_THRESHOLD = 240;
     for (AVCaptureDevice *d in [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo]) {
 		if ([d position] == position) {
             deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:(AVCaptureDevice*)d error:nil];
-            [[UIScreen mainScreen] setBrightness:1];
+            [[UIScreen mainScreen] setBrightness:0];
             NSError *message = nil;
             if ([d lockForConfiguration:&message]) {
                 [d setWhiteBalanceMode:AVCaptureWhiteBalanceModeLocked];
@@ -143,7 +143,6 @@ bail:
             void (^hideAllLayers)(void) = ^{
                 NSEnumerator *index = [[previewLayer sublayers] objectEnumerator];
                 CALayer *featureLayer = nil;
-                [index nextObject]; //drop first layer, start at layer two
                 //Enumerate through sublayers
                 while (featureLayer = [index nextObject]) {
                     //Hide layer
