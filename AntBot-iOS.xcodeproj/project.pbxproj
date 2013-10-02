@@ -25,48 +25,31 @@
 		423D2E1C1514CFEB00B5231E /* MainController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 423D2E181514CFEB00B5231E /* MainController.mm */; };
 		423D2E251514D04700B5231E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 423D2E231514D04700B5231E /* main.m */; };
 		423F66A0152237A70001F9D3 /* ImageRecognition.mm in Sources */ = {isa = PBXBuildFile; fileRef = 423F669F152237A70001F9D3 /* ImageRecognition.mm */; };
-		424573C415E88A3800F7A97B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 424573BE15E88A3800F7A97B /* Default.png */; };
-		424573C515E88A3800F7A97B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 424573BF15E88A3800F7A97B /* Default@2x.png */; };
-		424573C615E88A3800F7A97B /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 424573C015E88A3800F7A97B /* Icon.png */; };
-		424573C715E88A3800F7A97B /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 424573C115E88A3800F7A97B /* Icon@2x.png */; };
-		424573C815E88A3800F7A97B /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 424573C215E88A3800F7A97B /* mask.png */; };
-		424573C915E88A3800F7A97B /* squarePNG.png in Resources */ = {isa = PBXBuildFile; fileRef = 424573C315E88A3800F7A97B /* squarePNG.png */; };
 		4256FE811579550C008FC425 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4256FE801579550C008FC425 /* libiconv.dylib */; };
 		4256FE841579559E008FC425 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4256FE831579559E008FC425 /* QuartzCore.framework */; };
 		4257B683159808A10072054D /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4257B682159808A10072054D /* MainStoryboard.storyboard */; };
+		425975B217FCB415002B1BA9 /* libRscMgrUniv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 425975B017FCB415002B1BA9 /* libRscMgrUniv.a */; };
+		425975B317FCB415002B1BA9 /* libZXingWidget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 425975B117FCB415002B1BA9 /* libZXingWidget.a */; };
+		425975BC17FCB430002B1BA9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 425975B517FCB430002B1BA9 /* Default-568h@2x.png */; };
+		425975BD17FCB430002B1BA9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 425975B617FCB430002B1BA9 /* Default.png */; };
+		425975BE17FCB430002B1BA9 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 425975B717FCB430002B1BA9 /* Default@2x.png */; };
+		425975BF17FCB430002B1BA9 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 425975B817FCB430002B1BA9 /* Icon.png */; };
+		425975C017FCB430002B1BA9 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 425975B917FCB430002B1BA9 /* Icon@2x.png */; };
+		425975C117FCB430002B1BA9 /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 425975BA17FCB430002B1BA9 /* mask.png */; };
+		425975C217FCB430002B1BA9 /* squarePNG.png in Resources */ = {isa = PBXBuildFile; fileRef = 425975BB17FCB430002B1BA9 /* squarePNG.png */; };
 		4269662A15B9D07B00BF7597 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4269662715B9D06300BF7597 /* SystemConfiguration.framework */; };
-		426B1FF81610AA8A001FA794 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 426B1FF71610AA8A001FA794 /* Default-568h@2x.png */; };
 		427F3C0415B4909300C2CB85 /* OpenCV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42042CEE156E78780053FC41 /* OpenCV.framework */; };
 		427F3C0B15B4A60600C2CB85 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F3C0A15B4A60600C2CB85 /* libz.dylib */; };
 		427F3C0D15B4A82900C2CB85 /* RelativeMotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 427F3C0C15B4A82900C2CB85 /* RelativeMotion.m */; };
 		427F4AA414A57E2B003F3E53 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4AA314A57E2B003F3E53 /* UIKit.framework */; };
 		427F4AA614A57E2B003F3E53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4AA514A57E2B003F3E53 /* Foundation.framework */; };
 		427F4AA814A57E2B003F3E53 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4AA714A57E2B003F3E53 /* CoreGraphics.framework */; };
-		427F4ADD14A58001003F3E53 /* libRscMgrUniv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4ADC14A58001003F3E53 /* libRscMgrUniv.a */; };
 		427F4ADF14A58048003F3E53 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4ADE14A58048003F3E53 /* ExternalAccessory.framework */; };
-		42AFA50216234685009355CD /* libZXingWidget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AFA4FE1623358B009355CD /* libZXingWidget.a */; };
 		42BC34DC14A98D5700692DDE /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42BC34DB14A98D5600692DDE /* CoreMotion.framework */; };
 		42BEFEC216BC7FE80095EE7C /* Utilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 42BEFEC116BC7FE80095EE7C /* Utilities.mm */; };
 		42D1C2191618FFDC00A7A8E7 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D1C2171618FFB200A7A8E7 /* GameKit.framework */; };
 		42F799FA161807FE007C2421 /* Communication.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F799F9161807FE007C2421 /* Communication.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		42AFA4FD1623358B009355CD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 42AFA4F51623358B009355CD /* ZXingWidget.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D2AAC07E0554694100DB518D;
-			remoteInfo = ZXingWidget;
-		};
-		42AFA4FF1623358B009355CD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 42AFA4F51623358B009355CD /* ZXingWidget.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1D60398D13DF7CAD006F4B51;
-			remoteInfo = ZXingTests;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		42042CEE156E78780053FC41 /* OpenCV.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCV.framework; path = "AntBot-iOS/OpenCV.framework"; sourceTree = "<group>"; };
@@ -101,17 +84,19 @@
 		423F669F152237A70001F9D3 /* ImageRecognition.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ImageRecognition.mm; path = "AntBot-iOS/ImageRecognition.mm"; sourceTree = SOURCE_ROOT; };
 		4242975215B51F9700CD2A74 /* AmbientLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AmbientLight.h; path = "AntBot-iOS/AmbientLight.h"; sourceTree = SOURCE_ROOT; };
 		4242975315B51F9700CD2A74 /* AmbientLight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AmbientLight.m; path = "AntBot-iOS/AmbientLight.m"; sourceTree = SOURCE_ROOT; };
-		424573BE15E88A3800F7A97B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = images/Default.png; sourceTree = SOURCE_ROOT; };
-		424573BF15E88A3800F7A97B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "images/Default@2x.png"; sourceTree = SOURCE_ROOT; };
-		424573C015E88A3800F7A97B /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = images/Icon.png; sourceTree = SOURCE_ROOT; };
-		424573C115E88A3800F7A97B /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "images/Icon@2x.png"; sourceTree = SOURCE_ROOT; };
-		424573C215E88A3800F7A97B /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mask.png; path = images/mask.png; sourceTree = SOURCE_ROOT; };
-		424573C315E88A3800F7A97B /* squarePNG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = squarePNG.png; path = images/squarePNG.png; sourceTree = SOURCE_ROOT; };
 		4256FE801579550C008FC425 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		4256FE831579559E008FC425 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4257B682159808A10072054D /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainStoryboard.storyboard; path = "AntBot-iOS/MainStoryboard.storyboard"; sourceTree = SOURCE_ROOT; };
+		425975B017FCB415002B1BA9 /* libRscMgrUniv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRscMgrUniv.a; path = "AntBot-iOS/lib/libRscMgrUniv.a"; sourceTree = SOURCE_ROOT; };
+		425975B117FCB415002B1BA9 /* libZXingWidget.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZXingWidget.a; path = "AntBot-iOS/lib/libZXingWidget.a"; sourceTree = SOURCE_ROOT; };
+		425975B517FCB430002B1BA9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		425975B617FCB430002B1BA9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		425975B717FCB430002B1BA9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		425975B817FCB430002B1BA9 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		425975B917FCB430002B1BA9 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		425975BA17FCB430002B1BA9 /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mask.png; sourceTree = "<group>"; };
+		425975BB17FCB430002B1BA9 /* squarePNG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = squarePNG.png; sourceTree = "<group>"; };
 		4269662715B9D06300BF7597 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		426B1FF71610AA8A001FA794 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "images/Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
 		426E73B716E9680600868D29 /* AntBot-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "AntBot-iOS-Info.plist"; path = "AntBot-iOS/AntBot-iOS-Info.plist"; sourceTree = SOURCE_ROOT; };
 		426E73B816E9680600868D29 /* AntBot-iOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "AntBot-iOS-Prefix.pch"; path = "AntBot-iOS/AntBot-iOS-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		427F3C0A15B4A60600C2CB85 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -121,17 +106,12 @@
 		427F4AA314A57E2B003F3E53 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		427F4AA514A57E2B003F3E53 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		427F4AA714A57E2B003F3E53 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		427F4AD914A58001003F3E53 /* redparkSerial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = redparkSerial.h; sourceTree = "<group>"; };
-		427F4ADA14A58001003F3E53 /* RscMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RscMgr.h; sourceTree = "<group>"; };
-		427F4ADC14A58001003F3E53 /* libRscMgrUniv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libRscMgrUniv.a; sourceTree = "<group>"; };
 		427F4ADE14A58048003F3E53 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
-		42AFA4F51623358B009355CD /* ZXingWidget.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ZXingWidget.xcodeproj; path = "AntBot-iOS/zxing/iphone/ZXingWidget/ZXingWidget.xcodeproj"; sourceTree = "<group>"; };
 		42BB468D153F07520034D665 /* Communication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Communication.h; path = "AntBot-iOS/Communication.h"; sourceTree = SOURCE_ROOT; };
 		42BC34DB14A98D5600692DDE /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		42BEFEC016BC7FE80095EE7C /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utilities.h; path = "AntBot-iOS/Utilities.h"; sourceTree = SOURCE_ROOT; };
 		42BEFEC116BC7FE80095EE7C /* Utilities.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Utilities.mm; path = "AntBot-iOS/Utilities.mm"; sourceTree = SOURCE_ROOT; };
 		42D1C2171618FFB200A7A8E7 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
-		42F1E1EC15AD36BE00F1ADEB /* libIOKit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libIOKit.dylib; path = usr/lib/libIOKit.dylib; sourceTree = SDKROOT; };
 		42F799F9161807FE007C2421 /* Communication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Communication.m; path = "AntBot-iOS/Communication.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -140,15 +120,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42AFA50216234685009355CD /* libZXingWidget.a in Frameworks */,
 				4221A9BD162246020055C9C8 /* AudioToolbox.framework in Frameworks */,
 				42D1C2191618FFDC00A7A8E7 /* GameKit.framework in Frameworks */,
 				4269662A15B9D07B00BF7597 /* SystemConfiguration.framework in Frameworks */,
+				425975B317FCB415002B1BA9 /* libZXingWidget.a in Frameworks */,
 				427F3C0B15B4A60600C2CB85 /* libz.dylib in Frameworks */,
 				4256FE841579559E008FC425 /* QuartzCore.framework in Frameworks */,
 				4256FE811579550C008FC425 /* libiconv.dylib in Frameworks */,
 				423B95971530E65B00A26A03 /* AVFoundation.framework in Frameworks */,
 				427F4AA814A57E2B003F3E53 /* CoreGraphics.framework in Frameworks */,
+				425975B217FCB415002B1BA9 /* libRscMgrUniv.a in Frameworks */,
 				423B959E1530EFEC00A26A03 /* CoreImage.framework in Frameworks */,
 				420CC92D151639A6003B29D3 /* CoreLocation.framework in Frameworks */,
 				423B959C1530EFC100A26A03 /* CoreMedia.framework in Frameworks */,
@@ -158,7 +139,6 @@
 				427F3C0415B4909300C2CB85 /* OpenCV.framework in Frameworks */,
 				427F4AA614A57E2B003F3E53 /* Foundation.framework in Frameworks */,
 				427F4AA414A57E2B003F3E53 /* UIKit.framework in Frameworks */,
-				427F4ADD14A58001003F3E53 /* libRscMgrUniv.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,12 +162,24 @@
 			name = "IR Utilities";
 			sourceTree = "<group>";
 		};
+		425975B417FCB430002B1BA9 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				425975B517FCB430002B1BA9 /* Default-568h@2x.png */,
+				425975B617FCB430002B1BA9 /* Default.png */,
+				425975B717FCB430002B1BA9 /* Default@2x.png */,
+				425975B817FCB430002B1BA9 /* Icon.png */,
+				425975B917FCB430002B1BA9 /* Icon@2x.png */,
+				425975BA17FCB430002B1BA9 /* mask.png */,
+				425975BB17FCB430002B1BA9 /* squarePNG.png */,
+			);
+			name = images;
+			path = "AntBot-iOS/images";
+			sourceTree = SOURCE_ROOT;
+		};
 		427F4A9414A57E2B003F3E53 = {
 			isa = PBXGroup;
 			children = (
-				42AFA4F51623358B009355CD /* ZXingWidget.xcodeproj */,
-				427F4AD814A58001003F3E53 /* inc */,
-				427F4ADB14A58001003F3E53 /* lib */,
 				427F4AA914A57E2B003F3E53 /* AntBot-iOS */,
 				427F4AA214A57E2B003F3E53 /* Frameworks */,
 				427F4AA014A57E2B003F3E53 /* Products */,
@@ -206,7 +198,6 @@
 			isa = PBXGroup;
 			children = (
 				427F3C0A15B4A60600C2CB85 /* libz.dylib */,
-				42F1E1EC15AD36BE00F1ADEB /* libIOKit.dylib */,
 				4256FE801579550C008FC425 /* libiconv.dylib */,
 				4221A9BB162245F60055C9C8 /* AudioToolbox.framework */,
 				4256FE831579559E008FC425 /* QuartzCore.framework */,
@@ -260,13 +251,8 @@
 		427F4AAA14A57E2B003F3E53 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				426B1FF71610AA8A001FA794 /* Default-568h@2x.png */,
-				424573BE15E88A3800F7A97B /* Default.png */,
-				424573BF15E88A3800F7A97B /* Default@2x.png */,
-				424573C015E88A3800F7A97B /* Icon.png */,
-				424573C115E88A3800F7A97B /* Icon@2x.png */,
-				424573C215E88A3800F7A97B /* mask.png */,
-				424573C315E88A3800F7A97B /* squarePNG.png */,
+				427F4ADB14A58001003F3E53 /* lib */,
+				425975B417FCB430002B1BA9 /* images */,
 				426E73B716E9680600868D29 /* AntBot-iOS-Info.plist */,
 				426E73B816E9680600868D29 /* AntBot-iOS-Prefix.pch */,
 				421743831514D0830003BF49 /* InfoPlist.strings */,
@@ -275,30 +261,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		427F4AD814A58001003F3E53 /* inc */ = {
-			isa = PBXGroup;
-			children = (
-				427F4AD914A58001003F3E53 /* redparkSerial.h */,
-				427F4ADA14A58001003F3E53 /* RscMgr.h */,
-			);
-			path = inc;
-			sourceTree = "<group>";
-		};
 		427F4ADB14A58001003F3E53 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				427F4ADC14A58001003F3E53 /* libRscMgrUniv.a */,
+				425975B017FCB415002B1BA9 /* libRscMgrUniv.a */,
+				425975B117FCB415002B1BA9 /* libZXingWidget.a */,
 			);
-			path = lib;
-			sourceTree = "<group>";
-		};
-		42AFA4F61623358B009355CD /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				42AFA4FE1623358B009355CD /* libZXingWidget.a */,
-				42AFA5001623358B009355CD /* ZXingTests.octest */,
-			);
-			name = Products;
+			name = lib;
+			path = ../lib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,8 +278,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 427F4AD214A57E2B003F3E53 /* Build configuration list for PBXNativeTarget "AntBot-iOS" */;
 			buildPhases = (
-				427F4A9B14A57E2B003F3E53 /* Sources */,
 				427F4A9C14A57E2B003F3E53 /* Frameworks */,
+				427F4A9B14A57E2B003F3E53 /* Sources */,
 				427F4A9D14A57E2B003F3E53 /* Resources */,
 			);
 			buildRules = (
@@ -345,12 +315,6 @@
 			mainGroup = 427F4A9414A57E2B003F3E53;
 			productRefGroup = 427F4AA014A57E2B003F3E53 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 42AFA4F61623358B009355CD /* Products */;
-					ProjectRef = 42AFA4F51623358B009355CD /* ZXingWidget.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				427F4A9E14A57E2B003F3E53 /* AntBot-iOS */,
@@ -358,37 +322,20 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXReferenceProxy section */
-		42AFA4FE1623358B009355CD /* libZXingWidget.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libZXingWidget.a;
-			remoteRef = 42AFA4FD1623358B009355CD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		42AFA5001623358B009355CD /* ZXingTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ZXingTests.octest;
-			remoteRef = 42AFA4FF1623358B009355CD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
 /* Begin PBXResourcesBuildPhase section */
 		427F4A9D14A57E2B003F3E53 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				425975BE17FCB430002B1BA9 /* Default@2x.png in Resources */,
 				421743851514D0830003BF49 /* InfoPlist.strings in Resources */,
 				4257B683159808A10072054D /* MainStoryboard.storyboard in Resources */,
-				424573C415E88A3800F7A97B /* Default.png in Resources */,
-				424573C515E88A3800F7A97B /* Default@2x.png in Resources */,
-				424573C615E88A3800F7A97B /* Icon.png in Resources */,
-				424573C715E88A3800F7A97B /* Icon@2x.png in Resources */,
-				424573C815E88A3800F7A97B /* mask.png in Resources */,
-				424573C915E88A3800F7A97B /* squarePNG.png in Resources */,
-				426B1FF81610AA8A001FA794 /* Default-568h@2x.png in Resources */,
+				425975BC17FCB430002B1BA9 /* Default-568h@2x.png in Resources */,
+				425975C217FCB430002B1BA9 /* squarePNG.png in Resources */,
+				425975BF17FCB430002B1BA9 /* Icon.png in Resources */,
+				425975C017FCB430002B1BA9 /* Icon@2x.png in Resources */,
+				425975C117FCB430002B1BA9 /* mask.png in Resources */,
+				425975BD17FCB430002B1BA9 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,20 +454,19 @@
 				GCC_PREFIX_HEADER = "AntBot-iOS/AntBot-iOS-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/AntBot-iOS\"",
-					"\"$(SRCROOT)/zxing/iphone/ZXingWidget/Classes\"/**",
-					"\"$(SRCROOT)/zxing/cpp/core/src/\"",
+					"\"$(SRCROOT)/AntBot-iOS/zxing/cpp\"",
+					"\"$(SRCROOT)/AntBot-iOS/zxing/objc\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/AntBot-iOS/AntBot-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/lib\"";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/AntBot-iOS/lib\"";
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "AntBot-iOS";
 				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/AntBot-iOS\"/**";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/AntBot-iOS/rsc\"";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -538,20 +484,19 @@
 				GCC_PREFIX_HEADER = "AntBot-iOS/AntBot-iOS-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/AntBot-iOS\"",
-					"\"$(SRCROOT)/zxing/iphone/ZXingWidget/Classes\"/**",
-					"\"$(SRCROOT)/zxing/cpp/core/src/\"",
+					"\"$(SRCROOT)/AntBot-iOS/zxing/cpp\"",
+					"\"$(SRCROOT)/AntBot-iOS/zxing/objc\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/AntBot-iOS/AntBot-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/lib\"";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/AntBot-iOS/lib\"";
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "AntBot-iOS";
 				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/AntBot-iOS\"/**";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/AntBot-iOS/rsc\"";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

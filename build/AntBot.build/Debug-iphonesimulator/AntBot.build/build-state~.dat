@@ -1,634 +1,0 @@
-TAntBot
-v7
-r0
-t355698356.824858
-cCheck dependencies
-cProcessInfoPlistFile "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/Info.plist" AntBot/AntBot-Info.plist
-cProcessPCH /var/folders/MH/MHKVBw+OH8Sk-Dh92uloNU+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/AntBot-Prefix-dpgiruyzvabucagqxvpvhcamitjx/AntBot-Prefix.pch.pth AntBot/AntBot-Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/AbsoluteMotion.o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AbsoluteMotion.m" normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/AppDelegate.o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.m" normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/RelativeMotion.o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m" normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/ViewController.o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m" normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/main.o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/main.m" normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/ImageRecognition.o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ImageRecognition.m" normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCpResource build/Debug-iphonesimulator/AntBot.app/en.lproj/MainStoryboard.storyboard en.lproj/MainStoryboard.storyboard
-cCopyStringsFile "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/en.lproj/InfoPlist.strings" AntBot/en.lproj/InfoPlist.strings
-cCpResource build/Debug-iphonesimulator/AntBot.app/Default.png Default.png
-cCpResource build/Debug-iphonesimulator/AntBot.app/Default@2x.png Default@2x.png
-cCpResource build/Debug-iphonesimulator/AntBot.app/Icon.png Icon.png
-cCpResource build/Debug-iphonesimulator/AntBot.app/Icon@2x.png Icon@2x.png
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk
-c000000004D5C9B4E0000000000000110
-t1297914702
-s272
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/AVFoundation.framework/AVFoundation
-c000000004D5EBEC300000000001340C0
-t1298054851
-s1261760
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/AVFoundation.framework/Headers/AVFoundation.h
-c000000004D5EBEBB00000000000007D0
-t1298054843
-s2000
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics
-c000000004D54CFFA00000000002999B0
-t1297403898
-s2726320
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreImage.framework/CoreImage
-c00000000000000000000000000000000
-t2
-s0
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreLocation.framework/CoreLocation
-c000000004D54DEBC00000000000778F0
-t1297407676
-s489712
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreLocation.framework/Headers/CoreLocation.h
-c000000004D54DEB600000000000001D0
-t1297407670
-s464
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMedia.framework/CoreMedia
-c000000004D5C9AE3000000000006A720
-t1297914595
-s436000
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/CoreMotion
-c000000004D54DEC0000000000003B900
-t1297407680
-s243968
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CoreMotion.h
-c000000004D54DEBD00000000000001CB
-t1297407677
-s459
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreVideo.framework/CoreVideo
-c000000004D54D0CD0000000000019010
-t1297404109
-s102416
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/ExternalAccessory.framework/ExternalAccessory
-c000000004D54DEF6000000000001AD00
-t1297407734
-s109824
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/ExternalAccessory.framework/Headers/EAAccessory.h
-c000000004D54DEF200000000000007C8
-t1297407730
-s1992
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/ExternalAccessory.framework/Headers/EAAccessoryManager.h
-c000000004D54DEF20000000000000454
-t1297407730
-s1108
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/ExternalAccessory.framework/Headers/EASession.h
-c000000004D54DEF2000000000000039C
-t1297407730
-s924
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/ExternalAccessory.framework/Headers/ExternalAccessoryDefines.h
-c000000004D54DEF200000000000001F9
-t1297407730
-s505
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/Foundation.framework/Foundation
-c000000004D54CFE5000000000029DA70
-t1297403877
-s2742896
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h
-c000000004D54CFB80000000000001466
-t1297403832
-s5222
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.h
-c000000004D5615B40000000000000AA1
-t1297487284
-s2721
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/UIKit.framework/UIKit
-c000000004D5616030000000000766870
-t1297487363
-s7759984
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/usr/include/Availability.h
-c000000004D4F7A2B0000000000001B19
-t1297054251
-s6937
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AbsoluteMotion.h
-c000000004F81D98500000000000001F4
-t1333909893
-s500
-i<Foundation/Foundation.h>
-i<CoreLocation/CoreLocation.h>
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AbsoluteMotion.m
-c000000004F67F6E400000000000006E1
-t1332213476
-s1761
-i"AbsoluteMotion.h"
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AntBot-Prefix.pch
-c000000004F64995C000000000000013B
-t1331992924
-s315
-i<Availability.h>
-i<UIKit/UIKit.h>
-i<Foundation/Foundation.h>
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h
-c000000004F649980000000000000011D
-t1331992960
-s285
-i<UIKit/UIKit.h>
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.m
-c000000004F64999A0000000000000845
-t1331992986
-s2117
-i"AppDelegate.h"
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ImageRecognition.h
-c000000004F81DADF0000000000000286
-t1333910239
-s646
-i<AVFoundation/AVFoundation.h>
-i<Foundation/Foundation.h>
-i<UIKit/UIKit.h>
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ImageRecognition.m
-c000000004F81DD7400000000000014D7
-t1333910900
-s5335
-i"ImageRecognition.h"
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.h
-c000000004F64997E000000000000028A
-t1331992958
-s650
-i<Foundation/Foundation.h>
-i<CoreMotion/CoreMotion.h>
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m
-c000000004F66A05B0000000000000BFA
-t1332125787
-s3066
-i"RelativeMotion.h"
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h
-c000000004F7225970000000000000335
-t1332880791
-s821
-i<UIKit/UIKit.h>
-i"RscMgr.h"
-i"AbsoluteMotion.h"
-i"RelativeMotion.h"
-i"ImageRecognition.h"
-i<CoreLocation/CoreLocation.h>
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m
-c000000004F81DECB0000000000000DC7
-t1333911243
-s3527
-i"ViewController.h"
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/en.lproj/InfoPlist.strings
-c000000004EF546AB000000000000002D
-t1324697259
-s45
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/main.m
-c000000004EF546AB0000000000000159
-t1324697259
-s345
-i<UIKit/UIKit.h>
-i"AppDelegate.h"
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/Default.png
-c000000004F607EBF0000000000009835
-t1331723967
-s38965
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/Default@2x.png
-c000000004F607F04000000000001C3DE
-t1331724036
-s115678
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/Icon.png
-c000000004F5FF30E000000000000160E
-t1331688206
-s5646
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/Icon@2x.png
-c000000004F5FF3A800000000000026A5
-t1331688360
-s9893
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/AbsoluteMotion.o
-t1334005556
-s15748
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/AntBot.LinkFileList
-c000000004F834F32000000000000034F
-t1334005554
-s847
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/AppDelegate.o
-t2
-s0
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/ImageRecognition.o
-t1334005556
-s62564
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/RelativeMotion.o
-t2
-s0
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/ViewController.o
-t2
-s0
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/main.o
-t2
-s0
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app
-t2
-s0
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app.dSYM
-t2
-s0
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/AntBot
-t2
-s0
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/Default.png
-t1334005556
-s38965
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/Default@2x.png
-t1334005556
-s115678
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/Icon.png
-t1334005556
-s5646
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/Icon@2x.png
-t1334005556
-s9893
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/Info.plist
-t1334005554
-s971
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/PkgInfo
-t1334005554
-s8
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/en.lproj/InfoPlist.strings
-t1334005556
-s42
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/en.lproj/MainStoryboard.storyboard
-t1334005556
-s4611
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/en.lproj/MainStoryboard.storyboard
-c000000004F5D20B00000000000001203
-t1331503280
-s4611
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/inc/RscMgr.h
-c000000004EF5B4C000000000000010C9
-t1324725440
-s4297
-i<Foundation/Foundation.h>
-i<ExternalAccessory/ExternalAccessoryDefines.h>
-i<ExternalAccessory/EAAccessoryManager.h>
-i<ExternalAccessory/EAAccessory.h>
-i<ExternalAccessory/EASession.h>
-i"redparkSerial.h"
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/inc/redparkSerial.h
-c000000004DFFC87800000000000013E2
-t1308608632
-s5090
-
-N/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/lib/libRscMgrUniv.a
-c000000004E1D5055000000000002642C
-t1310543957
-s156716
-
-N/var/folders/MH/MHKVBw+OH8Sk-Dh92uloNU+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/AntBot-Prefix-dpgiruyzvabucagqxvpvhcamitjx/AntBot-Prefix.pch.pth
-t1334005555
-s3345864
-
-NAntBot/AntBot-Info.plist
-c000000004F80D16A00000000000006A7
-t1333842282
-s1703
-
-CCheck dependencies
-r0
-lSLF07#2@18"Check dependencies355698354#355698354#0(0"0(0#1#0"3343187568374212096#0"0#
-
-CCompileC build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/AbsoluteMotion.o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AbsoluteMotion.m" normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s355698355.291250
-e355698356.342614
-r1
-xCompileC
-xbuild/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/AbsoluteMotion.o
-x/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AbsoluteMotion.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-lSLF07#2@83"Compile /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AbsoluteMotion.m355698355#355698356#0(0"0(0#0#75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AbsoluteMotion.m8602485376#2135"    cd "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot"    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -pipe -fdiagnostics-print-source-range-info -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wmissing-prototypes -Wreturn-type -Wunused-variable -DDEBUG=1 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk -fexceptions -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -D__IPHONE_OS_VERSION_MIN_REQUIRED=40300 -iquote "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-generated-files.hmap" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-own-target-headers.hmap" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-all-target-headers.hmap" -iquote "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-project-headers.hmap" "-F/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/include" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/DerivedSources/i386" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/DerivedSources" -include /var/folders/MH/MHKVBw+OH8Sk-Dh92uloNU+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/AntBot-Prefix-dpgiruyzvabucagqxvpvhcamitjx/AntBot-Prefix.pch -c "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AbsoluteMotion.m" -o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/AbsoluteMotion.o"0#
-
-CCompileC build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/AppDelegate.o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.m" normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s355698355.293070
-e355698355.542943
-r0
-xCompileC
-xbuild/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/AppDelegate.o
-x/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-oIn file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.m:9:
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h:13:12: error: unknown property attribute 'strong'
-o @property (strong, nonatomic) UIWindow *window;
-o            ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h:13:1: warning: no 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed
-o @property (strong, nonatomic) UIWindow *window;
-o ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h:13:1: warning: default property attribute 'assign' not appropriate for non-gc object
-o2 warnings and 1 error generated.
-lSLF07#2@80"Compile /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.m355698355#355698355#0(694"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.m:9:/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h:13:12: error: unknown property attribute 'strong' @property (strong, nonatomic) UIWindow *window;            ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h:13:1: warning: no 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed @property (strong, nonatomic) UIWindow *window; ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h:13:1: warning: default property attribute 'assign' not appropriate for non-gc object2 warnings and 1 error generated.3(4@35"Unknown property attribute 'strong'355698355#98#123#2(7@97"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.m:9:355698355#0#98#0(6@72"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.m353685786#9#0#9#0#0"0(13@111"Unknown property attribute 'strong' in /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h355698355#18446744073709551615#0#0(6@72"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h353685760#13#12#0#0#0"0(6@72"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h353685760#13#12#0#0#28"unknown property attribute *0(22@77"No 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed355698355#284#166#2(7@97"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.m:9:355698355#18446744073709551615#0#0(6@72"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.m353685786#9#0#9#0#0"0(13@153"No 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed in /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h355698355#18446744073709551615#0#0(6@72"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h353685760#13#1#0#0#0"0(6@72"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h353685760#13#1#0#0#77"no 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed0(22@69"Default property attribute 'assign' not appropriate for non-gc object355698355#502#158#2(7@97"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.m:9:355698355#18446744073709551615#0#0(6@72"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.m353685786#9#0#9#0#0"0(13@145"Default property attribute 'assign' not appropriate for non-gc object in /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h355698355#18446744073709551615#0#0(6@72"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h353685760#13#1#0#0#0"0(6@72"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h353685760#13#1#0#0#69"default property attribute 'assign' not appropriate for non-gc object0(0#0#72"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.m8599641472#2129"    cd "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot"    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -pipe -fdiagnostics-print-source-range-info -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wmissing-prototypes -Wreturn-type -Wunused-variable -DDEBUG=1 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk -fexceptions -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -D__IPHONE_OS_VERSION_MIN_REQUIRED=40300 -iquote "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-generated-files.hmap" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-own-target-headers.hmap" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-all-target-headers.hmap" -iquote "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-project-headers.hmap" "-F/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/include" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/DerivedSources/i386" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/DerivedSources" -include /var/folders/MH/MHKVBw+OH8Sk-Dh92uloNU+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/AntBot-Prefix-dpgiruyzvabucagqxvpvhcamitjx/AntBot-Prefix.pch -c "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.m" -o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/AppDelegate.o"1#
-
-CCompileC build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/ImageRecognition.o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ImageRecognition.m" normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s355698356.014635
-e355698356.365895
-r1
-xCompileC
-xbuild/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/ImageRecognition.o
-x/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ImageRecognition.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ImageRecognition.m:73:3:{73:3-73:61}: warning: method '-connectionWithMediaType:' not found (return type defaults to 'id')
-o         [[videoDataOutput connectionWithMediaType:AVMediaTypeVideo] setEnabled:NO];
-o          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-o1 warning generated.
-lSLF07#2@85"Compile /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ImageRecognition.m355698356#355698356#0(357"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ImageRecognition.m:73:3:{73:3-73:61}: warning: method '-connectionWithMediaType:' not found (return type defaults to 'id')         [[videoDataOutput connectionWithMediaType:AVMediaTypeVideo] setEnabled:NO];          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~1 warning generated.1(22@75"Method '-connectionWithMediaType:' not found (return type defaults to 'id')355698356#0#182#0(6@77"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ImageRecognition.m355603700#73#3#0#0#49"method * not found (return type defaults to 'id')1(6@77"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ImageRecognition.m355603700#73#3#73#61#0#0#77"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ImageRecognition.m3275089324280537600#2139"    cd "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot"    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -pipe -fdiagnostics-print-source-range-info -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wmissing-prototypes -Wreturn-type -Wunused-variable -DDEBUG=1 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk -fexceptions -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -D__IPHONE_OS_VERSION_MIN_REQUIRED=40300 -iquote "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-generated-files.hmap" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-own-target-headers.hmap" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-all-target-headers.hmap" -iquote "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-project-headers.hmap" "-F/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/include" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/DerivedSources/i386" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/DerivedSources" -include /var/folders/MH/MHKVBw+OH8Sk-Dh92uloNU+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/AntBot-Prefix-dpgiruyzvabucagqxvpvhcamitjx/AntBot-Prefix.pch -c "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ImageRecognition.m" -o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/ImageRecognition.o"0#
-
-CCompileC build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/RelativeMotion.o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m" normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s355698355.543047
-e355698355.615997
-r0
-xCompileC
-xbuild/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/RelativeMotion.o
-x/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:15:22: error: ivars may not be placed in class extension
-o     CMMotionManager *motionManager;
-o                      ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:55:5: error: use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?
-o     motionManager = [[CMMotionManager alloc] init];
-o     ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:56:5: error: use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?
-o     motionManager.showsDeviceMovementDisplay = YES;
-o     ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:57:5: error: use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?
-o     motionManager.deviceMotionUpdateInterval = 1.0/60.0;
-o     ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:59:6: error: unknown receiver 'motionManager'; did you mean 'CMMotionManager'?
-o     [motionManager startDeviceMotionUpdates];
-o      ^~~~~~~~~~~~~
-o      CMMotionManager
-oIn file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:9:
-oIn file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.h:10:
-oIn file included from /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CoreMotion.h:17:
-o/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h:73:1: note: 'CMMotionManager' declared here
-o @interface CMMotionManager : NSObject
-o ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:59:5:{59:5-59:45}: warning: method '+startDeviceMotionUpdates' not found (return type defaults to 'id')
-o     [motionManager startDeviceMotionUpdates];
-o     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:60:6: error: unknown receiver 'motionManager'; did you mean 'CMMotionManager'?
-o     [motionManager startGyroUpdates];
-o      ^~~~~~~~~~~~~
-o      CMMotionManager
-oIn file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:9:
-oIn file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.h:10:
-oIn file included from /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CoreMotion.h:17:
-o/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h:73:1: note: 'CMMotionManager' declared here
-o @interface CMMotionManager : NSObject
-o ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:60:5:{60:5-60:37}: warning: method '+startGyroUpdates' not found (return type defaults to 'id')
-o     [motionManager startGyroUpdates];
-o     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:62:12: error: use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?
-o     while (motionManager.deviceMotion == nil) {}
-o            ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:67:6: error: unknown receiver 'motionManager'; did you mean 'CMMotionManager'?
-o     [motionManager stopDeviceMotionUpdates];
-o      ^~~~~~~~~~~~~
-o      CMMotionManager
-oIn file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:9:
-oIn file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.h:10:
-oIn file included from /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CoreMotion.h:17:
-o/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h:73:1: note: 'CMMotionManager' declared here
-o @interface CMMotionManager : NSObject
-o ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:67:5:{67:5-67:44}: warning: method '+stopDeviceMotionUpdates' not found (return type defaults to 'id')
-o     [motionManager stopDeviceMotionUpdates];
-o     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:68:6: error: unknown receiver 'motionManager'; did you mean 'CMMotionManager'?
-o     [motionManager stopGyroUpdates];
-o      ^~~~~~~~~~~~~
-o      CMMotionManager
-oIn file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:9:
-oIn file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.h:10:
-oIn file included from /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CoreMotion.h:17:
-o/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h:73:1: note: 'CMMotionManager' declared here
-o @interface CMMotionManager : NSObject
-o ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:68:5:{68:5-68:36}: warning: method '+stopGyroUpdates' not found (return type defaults to 'id')
-o     [motionManager stopGyroUpdates];
-o     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:69:2: error: use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?
-o         motionManager = nil;
-o         ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:80:25: error: use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?
-o     CMDeviceMotion *d = motionManager.deviceMotion;
-o                         ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:92:23: error: use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?
-o     if (timePassed >= motionManager.deviceMotionUpdateInterval)
-o                       ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:94:29: error: use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?
-o         CMDeviceMotion *d = motionManager.deviceMotion;
-o                             ^
-o4 warnings and 13 errors generated.
-lSLF07#2@83"Compile /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m355698355#355698355#0(6610"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:15:22: error: ivars may not be placed in class extension     CMMotionManager *motionManager;                      ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:55:5: error: use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?     motionManager = [[CMMotionManager alloc] init];     ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:56:5: error: use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?     motionManager.showsDeviceMovementDisplay = YES;     ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:57:5: error: use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?     motionManager.deviceMotionUpdateInterval = 1.0/60.0;     ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:59:6: error: unknown receiver 'motionManager'; did you mean 'CMMotionManager'?     [motionManager startDeviceMotionUpdates];      ^~~~~~~~~~~~~      CMMotionManagerIn file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:9:In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.h:10:In file included from /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CoreMotion.h:17:/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h:73:1: note: 'CMMotionManager' declared here @interface CMMotionManager : NSObject ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:59:5:{59:5-59:45}: warning: method '+startDeviceMotionUpdates' not found (return type defaults to 'id')     [motionManager startDeviceMotionUpdates];     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:60:6: error: unknown receiver 'motionManager'; did you mean 'CMMotionManager'?     [motionManager startGyroUpdates];      ^~~~~~~~~~~~~      CMMotionManagerIn file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:9:In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.h:10:In file included from /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CoreMotion.h:17:/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h:73:1: note: 'CMMotionManager' declared here @interface CMMotionManager : NSObject ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:60:5:{60:5-60:37}: warning: method '+startGyroUpdates' not found (return type defaults to 'id')     [motionManager startGyroUpdates];     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:62:12: error: use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?     while (motionManager.deviceMotion == nil) {}            ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:67:6: error: unknown receiver 'motionManager'; did you mean 'CMMotionManager'?     [motionManager stopDeviceMotionUpdates];      ^~~~~~~~~~~~~      CMMotionManagerIn file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:9:In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.h:10:In file included from /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CoreMotion.h:17:/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h:73:1: note: 'CMMotionManager' declared here @interface CMMotionManager : NSObject ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:67:5:{67:5-67:44}: warning: method '+stopDeviceMotionUpdates' not found (return type defaults to 'id')     [motionManager stopDeviceMotionUpdates];     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:68:6: error: unknown receiver 'motionManager'; did you mean 'CMMotionManager'?     [motionManager stopGyroUpdates];      ^~~~~~~~~~~~~      CMMotionManagerIn file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:9:In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.h:10:In file included from /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CoreMotion.h:17:/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h:73:1: note: 'CMMotionManager' declared here @interface CMMotionManager : NSObject ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:68:5:{68:5-68:36}: warning: method '+stopGyroUpdates' not found (return type defaults to 'id')     [motionManager stopGyroUpdates];     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:69:2: error: use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?         motionManager = nil;         ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:80:25: error: use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?     CMDeviceMotion *d = motionManager.deviceMotion;                         ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:92:23: error: use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?     if (timePassed >= motionManager.deviceMotionUpdateInterval)                       ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:94:29: error: use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?         CMDeviceMotion *d = motionManager.deviceMotion;                             ^4 warnings and 13 errors generated.17(4@42"Ivars may not be placed in class extension355698355#0#133#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#15#22#0#0#28"ivars may not be placed in *0(4@77"Use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?355698355#194#167#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#55#5#0#0#47"use of undeclared identifier *; did you mean *?0(4@77"Use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?355698355#421#167#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#56#5#0#0#47"use of undeclared identifier *; did you mean *?0(4@77"Use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?355698355#648#167#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#57#5#0#0#47"use of undeclared identifier *; did you mean *?0(4@65"Unknown receiver 'motionManager'; did you mean 'CMMotionManager'?355698355#880#155#1(13@31"'CMMotionManager' declared here355698355#1505#201#4(7@177"In file included from /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CoreMotion.h:17:355698355#1327#178#0(6@151"/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CoreMotion.h319100477#17#0#17#0#0"0(7@101"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.h:10:355698355#1225#102#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.h353685758#10#0#10#0#0"0(7@100"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:9:355698355#1124#101#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#9#0#9#0#0"0(13@191"'CMMotionManager' declared here in /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h355698355#18446744073709551615#0#0(6@156"/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h319100477#73#1#0#0#0"0(6@156"/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h319100477#73#1#0#0#15"* declared here0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#59#6#0#0#35"unknown receiver *; did you mean *?0(22@75"Method '+startDeviceMotionUpdates' not found (return type defaults to 'id')355698355#1748#180#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#59#5#0#0#49"method * not found (return type defaults to 'id')1(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#59#5#59#45#4@65"Unknown receiver 'motionManager'; did you mean 'CMMotionManager'?355698355#2021#155#1(13@31"'CMMotionManager' declared here355698355#2638#201#4(7@177"In file included from /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CoreMotion.h:17:355698355#18446744073709551615#0#0(6@151"/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CoreMotion.h319100477#17#0#17#0#0"0(7@101"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.h:10:355698355#18446744073709551615#0#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.h353685758#10#0#10#0#0"0(7@100"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:9:355698355#18446744073709551615#0#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#9#0#9#0#0"0(13@191"'CMMotionManager' declared here in /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h355698355#18446744073709551615#0#0(6@156"/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h319100477#73#1#0#0#0"0(6@156"/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h319100477#73#1#0#0#15"* declared here0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#60#6#0#0#35"unknown receiver *; did you mean *?0(22@67"Method '+startGyroUpdates' not found (return type defaults to 'id')355698355#2881#172#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#60#5#0#0#49"method * not found (return type defaults to 'id')1(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#60#5#60#37#4@77"Use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?355698355#3130#168#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#62#12#0#0#47"use of undeclared identifier *; did you mean *?0(4@65"Unknown receiver 'motionManager'; did you mean 'CMMotionManager'?355698355#3362#155#1(13@31"'CMMotionManager' declared here355698355#3986#201#4(7@177"In file included from /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CoreMotion.h:17:355698355#18446744073709551615#0#0(6@151"/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CoreMotion.h319100477#17#0#17#0#0"0(7@101"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.h:10:355698355#18446744073709551615#0#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.h353685758#10#0#10#0#0"0(7@100"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:9:355698355#18446744073709551615#0#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#9#0#9#0#0"0(13@191"'CMMotionManager' declared here in /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h355698355#18446744073709551615#0#0(6@156"/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h319100477#73#1#0#0#0"0(6@156"/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h319100477#73#1#0#0#15"* declared here0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#67#6#0#0#35"unknown receiver *; did you mean *?0(22@74"Method '+stopDeviceMotionUpdates' not found (return type defaults to 'id')355698355#4229#179#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#67#5#0#0#49"method * not found (return type defaults to 'id')1(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#67#5#67#44#4@65"Unknown receiver 'motionManager'; did you mean 'CMMotionManager'?355698355#4499#155#1(13@31"'CMMotionManager' declared here355698355#5115#201#4(7@177"In file included from /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CoreMotion.h:17:355698355#18446744073709551615#0#0(6@151"/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CoreMotion.h319100477#17#0#17#0#0"0(7@101"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.h:10:355698355#18446744073709551615#0#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.h353685758#10#0#10#0#0"0(7@100"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m:9:355698355#18446744073709551615#0#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#9#0#9#0#0"0(13@191"'CMMotionManager' declared here in /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h355698355#18446744073709551615#0#0(6@156"/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h319100477#73#1#0#0#0"0(6@156"/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/CoreMotion.framework/Headers/CMMotionManager.h319100477#73#1#0#0#15"* declared here0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#68#6#0#0#35"unknown receiver *; did you mean *?0(22@66"Method '+stopGyroUpdates' not found (return type defaults to 'id')355698355#5358#171#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#68#5#0#0#49"method * not found (return type defaults to 'id')1(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#68#5#68#36#4@77"Use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?355698355#5604#167#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#69#2#0#0#47"use of undeclared identifier *; did you mean *?0(4@77"Use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?355698355#5812#168#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#80#25#0#0#47"use of undeclared identifier *; did you mean *?0(4@77"Use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?355698355#6060#168#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#92#23#0#0#47"use of undeclared identifier *; did you mean *?0(4@77"Use of undeclared identifier 'motionManager'; did you mean 'CMMotionManager'?355698355#6318#168#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m353818587#94#29#0#0#47"use of undeclared identifier *; did you mean *?0(0#0#75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m8602299232#2135"    cd "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot"    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -pipe -fdiagnostics-print-source-range-info -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wmissing-prototypes -Wreturn-type -Wunused-variable -DDEBUG=1 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk -fexceptions -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -D__IPHONE_OS_VERSION_MIN_REQUIRED=40300 -iquote "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-generated-files.hmap" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-own-target-headers.hmap" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-all-target-headers.hmap" -iquote "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-project-headers.hmap" "-F/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/include" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/DerivedSources/i386" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/DerivedSources" -include /var/folders/MH/MHKVBw+OH8Sk-Dh92uloNU+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/AntBot-Prefix-dpgiruyzvabucagqxvpvhcamitjx/AntBot-Prefix.pch -c "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/RelativeMotion.m" -o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/RelativeMotion.o"1#
-
-CCompileC build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/ViewController.o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m" normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s355698355.616213
-e355698355.793247
-r0
-xCompileC
-xbuild/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/ViewController.o
-x/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-oIn file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m:9:
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h:29:12: error: unknown property attribute 'strong'
-o @property (strong, nonatomic) IBOutlet UISwitch *toggleSwitch;
-o            ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h:29:1: warning: no 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed
-o @property (strong, nonatomic) IBOutlet UISwitch *toggleSwitch;
-o ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h:29:1: warning: default property attribute 'assign' not appropriate for non-gc object
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h:31:12: error: unknown property attribute 'strong'
-o @property (strong, nonatomic) IBOutlet UIButton *pressButton;
-o            ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h:31:1: warning: no 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed
-o @property (strong, nonatomic) IBOutlet UIButton *pressButton;
-o ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h:31:1: warning: default property attribute 'assign' not appropriate for non-gc object
-o4 warnings and 2 errors generated.
-lSLF07#2@83"Compile /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m355698355#355698355#0(1336"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m:9:/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h:29:12: error: unknown property attribute 'strong' @property (strong, nonatomic) IBOutlet UISwitch *toggleSwitch;            ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h:29:1: warning: no 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed @property (strong, nonatomic) IBOutlet UISwitch *toggleSwitch; ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h:29:1: warning: default property attribute 'assign' not appropriate for non-gc object/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h:31:12: error: unknown property attribute 'strong' @property (strong, nonatomic) IBOutlet UIButton *pressButton;            ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h:31:1: warning: no 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed @property (strong, nonatomic) IBOutlet UIButton *pressButton; ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h:31:1: warning: default property attribute 'assign' not appropriate for non-gc object4 warnings and 2 errors generated.6(4@35"Unknown property attribute 'strong'355698355#101#126#2(7@100"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m:9:355698355#0#101#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m355604043#9#0#9#0#0"0(13@114"Unknown property attribute 'strong' in /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h355698355#18446744073709551615#0#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h354573591#29#12#0#0#0"0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h354573591#29#12#0#0#28"unknown property attribute *0(22@77"No 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed355698355#305#169#2(7@100"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m:9:355698355#18446744073709551615#0#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m355604043#9#0#9#0#0"0(13@156"No 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed in /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h355698355#18446744073709551615#0#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h354573591#29#1#0#0#0"0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h354573591#29#1#0#0#77"no 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed0(22@69"Default property attribute 'assign' not appropriate for non-gc object355698355#541#161#2(7@100"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m:9:355698355#18446744073709551615#0#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m355604043#9#0#9#0#0"0(13@148"Default property attribute 'assign' not appropriate for non-gc object in /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h355698355#18446744073709551615#0#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h354573591#29#1#0#0#0"0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h354573591#29#1#0#0#69"default property attribute 'assign' not appropriate for non-gc object0(4@35"Unknown property attribute 'strong'355698355#702#126#2(7@100"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m:9:355698355#18446744073709551615#0#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m355604043#9#0#9#0#0"0(13@114"Unknown property attribute 'strong' in /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h355698355#18446744073709551615#0#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h354573591#31#12#0#0#0"0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h354573591#31#12#0#0#28"unknown property attribute *0(22@77"No 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed355698355#905#169#2(7@100"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m:9:355698355#18446744073709551615#0#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m355604043#9#0#9#0#0"0(13@156"No 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed in /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h355698355#18446744073709551615#0#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h354573591#31#1#0#0#0"0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h354573591#31#1#0#0#77"no 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed0(22@69"Default property attribute 'assign' not appropriate for non-gc object355698355#1140#161#2(7@100"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m:9:355698355#18446744073709551615#0#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m355604043#9#0#9#0#0"0(13@148"Default property attribute 'assign' not appropriate for non-gc object in /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h355698355#18446744073709551615#0#0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h354573591#31#1#0#0#0"0(6@75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.h354573591#31#1#0#0#69"default property attribute 'assign' not appropriate for non-gc object0(0#0#75"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m8603549856#2135"    cd "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot"    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -pipe -fdiagnostics-print-source-range-info -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wmissing-prototypes -Wreturn-type -Wunused-variable -DDEBUG=1 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk -fexceptions -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -D__IPHONE_OS_VERSION_MIN_REQUIRED=40300 -iquote "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-generated-files.hmap" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-own-target-headers.hmap" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-all-target-headers.hmap" -iquote "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-project-headers.hmap" "-F/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/include" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/DerivedSources/i386" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/DerivedSources" -include /var/folders/MH/MHKVBw+OH8Sk-Dh92uloNU+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/AntBot-Prefix-dpgiruyzvabucagqxvpvhcamitjx/AntBot-Prefix.pch -c "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/ViewController.m" -o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/ViewController.o"1#
-
-CCompileC build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/main.o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/main.m" normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s355698355.793400
-e355698356.014527
-r0
-xCompileC
-xbuild/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/main.o
-x/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/main.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-oIn file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/main.m:11:
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h:13:12: error: unknown property attribute 'strong'
-o @property (strong, nonatomic) UIWindow *window;
-o            ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h:13:1: warning: no 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed
-o @property (strong, nonatomic) UIWindow *window;
-o ^
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h:13:1: warning: default property attribute 'assign' not appropriate for non-gc object
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/main.m:15:5: error: unexpected '@' in program
-o     @autoreleasepool {
-o     ^
-o2 warnings and 2 errors generated.
-lSLF07#2@73"Compile /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/main.m355698355#355698356#0(825"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/main.m:11:/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h:13:12: error: unknown property attribute 'strong' @property (strong, nonatomic) UIWindow *window;            ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h:13:1: warning: no 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed @property (strong, nonatomic) UIWindow *window; ^/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h:13:1: warning: default property attribute 'assign' not appropriate for non-gc object/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/main.m:15:5: error: unexpected '@' in program     @autoreleasepool {     ^2 warnings and 2 errors generated.4(4@35"Unknown property attribute 'strong'355698355#92#123#2(7@91"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/main.m:11:355698355#0#92#0(6@65"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/main.m346390059#11#0#11#0#0"0(13@111"Unknown property attribute 'strong' in /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h355698355#18446744073709551615#0#0(6@72"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h353685760#13#12#0#0#0"0(6@72"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h353685760#13#12#0#0#28"unknown property attribute *0(22@77"No 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed355698356#278#166#2(7@91"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/main.m:11:355698355#18446744073709551615#0#0(6@65"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/main.m346390059#11#0#11#0#0"0(13@153"No 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed in /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h355698356#18446744073709551615#0#0(6@72"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h353685760#13#1#0#0#0"0(6@72"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h353685760#13#1#0#0#77"no 'assign', 'retain', or 'copy' attribute is specified - 'assign' is assumed0(22@69"Default property attribute 'assign' not appropriate for non-gc object355698356#496#158#2(7@91"In file included from /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/main.m:11:355698355#18446744073709551615#0#0(6@65"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/main.m346390059#11#0#11#0#0"0(13@145"Default property attribute 'assign' not appropriate for non-gc object in /Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h355698356#18446744073709551615#0#0(6@72"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h353685760#13#1#0#0#0"0(6@72"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AppDelegate.h353685760#13#1#0#0#69"default property attribute 'assign' not appropriate for non-gc object0(4@25"Unexpected '@' in program355698356#654#105#0(6@65"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/main.m346390059#15#5#0#0#25"unexpected '@' in program0(0#0#65"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/main.m8603737856#2115"    cd "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot"    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -pipe -fdiagnostics-print-source-range-info -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wmissing-prototypes -Wreturn-type -Wunused-variable -DDEBUG=1 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk -fexceptions -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -D__IPHONE_OS_VERSION_MIN_REQUIRED=40300 -iquote "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-generated-files.hmap" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-own-target-headers.hmap" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-all-target-headers.hmap" -iquote "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-project-headers.hmap" "-F/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/include" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/DerivedSources/i386" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/DerivedSources" -include /var/folders/MH/MHKVBw+OH8Sk-Dh92uloNU+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/AntBot-Prefix-dpgiruyzvabucagqxvpvhcamitjx/AntBot-Prefix.pch -c "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/main.m" -o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/Objects-normal/i386/main.o"1#
-
-CCopyStringsFile "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/en.lproj/InfoPlist.strings" AntBot/en.lproj/InfoPlist.strings
-s355698356.367031
-e355698356.824731
-r1
-xCopyStringsFile
-x/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/en.lproj/InfoPlist.strings
-xAntBot/en.lproj/InfoPlist.strings
-lSLF07#2@38"Copy AntBot/en.lproj/InfoPlist.strings355698356#355698356#0(0"0(0#0#85"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/en.lproj/InfoPlist.strings8602740480#519"    cd "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot"    setenv ICONV /usr/bin/iconv    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Library/Xcode/Plug-ins/CoreBuildTasks.xcplugin/Contents/Resources/copystrings --validate --inputencoding utf-8 --outputencoding binary AntBot/en.lproj/InfoPlist.strings --outdir "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/en.lproj"0#
-
-CCpResource build/Debug-iphonesimulator/AntBot.app/Default.png Default.png
-s355698356.622604
-e355698356.650673
-r1
-xCpResource
-xbuild/Debug-iphonesimulator/AntBot.app/Default.png
-xDefault.png
-lSLF07#2@16"Copy Default.png355698356#355698356#0(0"0(0#0#63"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/Default.png8603825024#513"    cd "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot"    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -resolve-src-symlinks "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/Default.png" "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app"0#
-
-CCpResource build/Debug-iphonesimulator/AntBot.app/Default@2x.png Default@2x.png
-s355698356.624159
-e355698356.655063
-r1
-xCpResource
-xbuild/Debug-iphonesimulator/AntBot.app/Default@2x.png
-xDefault@2x.png
-lSLF07#2@19"Copy Default@2x.png355698356#355698356#0(0"0(0#0#66"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/Default@2x.png8603694816#516"    cd "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot"    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -resolve-src-symlinks "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/Default@2x.png" "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app"0#
-
-CCpResource build/Debug-iphonesimulator/AntBot.app/Icon.png Icon.png
-s355698356.625066
-e355698356.634889
-r1
-xCpResource
-xbuild/Debug-iphonesimulator/AntBot.app/Icon.png
-xIcon.png
-lSLF07#2@13"Copy Icon.png355698356#355698356#0(0"0(0#0#60"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/Icon.png8602326912#510"    cd "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot"    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -resolve-src-symlinks "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/Icon.png" "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app"0#
-
-CCpResource build/Debug-iphonesimulator/AntBot.app/Icon@2x.png Icon@2x.png
-s355698356.625911
-e355698356.636880
-r1
-xCpResource
-xbuild/Debug-iphonesimulator/AntBot.app/Icon@2x.png
-xIcon@2x.png
-lSLF07#2@16"Copy Icon@2x.png355698356#355698356#0(0"0(0#0#63"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/Icon@2x.png8600115840#513"    cd "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot"    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -resolve-src-symlinks "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/Icon@2x.png" "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app"0#
-
-CCpResource build/Debug-iphonesimulator/AntBot.app/en.lproj/MainStoryboard.storyboard en.lproj/MainStoryboard.storyboard
-s355698356.366006
-e355698356.622285
-r1
-xCpResource
-xbuild/Debug-iphonesimulator/AntBot.app/en.lproj/MainStoryboard.storyboard
-xen.lproj/MainStoryboard.storyboard
-lSLF07#2@39"Copy en.lproj/MainStoryboard.storyboard355698356#355698356#0(0"0(0#0#86"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/en.lproj/MainStoryboard.storyboard8603634176#545"    cd "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot"    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -resolve-src-symlinks "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/en.lproj/MainStoryboard.storyboard" "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/en.lproj"0#
-
-CGenerateDSYMFile "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app.dSYM" "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/AntBot"
-r0
-
-CLd "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/AntBot" normal i386
-r0
-
-CProcessInfoPlistFile "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/Info.plist" AntBot/AntBot-Info.plist
-s355698354.290242
-e355698354.328980
-r1
-xProcessInfoPlistFile
-x/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/Info.plist
-xAntBot/AntBot-Info.plist
-lSLF07#2@32"Process AntBot/AntBot-Info.plist355698354#355698354#0(0"0(0#0#76"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AntBot-Info.plist4788573530048786432#528"    cd "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot"    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    builtin-infoPlistUtility AntBot/AntBot-Info.plist -genpkginfo "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/PkgInfo" -expandbuildsettings -format binary -platform iphonesimulator -o "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app/Info.plist"0#
-
-CProcessPCH /var/folders/MH/MHKVBw+OH8Sk-Dh92uloNU+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/AntBot-Prefix-dpgiruyzvabucagqxvpvhcamitjx/AntBot-Prefix.pch.pth AntBot/AntBot-Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s355698354.329167
-e355698355.291135
-r1
-xProcessPCH
-x/var/folders/MH/MHKVBw+OH8Sk-Dh92uloNU+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/AntBot-Prefix-dpgiruyzvabucagqxvpvhcamitjx/AntBot-Prefix.pch.pth
-xAntBot/AntBot-Prefix.pch
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-o/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AntBot-Prefix.pch:8:2: warning: #warning "This project uses features only available in iOS SDK 5.0 and later." [-W#warnings]
-o #warning "This project uses features only available in iOS SDK 5.0 and later."
-o  ^
-o1 warning generated.
-lSLF07#2@35"Precompile AntBot/AntBot-Prefix.pch355698354#355698355#0(289"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AntBot-Prefix.pch:8:2: warning: #warning "This project uses features only available in iOS SDK 5.0 and later." [-W#warnings] #warning "This project uses features only available in iOS SDK 5.0 and later."  ^1 warning generated.1(22@78"#warning "This project uses features only available in iOS SDK 5.0 and later."355698354#0#184#0(6@76"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AntBot-Prefix.pch353685724#8#2#0#0#10"#warning *0(0#0#76"/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AntBot-Prefix.pch8603838272#1993"    cd "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot"    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/clang -x objective-c-header -arch i386 -fmessage-length=0 -pipe -fdiagnostics-print-source-range-info -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wmissing-prototypes -Wreturn-type -Wunused-variable -DDEBUG=1 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk -fexceptions -fasm-blocks -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -D__IPHONE_OS_VERSION_MIN_REQUIRED=40300 -iquote "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-generated-files.hmap" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-own-target-headers.hmap" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-all-target-headers.hmap" -iquote "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/AntBot-project-headers.hmap" "-F/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/include" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/DerivedSources/i386" "-I/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/AntBot.build/Debug-iphonesimulator/AntBot.build/DerivedSources" -c "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/AntBot/AntBot-Prefix.pch" -o /var/folders/MH/MHKVBw+OH8Sk-Dh92uloNU+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/AntBot-Prefix-dpgiruyzvabucagqxvpvhcamitjx/AntBot-Prefix.pch.pth0#
-
-CTouch "/Users/daniel/Dropbox/antbot (1)/Code/iPhone/AntBot/build/Debug-iphonesimulator/AntBot.app"
-r0
-
