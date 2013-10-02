@@ -40,18 +40,16 @@ ZXingWidgetControllerCallback(Decoder* _decoder) : decoder(_decoder) {}
   }
 };
 
+@interface Decoder ()
+@property(nonatomic, retain) UIImage *subsetImage;
+@end
+
 @implementation Decoder
 
 @synthesize image;
-@synthesize cropRect;
 @synthesize subsetImage;
-@synthesize subsetData;
-@synthesize subsetWidth;
-@synthesize subsetHeight;
-@synthesize subsetBytesPerRow;
 @synthesize delegate;
 @synthesize readers;
-
 
 - (void)willDecodeImage {
   if ([self.delegate respondsToSelector:@selector(decoder:willDecodeImage:usingSubset:)]) {
@@ -80,15 +78,16 @@ ZXingWidgetControllerCallback(Decoder* _decoder) : decoder(_decoder) {}
 }
 
 #define SUBSET_SIZE 360
-- (void) prepareSubset {
+
+- (ArrayRef<char>) prepareSubset {
   CGSize size = [image size];
-#ifdef DEBUG
+#if ZXING_DEBUG
   NSLog(@"decoding: image is (%.1f x %.1f), cropRect is (%.1f,%.1f)x(%.1f,%.1f)", size.width, size.height,
         cropRect.origin.x, cropRect.origin.y, cropRect.size.width, cropRect.size.height);
 #endif
   float scale = fminf(1.0f, fmaxf(SUBSET_SIZE / cropRect.size.width, SUBSET_SIZE / cropRect.size.height));
   CGPoint offset = CGPointMake(-cropRect.origin.x, -cropRect.origin.y);
-#ifdef DEBUG
+#if ZXING_DEBUG
   NSLog(@"  offset = (%.1f, %.1f), scale = %.3f", offset.x, offset.y, scale);
 #endif
   
@@ -96,19 +95,19 @@ ZXingWidgetControllerCallback(Decoder* _decoder) : decoder(_decoder) {}
   subsetHeight = cropRect.size.height * scale;
   
   subsetBytesPerRow = ((subsetWidth + 0xf) >> 4) << 4;
-#ifdef DEBUG
-  NSLog(@"decoding: image to decode is (%d x %d) (%d bytes/row)", subsetWidth, subsetHeight, subsetBytesPerRow);
+#if ZXING_DEBUG
+  NSLog(@"decoding: image to decode is (%lu x %lu) (%lu bytes/row)", subsetWidth, subsetHeight, subsetBytesPerRow);
 #endif
   
-  subsetData = (unsigned char *)malloc(subsetBytesPerRow * subsetHeight);
-#ifdef DEBUG
-  NSLog(@"allocated %d bytes of memory", subsetBytesPerRow * subsetHeight);
+  ArrayRef<char> subsetData (subsetBytesPerRow * subsetHeight);
+#if ZXING_DEBUG
+  NSLog(@"allocated %lu bytes of memory", subsetBytesPerRow * subsetHeight);
 #endif
   
   CGColorSpaceRef grayColorSpace = CGColorSpaceCreateDeviceGray();
   
   CGContextRef ctx = 
-    CGBitmapContextCreate(subsetData, subsetWidth, subsetHeight, 
+    CGBitmapContextCreate(&subsetData->values()[0], subsetWidth, subsetHeight, 
                           8, subsetBytesPerRow, grayColorSpace, 
                           kCGImageAlphaNone);
   CGColorSpaceRelease(grayColorSpace);
@@ -118,28 +117,28 @@ ZXingWidgetControllerCallback(Decoder* _decoder) : decoder(_decoder) {}
   CGContextTranslateCTM(ctx, 0.0, subsetHeight);
   CGContextScaleCTM(ctx, 1.0, -1.0);  
   
-#ifdef DEBUG
-  NSLog(@"created %dx%d bitmap context", subsetWidth, subsetHeight);
+#if ZXING_DEBUG
+  NSLog(@"created %lux%lu bitmap context", subsetWidth, subsetHeight);
 #endif
   
   UIGraphicsPushContext(ctx);
   CGRect rect = CGRectMake(offset.x * scale, offset.y * scale, scale * size.width, scale * size.height);
-#ifdef DEBUG
+#if ZXING_DEBUG
   NSLog(@"rect for image = (%.1f,%.1f)x(%.1f,%.1f)", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
 #endif
   [image drawInRect:rect];
   UIGraphicsPopContext();
   
-#ifdef DEBUG
-  NSLog(@"drew image into %d(%d)x%d  bitmap context", subsetWidth, subsetBytesPerRow, subsetHeight);
+#if ZXING_DEBUG
+  NSLog(@"drew image into %lu(%lu)x%lu  bitmap context", subsetWidth, subsetBytesPerRow, subsetHeight);
 #endif
   CGContextFlush(ctx);
-#ifdef DEBUG
+#if ZXING_DEBUG
   NSLog(@"flushed context");
 #endif
     
   CGImageRef subsetImageRef = CGBitmapContextCreateImage(ctx);
-#ifdef DEBUG
+#if ZXING_DEBUG
   NSLog(@"created CGImage from context");
 #endif
   
@@ -147,12 +146,13 @@ ZXingWidgetControllerCallback(Decoder* _decoder) : decoder(_decoder) {}
   CGImageRelease(subsetImageRef);
   
   CGContextRelease(ctx);
-#ifdef DEBUG
+#if ZXING_DEBUG
   NSLog(@"released context");  
 #endif
+  return subsetData;
 }  
 
-- (BOOL)decode {
+- (BOOL)decode:(ArrayRef<char>)subsetData {
   NSAutoreleasePool* mainpool = [[NSAutoreleasePool alloc] init];
   TwoDDecoderResult *decoderResult = nil;
   BOOL returnCode = NO;
@@ -160,17 +160,13 @@ ZXingWidgetControllerCallback(Decoder* _decoder) : decoder(_decoder) {}
     //NSSet *formatReaders = [FormatReader formatReaders];
     NSSet *formatReaders = self.readers;
     Ref<LuminanceSource> source 
-      (new GreyscaleLuminanceSource(subsetData, subsetBytesPerRow, subsetHeight, 0, 0, subsetWidth, subsetHeight));
+      (new GreyscaleLuminanceSource(ArrayRef<char>(subsetData), subsetBytesPerRow, subsetHeight, 0, 0, subsetWidth, subsetHeight));
+    subsetData = 0;
 
     Ref<Binarizer> binarizer (new HybridBinarizer(source));
     source = 0;
     Ref<BinaryBitmap> grayImage (new BinaryBitmap(binarizer));
     binarizer = 0;
-#ifdef DEBUG
-    NSLog(@"created GreyscaleLuminanceSource(%p,%d,%d,%d,%d,%d,%d)",
-          subsetData, subsetBytesPerRow, subsetHeight, 0, 0, subsetWidth, subsetHeight);
-    NSLog(@"grayImage count = %d", grayImage->count());
-#endif
     
 #ifdef TRY_ROTATIONS
     for (int i = 0; !decoderResult && i < 4; i++) {
@@ -180,22 +176,22 @@ ZXingWidgetControllerCallback(Decoder* _decoder) : decoder(_decoder) {}
         NSMutableArray *points = nil;
         NSString *resultString = nil;
         try {
-#ifdef DEBUG
+#if ZXING_DEBUG
           NSLog(@"decoding gray image");
 #endif  
           ResultPointCallback* callback_pointer(new ZXingWidgetControllerCallback(self));
           Ref<ResultPointCallback> callback(callback_pointer);
           Ref<Result> result([reader decode:grayImage andCallback:callback]);
-#ifdef DEBUG
+#if ZXING_DEBUG
           NSLog(@"gray image decoded");
 #endif
           
           Ref<String> resultText(result->getText());
           const char *cString = resultText->getText().c_str();
-          const std::vector<Ref<ResultPoint> > &resultPoints = result->getResultPoints();
-          points = [[NSMutableArray alloc ] initWithCapacity:resultPoints.size()];
+          const ArrayRef<Ref<ResultPoint> > &resultPoints = result->getResultPoints();
+          points = [[NSMutableArray alloc ] initWithCapacity:resultPoints->size()];
           
-          for (size_t i = 0; i < resultPoints.size(); i++) {
+          for (int i = 0; i < resultPoints->size(); i++) {
             const Ref<ResultPoint> &rp = resultPoints[i];
             CGPoint p = CGPointMake(rp->getX(), rp->getY());
             [points addObject:[NSValue valueWithCGPoint:p]];
@@ -205,12 +201,12 @@ ZXingWidgetControllerCallback(Decoder* _decoder) : decoder(_decoder) {}
           if (decoderResult) [decoderResult release];
           decoderResult = [[TwoDDecoderResult alloc] initWithText:resultString points:points];
         } catch (ReaderException &rex) {
-#ifdef DEBUG
+#if ZXING_DEBUG
           NSLog(@"failed to decode, caught ReaderException '%s'",
                 rex.what());
 #endif
         } catch (IllegalArgumentException &iex) {
-#ifdef DEBUG
+#if ZXING_DEBUG
           NSLog(@"failed to decode, caught IllegalArgumentException '%s'", 
                 iex.what());
 #endif
@@ -224,25 +220,17 @@ ZXingWidgetControllerCallback(Decoder* _decoder) : decoder(_decoder) {}
       
 #ifdef TRY_ROTATIONS
       if (!decoderResult) {
-#ifdef DEBUG
+#if ZXING_DEBUG
         NSLog(@"rotating gray image");
 #endif
         grayImage = grayImage->rotateCounterClockwise();
-#ifdef DEBUG
+#if ZXING_DEBUG
         NSLog(@"gray image rotated");
 #endif
       }
     }
 #endif
 	  
-    free(subsetData);
-    self.subsetData = NULL;
-	  
-    // DONT COMMIT
-    // [decoderResult release];
-    // decoderResult = nil;
-        
-
     if (decoderResult) {
       [self performSelectorOnMainThread:@selector(didDecodeImage:)
                              withObject:[decoderResult copy]
@@ -257,7 +245,7 @@ ZXingWidgetControllerCallback(Decoder* _decoder) : decoder(_decoder) {}
   }
   
   
-#ifdef DEBUG
+#if ZXING_DEBUG
   NSLog(@"finished decoding.");
 #endif
   [mainpool release];
@@ -271,17 +259,16 @@ ZXingWidgetControllerCallback(Decoder* _decoder) : decoder(_decoder) {}
 
 - (BOOL) decodeImage:(UIImage *)i cropRect:(CGRect)cr {
   self.image = i;
-  self.cropRect = cr;
-  [self prepareSubset];
+  cropRect = cr;
+  ArrayRef<char> subsetData = [self prepareSubset];
   [self willDecodeImage];
-  return [self decode];
+  return [self decode:subsetData];
 }
 
 - (void) dealloc {
   delegate = nil;
   [image release];
   [subsetImage release];
-  free(subsetData);
   [readers release];
   [super dealloc];
 }
