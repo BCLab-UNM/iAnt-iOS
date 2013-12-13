@@ -128,8 +128,20 @@ bail:
         if ([sensorState isEqualToString:@"TAG FOUND"]) {
             //Filter image
             [imgRecog locateQRFinderPatternsIn:sampleBuffer];
-            UIImage *imgThreshold = [imgRecog getImgThresholdUI];
+            
+            //Load relevant images
+            UIImage *img = [Conversions createUIImageFromCMSampleBuffer:sampleBuffer]; //original
+            UIImage *img22 = [Conversions rotateUIImage:img customRadians:(M_PI_4/2.f)]; //rotated 22.5 degrees
+            UIImage *img45 = [Conversions rotateUIImage:img customRadians:M_PI_4]; //rotated 45 degrees
+            UIImage *img67 = [Conversions rotateUIImage:img customRadians:(M_PI_4 + M_PI_4/2.f)]; //rotated 67.5 degrees
+            UIImage *imgThreshold = [imgRecog getImgThresholdUI]; //thresholded
+            
             //Check tag image for QR code
+            //Note that we exploit lazy evaluation here to avoid detecting the same QR tag multiple times
+            [qrDecoder decodeImage:img] ||
+            [qrDecoder decodeImage:img22] ||
+            [qrDecoder decodeImage:img45] ||
+            [qrDecoder decodeImage:img67] ||
             [qrDecoder decodeImage:imgThreshold];
         }
         //Otherwise
@@ -186,6 +198,7 @@ bail:
                 UIImage *imgThreshold = [imgRecog getImgThresholdUI]; //thresholded
                 
                 //If we are searching for tags, and a tag has been found in the image
+                //Note that we exploit lazy evaluation here to avoid detecting the same QR tag multiple times
                 if ([sensorState isEqualToString:@"TAG ON"] && ([qrDecoder decodeImage:img] ||
                                                                 [qrDecoder decodeImage:img22] ||
                                                                 [qrDecoder decodeImage:img45] ||
