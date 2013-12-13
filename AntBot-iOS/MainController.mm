@@ -179,10 +179,18 @@ bail:
                 CALayer *featureLayer = nil;
                 //Load relevant images
                 UIImage *square = [UIImage imageNamed:@"squarePNG"];
-                UIImage *imgThreshold = [imgRecog getImgThresholdUI];
+                UIImage *img = [Conversions createUIImageFromCMSampleBuffer:sampleBuffer]; //original
+                UIImage *img22 = [Conversions rotateUIImage:img customRadians:(M_PI_4/2.f)]; //rotated 22.5 degrees
+                UIImage *img45 = [Conversions rotateUIImage:img customRadians:M_PI_4]; //rotated 45 degrees
+                UIImage *img67 = [Conversions rotateUIImage:img customRadians:(M_PI_4 + M_PI_4/2.f)]; //rotated 67.5 degrees
+                UIImage *imgThreshold = [imgRecog getImgThresholdUI]; //thresholded
                 
                 //If we are searching for tags, and a tag has been found in the image
-                if ([sensorState isEqualToString:@"TAG ON"] && [qrDecoder decodeImage:imgThreshold]) {
+                if ([sensorState isEqualToString:@"TAG ON"] && ([qrDecoder decodeImage:img] ||
+                                                                [qrDecoder decodeImage:img22] ||
+                                                                [qrDecoder decodeImage:img45] ||
+                                                                [qrDecoder decodeImage:img67] ||
+                                                                [qrDecoder decodeImage:imgThreshold])) {
                     //Transmit stop messages to Arduino (two are required)
                     [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
                     [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
