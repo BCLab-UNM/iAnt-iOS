@@ -14,7 +14,32 @@
 @synthesize imgIpl;
 @synthesize imgData;
 
-#pragma mark - UIImage <--> IplImage functions
+
+//Rotate a UIImage about center by input radians
++ (UIImage*)rotateUIImage:(UIImage*)image customRadians:(float)radians
+{
+    //Get image size
+    CGSize size = [image size];
+    
+    //Create new image context
+    UIGraphicsBeginImageContext(size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    //Translate and rotate about center
+    CGContextTranslateCTM(context, 0.5f * size.width, 0.5f * size.height ) ;
+    CGContextRotateCTM(context, radians);
+    
+    //Draw new image
+    [image drawInRect:CGRectMake(-size.width * 0.5f, -size.height * 0.5f, size.width, size.height)];
+    UIImage *rotatedImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return rotatedImage;
+}
+
+
+#pragma mark - CoreFoundation --> IplImage, UIImage
 
 //Create a IplImage from sample buffer data
 - (void)createIplImageFromCMSampleBuffer:(CMSampleBufferRef)buffer
@@ -62,6 +87,9 @@
     
     return outputImage;
 }
+
+
+#pragma mark - UIImage <--> IplImage functions
 
 //Convert IplImage (standard OpenCV image format) to UIImage (standard Obj-C image format)
 - (void)createUIImageFromIplImage:(IplImage*)image
