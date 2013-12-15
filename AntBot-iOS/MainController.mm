@@ -447,7 +447,7 @@ bail:
     [cblMgr setDelegate:self];
     
     //Connect to ABS and send MAC address for I/O stream identification
-    [comm connectTo:@"192.168.33.1" onPort:2223];
+    [comm connectTo:@"192.168.1.10" onPort:2223];
     [comm send:[NSString stringWithFormat:@"%@\n",[comm getMacAddress]]];
     
     //Set up notifications
