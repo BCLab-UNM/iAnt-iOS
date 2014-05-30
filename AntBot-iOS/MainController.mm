@@ -182,7 +182,7 @@ bail:
             if ((numberOfCentroids = [centroidList count])) {
                 //Ensure mocapHeading observer has been removed
                 @try {
-                    [comm removeObserver:self forKeyPath:@"mocapHeading"];
+                    [server removeObserver:self forKeyPath:@"mocapHeading"];
                 }
                 @catch (NSException *exception) {
                     //do nothing, observer was already removed
@@ -423,7 +423,7 @@ bail:
         qrCode = [[result text] intValue];
         
         //Transmit QR code to ABS
-        [comm send:[NSString stringWithFormat:@"%@,%d\n",[comm getMacAddress],qrCode]];
+        [server send:[NSString stringWithFormat:@"%@,%d\n",[Utilities getMacAddress],qrCode]];
     }
 }
 
@@ -432,7 +432,7 @@ bail:
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    comm = [[Communication alloc] init];
+    server = [[RouterServer alloc] init];
     relMotion = [[RelativeMotion alloc] init];
     
     //Set up QR code reader
@@ -447,8 +447,8 @@ bail:
     [cblMgr setDelegate:self];
     
     //Connect to ABS and send MAC address for I/O stream identification
-    [comm connectTo:@"192.168.1.10" onPort:2223];
-    [comm send:[NSString stringWithFormat:@"%@\n",[comm getMacAddress]]];
+    [server connectTo:@"192.168.1.10" onPort:2223];
+    [server send:[NSString stringWithFormat:@"%@\n",[Utilities getMacAddress]]];
     
     //Set up notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:@"Stream opened" object:nil];
@@ -456,8 +456,8 @@ bail:
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateInfoBox:) name:@"infoBox text" object:nil];
     
     //Set up property observations
-    [comm addObserver:self forKeyPath:@"pheromoneLocation" options:NSKeyValueObservingOptionNew context:NULL];
-    [comm addObserver:self forKeyPath:@"tagStatus" options:NSKeyValueObservingOptionNew context:NULL];
+    [server addObserver:self forKeyPath:@"pheromoneLocation" options:NSKeyValueObservingOptionNew context:NULL];
+    [server addObserver:self forKeyPath:@"tagStatus" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)viewDidUnload {
@@ -519,7 +519,7 @@ bail:
     if ([keyPath isEqualToString:@"mocapHeading"]) {
         //Create storage variables
         short int data[2] = {0,0};
-        data[0] = 2 * (int)[Utilities angleFrom:(int)context to:[[comm mocapHeading] intValue]];
+        data[0] = 2 * (int)[Utilities angleFrom:(int)context to:[[server mocapHeading] intValue]];
         
         //Transmit data to Arduino
         [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
@@ -527,20 +527,20 @@ bail:
         //If angle is small enough, we transmit an additional command to Arduino to stop alignment
         if (abs(data[0]) < 2) {
             [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
-            [comm removeObserver:self forKeyPath:@"mocapHeading"];
+            [server removeObserver:self forKeyPath:@"mocapHeading"];
         }
     }
     else if ([keyPath isEqualToString:@"pheromoneLocation"]) {
         [cblMgr send:@"pheromone"];
-        [cblMgr send:[NSString stringWithFormat:@"%@\n",[comm pheromoneLocation]]];
+        [cblMgr send:[NSString stringWithFormat:@"%@\n",[server pheromoneLocation]]];
     }
     else if ([keyPath isEqualToString:@"tagStatus"]) {
-        [[self infoBox] setText:[NSString stringWithFormat:@"%@ TAG FOUND     %d",[[comm tagStatus] uppercaseString],qrCode]];
+        [[self infoBox] setText:[NSString stringWithFormat:@"%@ TAG FOUND     %d",[[server tagStatus] uppercaseString],qrCode]];
         
         @try {
             //If we receive tag information while the mocapHeading is being monitored,
             //  then we need to remove the mocapHeading observer and send a stop message to the Arduino
-            [comm removeObserver:self forKeyPath:@"mocapHeading"];
+            [server removeObserver:self forKeyPath:@"mocapHeading"];
             
             //If mocapHeading is *not* being monitored, @catch will handle the exception
             //   and the stop message will never be sent
@@ -552,8 +552,8 @@ bail:
             //do nothing, mocapHeading was not being observed
         }
 
-        [cblMgr send:[comm tagStatus]];
-        if ([[comm tagStatus] isEqualToString:@"new"]) {
+        [cblMgr send:[server tagStatus]];
+        if ([[server tagStatus] isEqualToString:@"new"]) {
             [cblMgr send:[NSString stringWithFormat:@"%d\n",qrCode]];
         }
     }
@@ -604,14 +604,14 @@ bail:
         if ([message hasPrefix:@"align"]) {
             //Ensure mocapHeading is not already being observed
             @try {
-                [comm removeObserver:self forKeyPath:@"mocapHeading"];
+                [server removeObserver:self forKeyPath:@"mocapHeading"];
             }
             @catch (NSException *exception) {
                 //do nothing, mocapHeading was not being observed
             }
             int wordLength = 5;
             int heading = [[message substringWithRange:NSMakeRange(wordLength, [message length] - wordLength)] intValue];
-            [comm addObserver:self forKeyPath:@"mocapHeading" options:NSKeyValueObservingOptionNew context:(void*)heading];
+            [server addObserver:self forKeyPath:@"mocapHeading" options:NSKeyValueObservingOptionNew context:(void*)heading];
             [cblMgr send:@"align"];
         }
       
@@ -649,8 +649,8 @@ bail:
       
         else if ([message isEqualToString:@"heading"]) {
             //Transmit heading to Arduino
-            if ([comm mocapHeading] != nil) {
-                [cblMgr send:[NSString stringWithFormat:@"%@\n",[comm mocapHeading]]];
+            if ([server mocapHeading] != nil) {
+                [cblMgr send:[NSString stringWithFormat:@"%@\n",[server mocapHeading]]];
             }
         }
         
@@ -681,17 +681,17 @@ bail:
         }
         
         else if ([message isEqualToString:@"parameters"]) {
-            if ([comm evolvedParameters] != nil) {
+            if ([server evolvedParameters] != nil) {
                 [cblMgr send:@"parameters"];
-                [cblMgr send:[NSString stringWithFormat:@"%@\n",[comm evolvedParameters]]];
+                [cblMgr send:[NSString stringWithFormat:@"%@\n",[server evolvedParameters]]];
             }
         }
 
         else if ([message hasPrefix:@"print"]) {
             int wordLength = 5;
             NSString* data = [message substringWithRange:NSMakeRange(wordLength, [message length] - wordLength)];
-            message = [NSString stringWithFormat:@"%@,%@\n",[comm getMacAddress],data];
-            [comm send:message];
+            message = [NSString stringWithFormat:@"%@,%@\n",[Utilities getMacAddress],data];
+            [server send:message];
         }
         
         else if ([message isEqualToString:@"seed"]) {

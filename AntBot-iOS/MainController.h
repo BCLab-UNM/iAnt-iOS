@@ -9,7 +9,6 @@
 #import "AbsoluteMotion.h"
 //#import "AmbientLight.h"
 #import "CableManager.h"
-#import "Communication.h"
 #import "Conversions.h"
 #import "ImageRecognition.h"
 #import "RelativeMotion.h"
@@ -18,13 +17,14 @@
 #import <QRCodeReader.h>
 #import "TwoDDecoderResult.h"
 #import <math.h>
+#import "RouterServer.h"
 
 @interface MainController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, RscMgrDelegate, DecoderDelegate> {
     
     AbsoluteMotion *absMotion;
     //AmbientLight *ambLight;
     CableManager *cblMgr;
-    Communication *comm;
+    RouterServer *server;
     Decoder *qrDecoder;
     ImageRecognition *imgRecog;
     RelativeMotion *relMotion;

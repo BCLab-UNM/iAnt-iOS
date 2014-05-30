@@ -26,4 +26,6 @@ struct Polar {
 + (Cartesian)pol2cart:(Polar)pol;
 + (Polar)cart2pol:(Cartesian)cart;
 
++ (NSString*)getMacAddress;
+
 @end

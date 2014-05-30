@@ -1,26 +1,26 @@
-#import <GameKit/GameKit.h>
+//
+//  RouterServer.h
+//  AntBot-iOS
+//
+//  Created by Bjorn Swenson on 5/30/14.
+//
+//
 
-@interface Communication : NSObject <NSStreamDelegate, GKSessionDelegate> {
+#import <Foundation/Foundation.h>
+#import <GameKit/GameKit.h>
+#import "Router.h"
+
+@interface RouterServer : Router <NSStreamDelegate, GKSessionDelegate> {
     CFReadStreamRef readStream;
     CFWriteStreamRef writeStream;
     NSInputStream *inputStream;
     NSOutputStream *outputStream;
-    NSString* host;
-    int port;
-    NSTimer* reconnectTimer;
-    NSMutableArray* rxBuffer;
     NSMutableArray* txBuffer;
     GKSession* bluetoothSession;
 }
 
 - (void)connectTo:(NSString*)server onPort:(int)number;
 - (void)closeConnection;
-
-- (BOOL)send:(NSString*)message;
-- (void)receive:(NSString*)message;
-- (NSString*)getMessage;
-
-- (NSString*) getMacAddress;
 
 @property NSString* mocapHeading;
 @property NSString* pheromoneLocation;
