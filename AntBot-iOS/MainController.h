@@ -8,7 +8,6 @@
 
 #import "AbsoluteMotion.h"
 //#import "AmbientLight.h"
-#import "CableManager.h"
 #import "Conversions.h"
 #import "ImageRecognition.h"
 #import "RelativeMotion.h"
@@ -17,14 +16,16 @@
 #import <QRCodeReader.h>
 #import "TwoDDecoderResult.h"
 #import <math.h>
-#import "RouterServer.h"
 
-@interface MainController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, RscMgrDelegate, DecoderDelegate> {
+#import "RouterServer.h"
+#import "RouterCable.h"
+
+@interface MainController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, DecoderDelegate> {
     
     AbsoluteMotion *absMotion;
     //AmbientLight *ambLight;
-    CableManager *cblMgr;
     RouterServer *server;
+    RouterCable *cable;
     Decoder *qrDecoder;
     ImageRecognition *imgRecog;
     RelativeMotion *relMotion;
@@ -38,7 +39,16 @@
     NSString *sensorState;
     int qrCode;
     int nestDistance;
+    
+    int mocapContext;
+    NSString* mocapHeading;
+    bool mocapMonitor;
+    
+    NSString* evolvedParameters;
 }
+
+- (void)initServerHandlers;
+- (void)initCableHandlers;
 
 @property IBOutlet UITextView *infoBox;
 

@@ -7,7 +7,7 @@
 //
 
 #import <CoreMotion/CoreMotion.h>
-#import "CableManager.h"
+#import "RouterCable.h"
 
 typedef struct
 {
@@ -15,9 +15,6 @@ typedef struct
 } vec3d_t;
 
 @interface RelativeMotion : NSObject
-{
-    CableManager *cblMgr;
-}
 
 @property vec3d_t currentDist;
 @property vec3d_t currentVel;
@@ -26,6 +23,7 @@ typedef struct
 @property vec3d_t previousVel;
 @property CMAcceleration previousAcc;
 @property (assign) NSDate *timer;
+@property RouterCable* cable;
 
 - (void)start;
 - (void)stop;

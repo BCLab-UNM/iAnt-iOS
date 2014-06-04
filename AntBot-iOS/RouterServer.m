@@ -13,8 +13,6 @@ const int MAX_RX_BUFFER_SIZE = 100;
 
 @implementation RouterServer
 
-@synthesize mocapHeading, pheromoneLocation, tagStatus, evolvedParameters;
-
 - (id)init {
     if (self = [super init]) {
         bluetoothSession = [[GKSession alloc] initWithSessionID:@"Colony" displayName:nil sessionMode:GKSessionModePeer];
@@ -28,30 +26,6 @@ const int MAX_RX_BUFFER_SIZE = 100;
 - (void)send:(NSString*)message {
     NSData *data = [[NSData alloc] initWithData:[message dataUsingEncoding:NSASCIIStringEncoding]];
     [outputStream write:[data bytes] maxLength:[data length]];
-}
-
-- (void)parseString:(NSString *)string withDelimiter:(NSString *)delimiter {
-    [super parseString:string withDelimiter:delimiter];
-    
-    NSString* msg = nil;
-    while ((msg = [self getMessage]) != nil) {
-        NSArray* splitMessage = [msg componentsSeparatedByString:@","];
-        NSString* msgTag = [splitMessage objectAtIndex:0];
-        NSString* msgInfo = [[splitMessage subarrayWithRange:NSMakeRange(1, [splitMessage count] - 1)] componentsJoinedByString:@","];
-        
-        if ([msgTag isEqualToString:@"heading"]) {
-            [self setMocapHeading:msgInfo];
-        }
-        else if ([msgTag isEqualToString:@"tag"]) {
-            [self setTagStatus:msgInfo];
-        }
-        else if ([msgTag isEqualToString:@"pheromone"]) {
-            [self setPheromoneLocation:msgInfo];
-        }
-        else if ([msgTag isEqualToString:@"parameters"]) {
-            [self setEvolvedParameters:msgInfo];
-        }
-    }
 }
 
 - (void)connectTo:(NSString*)server onPort:(int)number {
@@ -79,7 +53,7 @@ const int MAX_RX_BUFFER_SIZE = 100;
     [outputStream open];
     
     //Initialize buffer
-    rxBuffer = [[NSMutableArray alloc] init];
+    rxBuffer = @"";
 }
 
 - (void)closeConnection {

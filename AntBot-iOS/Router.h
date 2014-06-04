@@ -8,17 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+@interface NSObject(RouterReceiveHandler)
+- (void)receiveMessage:(NSString*)message body:(NSArray*)data;
+@end
+
 @interface Router : NSObject {
-    NSMutableArray* rxBuffer;
-    NSMutableDictionary* callbacks;
+    NSString* rxBuffer;
     NSMutableDictionary* handlers;
+    id delegate;
 }
 
 - (void)parseString:(NSString*)string withDelimiter:(NSString*)delimiter;
 - (void)send:(NSString*)message;
-- (void)send:(NSString*)message callback:(void (^)(void))callback;
-- (void)handle:(NSString*)message callback:(void (^)(void))callback;
-
-- (NSString*) getMessage;
+- (void)handle:(NSString*)message callback:(void (^)(NSArray*))callback;
 
 @end

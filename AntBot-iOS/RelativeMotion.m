@@ -28,6 +28,7 @@
 @synthesize previousVel;
 @synthesize previousAcc;
 @synthesize timer;
+@synthesize cable;
 
 - (void)start {
     [self startRelativeMotion];
@@ -44,8 +45,6 @@
     loc2.x = loc2.y = loc2.z = 0;
     [self setCurrentAcc:loc2];
     [self setPreviousAcc:loc2];
-    
-    cblMgr = [CableManager cableManager];
 }
 
 - (void)stop {
@@ -65,8 +64,8 @@
                                    withHandler: ^(CMGyroData *gyroData, NSError *error) {
                                        CMRotationRate rotationRate = gyroData.rotationRate;
                                        int rate = rotationRate.z * (180.0/M_PI);
-                                       [cblMgr send:[NSString stringWithFormat:@"%d",rate]];
-                                       [cblMgr send:@"\n"]; //delimiter
+                                       [cable send:[NSString stringWithFormat:@"%d",rate]];
+                                       [cable send:@"\n"]; //delimiter
                                        [[NSNotificationCenter defaultCenter] postNotificationName:@"infoBox text" object:nil
                                                                                          userInfo:[NSDictionary dictionaryWithObject:
                                                                                                    [NSString stringWithFormat:@"GYRO     %d",rate] forKey:@"text"]];

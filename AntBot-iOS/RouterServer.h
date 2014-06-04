@@ -22,9 +22,4 @@
 - (void)connectTo:(NSString*)server onPort:(int)number;
 - (void)closeConnection;
 
-@property NSString* mocapHeading;
-@property NSString* pheromoneLocation;
-@property NSString* tagStatus;
-@property NSString* evolvedParameters;
-
 @end

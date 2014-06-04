@@ -31,11 +31,19 @@
     // Convert raw bytes into string
     NSString *string = [[NSString alloc] initWithBytes:buffer length:length encoding:NSUTF8StringEncoding];
     
+#ifdef DEBUG
+    NSLog(@"%@", string);
+#endif
+    
     // Call superclass method to tokenize string.
     [self parseString:string withDelimiter:@"\r\n"];
 }
 
-- (void)cableConnected:(NSString *)protocol {}
+- (void)cableConnected:(NSString *)protocol {
+    [rscMgr setBaud:9600];
+	[rscMgr open];
+}
+
 - (void)cableDisconnected {}
 - (void)portStatusChanged {}
 

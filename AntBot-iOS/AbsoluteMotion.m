@@ -23,22 +23,16 @@
 @synthesize currentCoordinate;
 @synthesize insideVirtualFence;
 @synthesize locationManager;
+@synthesize cable;
 
 - (void)start
 {
     [self startAbsoluteMotion];
-    cblMgr = [CableManager cableManager];
 }
 
 - (void)stop
 {
     [self stopAbsoluteMotion];
-}
-
-- (AbsoluteMotion*)absoluteMotion
-{
-    AbsoluteMotion* absMotion = [[AbsoluteMotion alloc] init];
-    return absMotion;
 }
 
 - (void)enableRegionMonitoring:(NSString*)name withRadius:(double)radius

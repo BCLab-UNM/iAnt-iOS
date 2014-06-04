@@ -205,8 +205,8 @@ bail:
                                                                 [qrDecoder decodeImage:img67] ||
                                                                 [qrDecoder decodeImage:imgThreshold])) {
                     //Transmit stop messages to Arduino (two are required)
-                    [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
-                    [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
+                    [cable send:[NSString stringWithFormat:@"(%d,%d)", data[0], data[1]]];
+                    [cable send:[NSString stringWithFormat:@"(%d,%d)", data[0], data[1]]];
 
                     //Hide all layers
                     hideAllLayers();
@@ -369,7 +369,7 @@ bail:
                         });
                         
                         //Transmit data
-                        [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
+                        [cable send:[NSString stringWithFormat:@"(%d,%d)", data[0], data[1]]];
                     }
                     else if ([sensorState isEqualToString:@"TAG ON"]) {
                         //Number of pixels between observed and true center
@@ -383,7 +383,7 @@ bail:
                         });
                         
                         //Transmit data
-                        [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
+                        [cable send:[NSString stringWithFormat:@"(%d,%d)", data[0], data[1]]];
                     }
                 }
             }
@@ -404,7 +404,7 @@ bail:
                     });
                     
                     //Transmit data
-                    [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
+                    [cable send:[NSString stringWithFormat:@"(%d,%d)", data[0], data[1]]];
                 }
             }
 
@@ -423,7 +423,7 @@ bail:
         qrCode = [[result text] intValue];
         
         //Transmit QR code to ABS
-        [server send:[NSString stringWithFormat:@"%@,%d\n",[Utilities getMacAddress],qrCode]];
+        [server send:[NSString stringWithFormat:@"%@,%d\n", [Utilities getMacAddress], qrCode]];
     }
 }
 
@@ -432,32 +432,41 @@ bail:
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    server = [[RouterServer alloc] init];
-    relMotion = [[RelativeMotion alloc] init];
-    
-    //Set up QR code reader
+    // QR code reader
     qrDecoder = [[Decoder alloc] init];
     NSMutableSet *readers = [[NSMutableSet alloc] init];
     QRCodeReader* qrcodeReader = [[QRCodeReader alloc] init];
     [readers addObject:qrcodeReader];
     [qrDecoder setReaders:readers];
     [qrDecoder setDelegate:self];
-
-    cblMgr = [CableManager cableManager];
-    [cblMgr setDelegate:self];
     
-    //Connect to ABS and send MAC address for I/O stream identification
-    [server connectTo:@"192.168.1.10" onPort:2223];
-    [server send:[NSString stringWithFormat:@"%@\n",[Utilities getMacAddress]]];
-    
-    //Set up notifications
+    // Notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:@"Stream opened" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:@"Stream closed" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateInfoBox:) name:@"infoBox text" object:nil];
     
-    //Set up property observations
-    [server addObserver:self forKeyPath:@"pheromoneLocation" options:NSKeyValueObservingOptionNew context:NULL];
-    [server addObserver:self forKeyPath:@"tagStatus" options:NSKeyValueObservingOptionNew context:NULL];
+    // Server connection
+    server = [[RouterServer alloc] init];
+    [server connectTo:@"192.168.1.10" onPort:2223];
+    [server send:[NSString stringWithFormat:@"%@\n", [Utilities getMacAddress]]];
+    [self initServerHandlers];
+    
+    // Serial cable connection
+    cable = [[RouterCable alloc] init];
+    [self initCableHandlers];
+    
+    // RelativeMotion
+    relMotion = [[RelativeMotion alloc] init];
+    [relMotion setCable:cable];
+    
+    // AbsoluteMotion
+    absMotion = [[AbsoluteMotion alloc] init];
+    [absMotion setCable:cable];
+    
+    // Mocap variables.
+    mocapMonitor = false;
+    mocapHeading = 0;
+    mocapContext = 0;
 }
 
 - (void)viewDidUnload {
@@ -466,30 +475,186 @@ bail:
     [super viewDidUnload];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {    
-    [super viewDidDisappear:animated];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Release any cached data, images, etc that aren't in use.
+
+- (void)initServerHandlers {
+    
+    // Mocap Heading
+    [server handle:@"heading" callback:^(NSArray* data) {
+        mocapHeading = [data objectAtIndex:0];
+        
+        //Create storage variables
+        short int cmd[2] = {0, 0};
+        cmd[0] = 2 * (int)[Utilities angleFrom:(int)mocapContext to:[mocapHeading intValue]];
+        
+        //Transmit data to Arduino
+        [cable send:[NSString stringWithFormat:@"(%d,%d)", cmd[0], cmd[1]]];
+        
+        //If angle is small enough, we transmit an additional command to Arduino to stop alignment
+        if (abs(cmd[0]) < 2) {
+            [cable send:[NSString stringWithFormat:@"(%d,%d)", cmd[0], cmd[1]]];
+            mocapMonitor = false;
+        }
+    }];
+    
+    // Tag Status
+    [server handle:@"tag" callback:^(NSArray* data) {
+        NSString* tagStatus = [data objectAtIndex:0];
+        
+        [[self infoBox] setText:[NSString stringWithFormat:@"%@ TAG FOUND     %d", [tagStatus uppercaseString], qrCode]];
+        
+        if(mocapMonitor) {
+            // If we receive tag information while the mocapHeading is being monitored,
+            // then we need to remove the mocapHeading observer and send a stop message to the Arduino
+            mocapMonitor = false;
+            short int cmd[2] = {0, 0};
+            [cable send:[NSString stringWithFormat:@"(%d,%d)", cmd[0], cmd[1]]];
+            [cable send:[NSString stringWithFormat:@"(%d,%d)", cmd[0], cmd[1]]];
+        }
+        
+        [cable send:tagStatus];
+        if ([tagStatus isEqualToString:@"new"]) {
+            [cable send:[NSString stringWithFormat:@"%d\n", qrCode]];
+        }
+    }];
+    
+    // Pheromone Location
+    [server handle:@"pheromone" callback:^(NSArray* data) {
+        NSString* pheromone = [data objectAtIndex:0];
+        [cable send:@"pheromone"];
+        [cable send:[NSString stringWithFormat:@"%@\n", pheromone]];
+    }];
+}
+
+- (void)initCableHandlers {
+    
+    // Align
+    [cable handle:@"align" callback:^(NSArray* data) {
+        int heading = [[data objectAtIndex:0] intValue];
+        mocapContext = heading;
+        mocapMonitor = true;
+        [cable send:@"align"];
+    }];
+    
+    // Display
+    [cable handle:@"display" callback:^(NSArray* data) {
+        [[self infoBox] setText:[data objectAtIndex:0]];
+    }];
+    
+    // Fence
+    [cable handle:@"fence" callback:^(NSArray* data) {
+        double radius = [[data objectAtIndex:0] doubleValue];
+        [absMotion enableRegionMonitoring:@"virtual fence" withRadius:radius];
+    }];
+    
+    // Gyro on
+    [cable handle:@"gyro on" callback:^(NSArray* data) {
+        NSString* label = @"GYRO ON";
+        if(![sensorState isEqualToString:label]) {
+            [relMotion start];
+            [infoBox setText:label];
+            sensorState = label;
+        }
+        [cable send:@"gyro on"];
+    }];
+    
+    // Gyro off
+    [cable handle:@"gyro off" callback:^(NSArray* data) {
+        NSString* label = @"GYRO OFF";
+        if(![sensorState isEqualToString:label]) {
+            [relMotion stop];
+            [infoBox setText:label];
+            sensorState = @"GYRO OFF";
+        }
+    }];
+    
+    // Heading
+    [cable handle:@"heading" callback:^(NSArray* data) {
+        [cable send:mocapHeading];
+    }];
+    
+    // Nest on
+    [cable handle:@"nest on" callback:^(NSArray* data) {
+        NSString* label = @"NEST ON";
+        if(![sensorState isEqualToString:label]) {
+            if(imgRecog) {
+                [self teardownAVCapture];
+                imgRecog = nil;
+            }
+            imgRecog = [[ImageRecognition alloc] initResolutionTo:FRONT_REZ_VERT by:FRONT_REZ_HOR];
+            [self setupAVCaptureAt:AVCaptureDevicePositionFront];
+            [infoBox setText:label];
+            sensorState = label;
+            nestDistance = -1;
+        }
+        [cable send:@"nest on"];
+    }];
+    
+    // Nest off
+    [cable handle:@"nest off" callback:^(NSArray* data) {
+        NSString* label = @"NEST OFF";
+        if(![sensorState isEqualToString:label]) {
+            [self teardownAVCapture];
+            imgRecog = nil;
+            [infoBox setText:label];
+            sensorState = label;
+        }
+        [cable send:@"nest off"];
+        [cable send:[NSString stringWithFormat:@"%d\n", nestDistance]];
+    }];
+    
+    // Parameters
+    [cable handle:@"parameters" callback:^(NSArray* data) {
+        if(evolvedParameters) {
+            [cable send:@"parameters"];
+            [cable send:evolvedParameters];
+        }
+    }];
+    
+    // Print
+    [cable handle:@"print" callback:^(NSArray* data){
+        NSString* message = [data objectAtIndex:0];
+        [server send:[NSString stringWithFormat:@"%@,%@\n", [Utilities getMacAddress], message]];
+    }];
+    
+    // Seed
+    [cable handle:@"seed" callback:^(NSArray* data) {
+        [cable send:@"seed"];
+        [cable send:[NSString stringWithFormat:@"%d", arc4random()]];
+    }];
+    
+    // Tag on
+    [cable handle:@"tag on" callback:^(NSArray* data) {
+        NSString* label = @"TAG ON";
+        if(![sensorState isEqualToString:label] && ![sensorState isEqualToString:@"TAG FOUND"]) {
+            if(!imgRecog) {
+                [self teardownAVCapture];
+                imgRecog = nil;
+            }
+            
+            imgRecog = [[ImageRecognition alloc] initResolutionTo:BACK_REZ_VERT by:BACK_REZ_HOR];
+            [self setupAVCaptureAt:AVCaptureDevicePositionBack];
+        }
+        [infoBox setText:label];
+        sensorState = label;
+        [cable send:@"tag on"];
+        qrCode = -1;
+    }];
+    
+    // Tag off
+    [cable handle:@"tag off" callback:^(NSArray* data) {
+        NSString* label = @"TAG OFF";
+        if(![sensorState isEqualToString:label]) {
+            [self teardownAVCapture];
+            imgRecog = nil;
+            [infoBox setText:label];
+            sensorState = label;
+        }
+    }];
 }
 
 
@@ -497,248 +662,19 @@ bail:
 
 - (void)receiveNotification:(NSNotification *) notification {
     if ([[notification name] isEqualToString:@"Stream opened"]) {
-        [[self infoBox] setBackgroundColor:[UIColor clearColor]];
-        [[self infoBox] setTextColor:[UIColor blackColor]];
+        [infoBox setBackgroundColor:[UIColor clearColor]];
+        [infoBox setTextColor:[UIColor blackColor]];
     }
     else if ([[notification name] isEqualToString:@"Stream closed"]) {
-        [[self infoBox] setBackgroundColor:[UIColor redColor]];
-        [[self infoBox] setTextColor:[UIColor whiteColor]];
+        [infoBox setBackgroundColor:[UIColor redColor]];
+        [infoBox setTextColor:[UIColor whiteColor]];
     }
 }
 
 - (void)updateInfoBox:(NSNotification*) notification {
     dispatch_async (dispatch_get_main_queue(), ^{
-        [[self infoBox] setText:[[notification userInfo] objectForKey:@"text"]];
+        [infoBox setText:[[notification userInfo] objectForKey:@"text"]];
     });
 }
-
-
-#pragma mark - Observation methods
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"mocapHeading"]) {
-        //Create storage variables
-        short int data[2] = {0,0};
-        data[0] = 2 * (int)[Utilities angleFrom:(int)context to:[[server mocapHeading] intValue]];
-        
-        //Transmit data to Arduino
-        [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
-        
-        //If angle is small enough, we transmit an additional command to Arduino to stop alignment
-        if (abs(data[0]) < 2) {
-            [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
-            [server removeObserver:self forKeyPath:@"mocapHeading"];
-        }
-    }
-    else if ([keyPath isEqualToString:@"pheromoneLocation"]) {
-        [cblMgr send:@"pheromone"];
-        [cblMgr send:[NSString stringWithFormat:@"%@\n",[server pheromoneLocation]]];
-    }
-    else if ([keyPath isEqualToString:@"tagStatus"]) {
-        [[self infoBox] setText:[NSString stringWithFormat:@"%@ TAG FOUND     %d",[[server tagStatus] uppercaseString],qrCode]];
-        
-        @try {
-            //If we receive tag information while the mocapHeading is being monitored,
-            //  then we need to remove the mocapHeading observer and send a stop message to the Arduino
-            [server removeObserver:self forKeyPath:@"mocapHeading"];
-            
-            //If mocapHeading is *not* being monitored, @catch will handle the exception
-            //   and the stop message will never be sent
-            short int data[2] = {0,0};
-            [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
-            [cblMgr send:[NSString stringWithFormat:@"(%d,%d)",data[0],data[1]]];
-        }
-        @catch (NSException *exception) {
-            //do nothing, mocapHeading was not being observed
-        }
-
-        [cblMgr send:[server tagStatus]];
-        if ([[server tagStatus] isEqualToString:@"new"]) {
-            [cblMgr send:[NSString stringWithFormat:@"%d\n",qrCode]];
-        }
-    }
-}
-
-
-#pragma mark - RscMgrDelegate methods
-
-//RscMgr callback, triggered when serial data is available for reading
-- (void)readBytesAvailable:(UInt32)numBytes {
-    NSString *message = nil;
-    
-    //Read bytes into buffer
-    [cblMgr receive:numBytes];
-    
-    while ((message = [cblMgr getMessage]) != nil) {
-        
-        //Check for null characters at beginning of string (artifact of serial communication from Arduino)
-        if ([message length] > 0) {
-            
-            unichar character [1] = {0};
-            int nullCount = 0;
-            
-            [message getCharacters:character range:NSMakeRange(0,1)];
-            while (character[0] == 0) {
-                nullCount++;
-                [message getCharacters:character range:NSMakeRange(nullCount,1)];
-            }
-            
-            //If there are additional characters after the null characters
-            if ([message length] > nullCount) {
-                //Simply remove the null character
-                message = [message substringFromIndex:nullCount];
-            }
-            //Otherwise
-            else {
-                //Continue to next loop iteration
-                continue;
-            }
-        }
-        
-        //Log command
-        #ifdef DEBUG
-        NSLog(@"%@",message);
-        #endif
-        
-        //Check command against series of options
-        if ([message hasPrefix:@"align"]) {
-            //Ensure mocapHeading is not already being observed
-            @try {
-                [server removeObserver:self forKeyPath:@"mocapHeading"];
-            }
-            @catch (NSException *exception) {
-                //do nothing, mocapHeading was not being observed
-            }
-            int wordLength = 5;
-            int heading = [[message substringWithRange:NSMakeRange(wordLength, [message length] - wordLength)] intValue];
-            [server addObserver:self forKeyPath:@"mocapHeading" options:NSKeyValueObservingOptionNew context:(void*)heading];
-            [cblMgr send:@"align"];
-        }
-      
-        else if ([message hasPrefix:@"display"]) {
-            int wordLength = 7;
-            NSString* data = [message substringWithRange:NSMakeRange(wordLength, [message length] - wordLength)];
-            [[self infoBox] setText:data];
-        }
-         
-        else if ([message isEqualToString:@"fence"]) {
-            int wordLength = 5;
-            NSString* radius;
-            
-            radius = [message substringWithRange:NSMakeRange(wordLength, [message length] - wordLength)];
-            
-            [absMotion enableRegionMonitoring:@"virtual fence" withRadius:[radius doubleValue]];
-        }
-        
-        else if ([message isEqualToString:@"gyro on"]) {
-            if (![sensorState isEqualToString:@"GYRO ON"]) {
-                [relMotion start];
-                [[self infoBox] setText:@"GYRO ON"];
-                sensorState = @"GYRO ON";
-            }
-            [cblMgr send:@"gyro on"];
-        }
-        
-        else if ([message isEqualToString:@"gyro off"]) {
-            if (![sensorState isEqualToString:@"GYRO OFF"]) {
-                [relMotion stop];
-                [[self infoBox] setText:@"GYRO OFF"];
-                sensorState = @"GYRO OFF";
-            }
-        }
-      
-        else if ([message isEqualToString:@"heading"]) {
-            //Transmit heading to Arduino
-            if ([server mocapHeading] != nil) {
-                [cblMgr send:[NSString stringWithFormat:@"%@\n",[server mocapHeading]]];
-            }
-        }
-        
-        else if ([message isEqualToString:@"nest on"]) {
-            if (![sensorState isEqualToString:@"NEST ON"]) {
-                if (imgRecog != nil) {
-                    [self teardownAVCapture];
-                    imgRecog = nil;
-                }
-                imgRecog = [[ImageRecognition alloc] initResolutionTo:FRONT_REZ_VERT by:FRONT_REZ_HOR];
-                [self setupAVCaptureAt:AVCaptureDevicePositionFront];
-                [[self infoBox] setText:@"NEST ON"];
-                sensorState = @"NEST ON";
-                nestDistance = -1;
-            }
-            [cblMgr send:@"nest on"];
-        }
-        
-        else if ([message isEqualToString:@"nest off"]) {
-            if (![sensorState isEqualToString:@"NEST OFF"]) {
-                [self teardownAVCapture];
-                imgRecog = nil;
-                [[self infoBox] setText:@"NEST OFF"];
-                sensorState = @"NEST OFF";
-            }
-            [cblMgr send:@"nest off"];
-            [cblMgr send:[NSString stringWithFormat:@"%d\n",nestDistance]];
-        }
-        
-        else if ([message isEqualToString:@"parameters"]) {
-            if ([server evolvedParameters] != nil) {
-                [cblMgr send:@"parameters"];
-                [cblMgr send:[NSString stringWithFormat:@"%@\n",[server evolvedParameters]]];
-            }
-        }
-
-        else if ([message hasPrefix:@"print"]) {
-            int wordLength = 5;
-            NSString* data = [message substringWithRange:NSMakeRange(wordLength, [message length] - wordLength)];
-            message = [NSString stringWithFormat:@"%@,%@\n",[Utilities getMacAddress],data];
-            [server send:message];
-        }
-        
-        else if ([message isEqualToString:@"seed"]) {
-            [cblMgr send:@"seed"];
-            int seed = arc4random();
-            [cblMgr send:[[NSNumber numberWithInt:seed] stringValue]];
-        }
-        
-        else if ([message isEqualToString:@"tag on"]) {
-            if (![sensorState isEqualToString:@"TAG ON"] && ![sensorState isEqualToString:@"TAG FOUND"]) {
-                if (imgRecog != nil) {
-                    [self teardownAVCapture];
-                    imgRecog = nil;
-                }
-                imgRecog = [[ImageRecognition alloc] initResolutionTo:BACK_REZ_VERT by:BACK_REZ_HOR];
-                [self setupAVCaptureAt:AVCaptureDevicePositionBack];
-            }
-            [[self infoBox] setText:@"TAG ON"];
-            sensorState = @"TAG ON";
-            [cblMgr send:@"tag on"];
-            qrCode = -1;
-        }
-        
-        else if ([message isEqualToString:@"tag off"]) {
-            if (![sensorState isEqualToString:@"TAG OFF"]) {
-                [self teardownAVCapture];
-                imgRecog = nil;
-                [[self infoBox] setText:@"TAG OFF"];
-                sensorState = @"TAG OFF";
-            }
-        }
-        
-        else {
-            NSLog(@"Error - The command \"%@\" is not recognized",message);
-        }
-    }
-}
-
-- (void)cableConnected:(NSString *)protocol {
-    [cblMgr setBaud:9600];
-	[cblMgr open];
-}
-
-- (void)cableDisconnected {
-    exit(0);
-}
-
-- (void)portStatusChanged {}
 
 @end
