@@ -12,7 +12,6 @@
 		0618ACBE193905B400AE30B6 /* RouterServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0618ACBD193905B400AE30B6 /* RouterServer.m */; };
 		420CC92D151639A6003B29D3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 420CC92C151639A6003B29D3 /* CoreLocation.framework */; };
 		421743851514D0830003BF49 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 421743831514D0830003BF49 /* InfoPlist.strings */; };
-		421EA9171591252A00D3B52E /* CableManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 421EA9161591252A00D3B52E /* CableManager.m */; };
 		4221A9BD162246020055C9C8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4221A9BB162245F60055C9C8 /* AudioToolbox.framework */; };
 		42388E7515EF1FC4009F0D7E /* FinderPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 42388E7015EF1C6C009F0D7E /* FinderPattern.m */; };
 		42388E7615EF1FC4009F0D7E /* LineSegment2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 42388E7215EF1C6C009F0D7E /* LineSegment2D.m */; };
@@ -63,8 +62,6 @@
 		42042CEE156E78780053FC41 /* OpenCV.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCV.framework; path = "AntBot-iOS/OpenCV.framework"; sourceTree = "<group>"; };
 		420CC92C151639A6003B29D3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		421743841514D0830003BF49 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "AntBot-iOS/en.lproj/InfoPlist.strings"; sourceTree = SOURCE_ROOT; };
-		421EA9151591252900D3B52E /* CableManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CableManager.h; path = "AntBot-iOS/CableManager.h"; sourceTree = SOURCE_ROOT; };
-		421EA9161591252A00D3B52E /* CableManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CableManager.m; path = "AntBot-iOS/CableManager.m"; sourceTree = SOURCE_ROOT; };
 		4221A9BB162245F60055C9C8 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		42388E6F15EF1C6C009F0D7E /* FinderPattern.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FinderPattern.h; path = "AntBot-iOS/IR Utilities/FinderPattern.h"; sourceTree = SOURCE_ROOT; };
 		42388E7015EF1C6C009F0D7E /* FinderPattern.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = FinderPattern.m; path = "AntBot-iOS/IR Utilities/FinderPattern.m"; sourceTree = SOURCE_ROOT; };
@@ -234,8 +231,6 @@
 				4242975315B51F9700CD2A74 /* AmbientLight.m */,
 				423D2E131514CFEB00B5231E /* AppDelegate.h */,
 				423D2E141514CFEB00B5231E /* AppDelegate.m */,
-				421EA9151591252900D3B52E /* CableManager.h */,
-				421EA9161591252A00D3B52E /* CableManager.m */,
 				423F669E152237A70001F9D3 /* ImageRecognition.h */,
 				423F669F152237A70001F9D3 /* ImageRecognition.mm */,
 				42388E6515EF1974009F0D7E /* IR Utilities */,
@@ -360,7 +355,6 @@
 				423D2E251514D04700B5231E /* main.m in Sources */,
 				423D2E191514CFEB00B5231E /* AbsoluteMotion.m in Sources */,
 				423D2E1A1514CFEB00B5231E /* AppDelegate.m in Sources */,
-				421EA9171591252A00D3B52E /* CableManager.m in Sources */,
 				0618ACB81938F9F300AE30B6 /* Router.m in Sources */,
 				0618ACBE193905B400AE30B6 /* RouterServer.m in Sources */,
 				423F66A0152237A70001F9D3 /* ImageRecognition.mm in Sources */,
