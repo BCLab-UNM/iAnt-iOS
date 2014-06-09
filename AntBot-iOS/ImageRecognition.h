@@ -11,18 +11,42 @@
 #import "FinderPattern.h"
 #import "ThresholdRange.h"
 
-@interface ImageRecognition: NSObject {
+#import <Decoder.h>
+#import <QRCodeReader.h>
+#import "TwoDDecoderResult.h"
+
+NS_ENUM(NSInteger, ImageRecognitionTarget) {
+    ImageRecognitionQRCode,
+    ImageRecognitionNest
+};
+
+@interface ImageRecognition: NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, DecoderDelegate> {
     Conversions *converter;
     IplImage *imgGray;
     IplImage *imgGrayBGRA;
     IplImage *maskIpl;
+    
+    Decoder *qrDecoder;
+    
+    AVCaptureVideoDataOutput *videoDataOutput;
+    AVCaptureVideoPreviewLayer *previewLayer;
+    dispatch_queue_t videoDataOutputQueue;
+    AVCaptureSession *session;
+    
+    NSString* target;
+    UIView* view;
 }
 
-- (id)initResolutionTo:(int)vertical by:(int)horizontal;
+- (id)initResolutionTo:(int)vertical by:(int)horizontal target:(NSString*)target view:(UIView*)view;
 
 - (UIImage*)getImgThresholdUI;
 
 - (NSMutableArray*)findColorCentroidIn:(CMSampleBufferRef)buffer usingThreshold:(int)threshold;
 - (NSMutableArray*)locateQRFinderPatternsIn:(CMSampleBufferRef)buffer;
+
+- (void)setupAVCaptureAt:(AVCaptureDevicePosition)position;
+- (void)teardownAVCapture;
+
+@property id delegate;
 
 @end

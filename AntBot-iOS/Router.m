@@ -52,7 +52,7 @@
 - (void)send:(NSString *)message {}
 
 - (void)handle:(NSString*)messageTag callback:(void (^)(NSArray*))callback {
-    if (callback) {
+    if(callback) {
         [handlers setObject:callback forKey:messageTag];
     }
 }

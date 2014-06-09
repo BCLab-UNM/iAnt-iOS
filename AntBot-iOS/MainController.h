@@ -19,6 +19,7 @@
 
 #import "RouterServer.h"
 #import "RouterCable.h"
+#import "Forage.h"
 
 @interface MainController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, DecoderDelegate> {
     

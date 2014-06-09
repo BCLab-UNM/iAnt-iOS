@@ -24,8 +24,10 @@ const int MAX_RX_BUFFER_SIZE = 100;
 }
 
 - (void)send:(NSString*)message {
-    NSData *data = [[NSData alloc] initWithData:[message dataUsingEncoding:NSASCIIStringEncoding]];
-    [outputStream write:[data bytes] maxLength:[data length]];
+    //if([outputStream streamStatus] == NSStreamStatusOpen) {
+        NSData *data = [[NSData alloc] initWithData:[message dataUsingEncoding:NSASCIIStringEncoding]];
+        [outputStream write:[data bytes] maxLength:[data length]];
+    //}
 }
 
 - (void)connectTo:(NSString*)server onPort:(int)number {

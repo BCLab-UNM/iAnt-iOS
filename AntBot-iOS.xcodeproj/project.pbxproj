@@ -10,6 +10,7 @@
 		0618ACB81938F9F300AE30B6 /* Router.m in Sources */ = {isa = PBXBuildFile; fileRef = 0618ACB71938F9F300AE30B6 /* Router.m */; };
 		0618ACBB1939010C00AE30B6 /* RouterCable.m in Sources */ = {isa = PBXBuildFile; fileRef = 0618ACBA1939010C00AE30B6 /* RouterCable.m */; };
 		0618ACBE193905B400AE30B6 /* RouterServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0618ACBD193905B400AE30B6 /* RouterServer.m */; };
+		06BFD92D1940EE8D0040034E /* Forage.m in Sources */ = {isa = PBXBuildFile; fileRef = 06BFD92C1940EE8D0040034E /* Forage.m */; };
 		420CC92D151639A6003B29D3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 420CC92C151639A6003B29D3 /* CoreLocation.framework */; };
 		421743851514D0830003BF49 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 421743831514D0830003BF49 /* InfoPlist.strings */; };
 		4221A9BD162246020055C9C8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4221A9BB162245F60055C9C8 /* AudioToolbox.framework */; };
@@ -59,6 +60,8 @@
 		0618ACBA1939010C00AE30B6 /* RouterCable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RouterCable.m; path = "AntBot-iOS/RouterCable.m"; sourceTree = SOURCE_ROOT; };
 		0618ACBC193905B400AE30B6 /* RouterServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouterServer.h; path = "AntBot-iOS/RouterServer.h"; sourceTree = SOURCE_ROOT; };
 		0618ACBD193905B400AE30B6 /* RouterServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RouterServer.m; path = "AntBot-iOS/RouterServer.m"; sourceTree = SOURCE_ROOT; };
+		06BFD92B1940EE8D0040034E /* Forage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Forage.h; path = "AntBot-iOS/Forage.h"; sourceTree = SOURCE_ROOT; };
+		06BFD92C1940EE8D0040034E /* Forage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Forage.m; path = "AntBot-iOS/Forage.m"; sourceTree = SOURCE_ROOT; };
 		42042CEE156E78780053FC41 /* OpenCV.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCV.framework; path = "AntBot-iOS/OpenCV.framework"; sourceTree = "<group>"; };
 		420CC92C151639A6003B29D3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		421743841514D0830003BF49 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "AntBot-iOS/en.lproj/InfoPlist.strings"; sourceTree = SOURCE_ROOT; };
@@ -240,6 +243,8 @@
 				42BEFEC116BC7FE80095EE7C /* Utilities.mm */,
 				423D2E171514CFEB00B5231E /* MainController.h */,
 				423D2E181514CFEB00B5231E /* MainController.mm */,
+				06BFD92B1940EE8D0040034E /* Forage.h */,
+				06BFD92C1940EE8D0040034E /* Forage.m */,
 				0618ACB61938F9F300AE30B6 /* Router.h */,
 				0618ACB71938F9F300AE30B6 /* Router.m */,
 				0618ACB91939010C00AE30B6 /* RouterCable.h */,
@@ -358,6 +363,7 @@
 				0618ACB81938F9F300AE30B6 /* Router.m in Sources */,
 				0618ACBE193905B400AE30B6 /* RouterServer.m in Sources */,
 				423F66A0152237A70001F9D3 /* ImageRecognition.mm in Sources */,
+				06BFD92D1940EE8D0040034E /* Forage.m in Sources */,
 				423D2E1C1514CFEB00B5231E /* MainController.mm in Sources */,
 				427F3C0D15B4A82900C2CB85 /* RelativeMotion.m in Sources */,
 				42388E7515EF1FC4009F0D7E /* FinderPattern.m in Sources */,
