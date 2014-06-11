@@ -6,36 +6,18 @@
 //  Moses Lab, Department of Computer Science, University of New Mexico
 //
 
-#import "AbsoluteMotion.h"
-//#import "AmbientLight.h"
-#import "Conversions.h"
-#import "ImageRecognition.h"
-#import "RelativeMotion.h"
-#import "Utilities.h"
-#import <Decoder.h>
-#import <QRCodeReader.h>
-#import "TwoDDecoderResult.h"
-#import <math.h>
+@class AbsoluteMotion, Forage, ImageRecognition, RelativeMotion, RouterServer, RouterCable;
 
-#import "RouterServer.h"
-#import "RouterCable.h"
-#import "Forage.h"
-
-@interface MainController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, DecoderDelegate> {
+@interface MainController : UIViewController {
     
     AbsoluteMotion *absMotion;
-    //AmbientLight *ambLight;
     RouterServer *server;
     RouterCable *cable;
-    Decoder *qrDecoder;
     ImageRecognition *imgRecog;
     RelativeMotion *relMotion;
+    Forage* forage;
     
     IBOutlet UIView *previewView;
-    AVCaptureVideoDataOutput *videoDataOutput;
-    AVCaptureVideoPreviewLayer *previewLayer;
-    dispatch_queue_t videoDataOutputQueue;
-    AVCaptureSession *session;
     
     NSString *sensorState;
     int qrCode;

@@ -8,6 +8,16 @@
 
 #import "MainController.h"
 
+#import "AbsoluteMotion.h"
+#import "Forage.h"
+#import "ImageRecognition.h"
+#import "RelativeMotion.h"
+#import "RouterServer.h"
+#import "RouterCable.h"
+#import "Utilities.h"
+
+#import <math.h>
+
 @implementation MainController
 
 const int BACK_REZ_VERT = 352;
@@ -22,14 +32,6 @@ const int NEST_THRESHOLD = 240;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // QR code reader
-    qrDecoder = [[Decoder alloc] init];
-    NSMutableSet *readers = [[NSMutableSet alloc] init];
-    QRCodeReader* qrcodeReader = [[QRCodeReader alloc] init];
-    [readers addObject:qrcodeReader];
-    [qrDecoder setReaders:readers];
-    [qrDecoder setDelegate:self];
     
     // Notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:@"Stream opened" object:nil];
@@ -61,7 +63,7 @@ const int NEST_THRESHOLD = 240;
     mocapContext = 0;
     
     // Forage (CPFA logic).
-    Forage* forage = [[Forage alloc] init];
+    forage = [[Forage alloc] init];
 }
 
 - (void)viewDidUnload {
