@@ -40,7 +40,7 @@ const int NEST_THRESHOLD = 240;
     server = [[RouterServer alloc] init];
     //[server connectTo:@"192.168.1.10" onPort:2223];
     [server connectTo:@"64.106.39.146" onPort:2223];
-    [server send:[NSString stringWithFormat:@"%@\n", [Utilities getMacAddress]]];
+    [server send:[Utilities getMacAddress]];
     [self initServerHandlers];
     
     // Serial cable connection
@@ -60,11 +60,8 @@ const int NEST_THRESHOLD = 240;
     mocapHeading = 0;
     mocapContext = 0;
     
-    // Start forage logic thread.
-    dispatch_async(dispatch_get_global_queue(0, 0), ^(void) {
-        Forage* forage = [[Forage alloc] init];
-        [forage loop];
-    });
+    // Forage (CPFA logic).
+    Forage* forage = [[Forage alloc] init];
 }
 
 - (void)viewDidUnload {
@@ -89,11 +86,11 @@ const int NEST_THRESHOLD = 240;
         cmd[0] = 2 * (int)[Utilities angleFrom:(int)mocapContext to:[mocapHeading intValue]];
         
         //Transmit data to Arduino
-        [cable send:[NSString stringWithFormat:@"(%d,%d)", cmd[0], cmd[1]]];
+        [cable send:@"(%d,%d)", cmd[0], cmd[1]];
         
         //If angle is small enough, we transmit an additional command to Arduino to stop alignment
         if (abs(cmd[0]) < 2) {
-            [cable send:[NSString stringWithFormat:@"(%d,%d)", cmd[0], cmd[1]]];
+            [cable send:@"(%d,%d)", cmd[0], cmd[1]];
             mocapMonitor = false;
         }
     }];
@@ -109,13 +106,13 @@ const int NEST_THRESHOLD = 240;
             // then we need to remove the mocapHeading observer and send a stop message to the Arduino
             mocapMonitor = false;
             short int cmd[2] = {0, 0};
-            [cable send:[NSString stringWithFormat:@"(%d,%d)", cmd[0], cmd[1]]];
-            [cable send:[NSString stringWithFormat:@"(%d,%d)", cmd[0], cmd[1]]];
+            [cable send:@"(%d,%d)", cmd[0], cmd[1]];
+            [cable send:@"(%d,%d)", cmd[0], cmd[1]];
         }
         
         [cable send:tagStatus];
         if ([tagStatus isEqualToString:@"new"]) {
-            [cable send:[NSString stringWithFormat:@"%d\n", qrCode]];
+            [cable send:@"%d", qrCode];
         }
     }];
     
@@ -123,7 +120,7 @@ const int NEST_THRESHOLD = 240;
     [server handle:@"pheromone" callback:^(NSArray* data) {
         NSString* pheromone = [data objectAtIndex:0];
         [cable send:@"pheromone"];
-        [cable send:[NSString stringWithFormat:@"%@\n", pheromone]];
+        [cable send:@"%@", pheromone];
     }];
 }
 
@@ -179,10 +176,10 @@ const int NEST_THRESHOLD = 240;
         NSString* label = @"NEST ON";
         if(![sensorState isEqualToString:label]) {
             if(imgRecog) {
-                [imgRecog teardownAVCapture];
+                [imgRecog stop];
                 imgRecog = nil;
             }
-            imgRecog = [[ImageRecognition alloc] initResolutionTo:FRONT_REZ_VERT by:FRONT_REZ_HOR target:@"nest" view:previewView];
+            imgRecog = [[ImageRecognition alloc] initResolutionTo:FRONT_REZ_VERT by:FRONT_REZ_HOR view:previewView];
             [imgRecog setupAVCaptureAt:AVCaptureDevicePositionFront];
             [infoBox setText:label];
             sensorState = label;
@@ -195,13 +192,13 @@ const int NEST_THRESHOLD = 240;
     [cable handle:@"nest off" callback:^(NSArray* data) {
         NSString* label = @"NEST OFF";
         if(![sensorState isEqualToString:label]) {
-            [imgRecog teardownAVCapture];
+            [imgRecog stop];
             imgRecog = nil;
             [infoBox setText:label];
             sensorState = label;
         }
         [cable send:@"nest off"];
-        [cable send:[NSString stringWithFormat:@"%d\n", nestDistance]];
+        [cable send:@"%d", nestDistance];
     }];
     
     // Parameters
@@ -215,13 +212,13 @@ const int NEST_THRESHOLD = 240;
     // Print
     [cable handle:@"print" callback:^(NSArray* data){
         NSString* message = [data objectAtIndex:0];
-        [server send:[NSString stringWithFormat:@"%@,%@\n", [Utilities getMacAddress], message]];
+        [server send:@"%@,%@", [Utilities getMacAddress], message];
     }];
     
     // Seed
     [cable handle:@"seed" callback:^(NSArray* data) {
         [cable send:@"seed"];
-        [cable send:[NSString stringWithFormat:@"%d", arc4random()]];
+        [cable send:@"%d", arc4random()];
     }];
     
     // Tag on
@@ -229,11 +226,11 @@ const int NEST_THRESHOLD = 240;
         NSString* label = @"TAG ON";
         if(![sensorState isEqualToString:label] && ![sensorState isEqualToString:@"TAG FOUND"]) {
             if(!imgRecog) {
-                [imgRecog teardownAVCapture];
+                [imgRecog stop];
                 imgRecog = nil;
             }
             
-            imgRecog = [[ImageRecognition alloc] initResolutionTo:BACK_REZ_VERT by:BACK_REZ_HOR target:@"tag" view:previewView];
+            imgRecog = [[ImageRecognition alloc] initResolutionTo:BACK_REZ_VERT by:BACK_REZ_HOR view:previewView];
             [imgRecog setupAVCaptureAt:AVCaptureDevicePositionBack];
         }
         [infoBox setText:label];
@@ -246,7 +243,7 @@ const int NEST_THRESHOLD = 240;
     [cable handle:@"tag off" callback:^(NSArray* data) {
         NSString* label = @"TAG OFF";
         if(![sensorState isEqualToString:label]) {
-            [imgRecog teardownAVCapture];
+            [imgRecog stop];
             imgRecog = nil;
             [infoBox setText:label];
             sensorState = label;
