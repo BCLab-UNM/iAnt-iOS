@@ -15,10 +15,15 @@
 #import <QRCodeReader.h>
 #import "TwoDDecoderResult.h"
 
-NS_ENUM(NSInteger, ImageRecognitionTarget) {
-    ImageRecognitionQRCode,
-    ImageRecognitionNest
+typedef NS_ENUM(NSInteger, ImageRecognitionTarget) {
+    ImageRecognitionTargetTag,
+    ImageRecognitionTargetNeighbors,
+    ImageRecognitionTargetNest
 };
+
+@interface NSObject(ImageRecognitionDelegate)
+    -(void) didReceiveAlignInfo:(NSValue*)info;
+@end
 
 @interface ImageRecognition: NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, DecoderDelegate> {
     Conversions *converter;
@@ -32,12 +37,11 @@ NS_ENUM(NSInteger, ImageRecognitionTarget) {
     AVCaptureVideoPreviewLayer *previewLayer;
     dispatch_queue_t videoDataOutputQueue;
     AVCaptureSession *session;
-    
-    NSString* target;
+
     UIView* view;
 }
 
-- (id)initResolutionTo:(int)vertical by:(int)horizontal target:(NSString*)target view:(UIView*)view;
+- (id)initResolutionTo:(int)vertical by:(int)horizontal view:(UIView*)view;
 
 - (UIImage*)getImgThresholdUI;
 
@@ -45,8 +49,10 @@ NS_ENUM(NSInteger, ImageRecognitionTarget) {
 - (NSMutableArray*)locateQRFinderPatternsIn:(CMSampleBufferRef)buffer;
 
 - (void)setupAVCaptureAt:(AVCaptureDevicePosition)position;
-- (void)teardownAVCapture;
+- (void)start;
+- (void)stop;
 
 @property id delegate;
+@property ImageRecognitionTarget target;
 
 @end

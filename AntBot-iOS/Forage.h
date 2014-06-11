@@ -24,7 +24,6 @@ typedef NS_ENUM(NSInteger, RobotStatus) {
 }
 
 - (void)setup:(RouterCable*)cable;
-- (void)loop;
 
 @property (nonatomic) RobotStatus status;
 

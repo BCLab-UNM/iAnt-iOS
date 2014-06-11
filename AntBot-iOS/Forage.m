@@ -27,10 +27,10 @@
     // init
     [cable handle:@"init" callback:^(NSArray* data) {
         switch(status) {
+            
+            // Arduino is ready for commands.  Start the state machine.
             case RobotStatusInactive:
-                // [imageRecognition setTarget:ImageRecognitionTargetNest];
-                // [imageRecognition start];
-                // [cable send:@"align"]; // Tell the arduino we'll be streaming it motor offsets for a while.
+                status = RobotStatusDeparting;
                 break;
             
             default:
@@ -42,9 +42,18 @@
     // driveFinished
     [cable handle:@"driveFinished" callback:^(NSArray* data) {
         switch(status) {
-            case RobotStatusDeparting:
+                
+            // Robot has reached its destination.  Perform a random walk.
+            case RobotStatusDeparting: {
                 status = RobotStatusSearching;
+                // Fallthrough to RobotStatusSearching
+            }
+                
+            case RobotStatusSearching: {
+                float dTheta = random();
+                [cable send:[NSString stringWithFormat:@"turn,%f", dTheta]];
                 break;
+            }
                 
             case RobotStatusReturning:
                 // check pheromones from server
@@ -53,31 +62,33 @@
                 // will probably also involve an align
                 break;
             
-            case RobotStatusSearching:
-                // turn a little bit
-                // tell it to drive
-                break;
-            
             default:
                 NSLog(@"Received driveFinished, but was in inappropriate state %d", status);
                 break;
         }
     }];
     
-    // alignFinished
-    [cable handle:@"alignFinished" callback:^(NSArray* data) {
+    // turnFinished
+    [cable handle:@"turnFinished" callback:^(NSArray* data) {
         switch(status) {
-            case RobotStatusDeparting:
-                // Tell it to drive to the destination
+                
+            // Robot has finished aligning to its destination.  Tell it to drive there.
+            case RobotStatusDeparting: {
+                float distance = random();
+                [cable send:[NSString stringWithFormat:@"drive,%f", distance]];
                 break;
+            }
                 
             case RobotStatusReturning:
                 // Tell it to drive to the nest
                 break;
                 
-            case RobotStatusSearching:
-                // Tell it to drive forward a tad
+            // Robot has finished adjusting its direction.  Tell it to drive forward.
+            case RobotStatusSearching: {
+                float distance = random();
+                [cable send:[NSString stringWithFormat:@"drive,%f", distance]];
                 break;
+            }
                 
             default:
                 NSLog(@"Received alignFinished, but was in inappropriate state %d", status);
@@ -86,23 +97,48 @@
     }];
 }
 
-- (void)loop {
-    // Hopefully we don't have to put anything here
-}
-
 - (void)setStatus:(RobotStatus)_status {
     switch(_status) {
-        // State change logic here.
-        default:
+        case RobotStatusDeparting:
+            [self localize];
             break;
+            
+        case RobotStatusSearching:
+            [imageRecognition setTarget:ImageRecognitionTargetTag];
+            [imageRecognition start];
+            break;
+            
+        default: break;
     }
     
     status = _status;
 }
 
-- (void)didReceiveAlignInfo:(int)horizontal vertical:(int)vertical {
-    // ImageRecognition processed a frame.
-    [cable send:[NSString stringWithFormat:@"%d,%d", horizontal, vertical]];
+- (void)didReceiveAlignInfo:(NSValue*)info {
+    CGPoint offset = [info CGPointValue];
+    bool epsilonCondition = false;
+    if(epsilonCondition) {
+        [cable send:@"alignFinished"];
+        switch(status) {
+            case RobotStatusDeparting: {
+                // Decide on a destination based on pheromones and site fidelity.
+                float heading = random();
+                [cable send:[NSString stringWithFormat:@"turnTo,%f", heading]];
+                break;
+            }
+                
+            default: break;
+        }
+    }
+    else {
+        [cable send:[NSString stringWithFormat:@"%d,%d", (int)offset.x, (int)offset.y]];
+    }
+}
+
+- (void)localize {
+    [imageRecognition setTarget:ImageRecognitionTargetNest];
+    [imageRecognition start];
+    [cable send:@"align"]; // Tell the arduino we'll be streaming it motor offsets for a while.
 }
 
 @end

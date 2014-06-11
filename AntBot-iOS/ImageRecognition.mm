@@ -18,7 +18,9 @@ const int NEST_THRESHOLD = 240;
 
 @implementation ImageRecognition
 
-- (id)initResolutionTo:(int)vertical by:(int)horizontal target:(NSString*)_target view:(UIView*)_view {
+@synthesize delegate, target;
+
+- (id)initResolutionTo:(int)vertical by:(int)horizontal view:(UIView*)_view {
     self = [super init];
     
     converter = [Conversions new];
@@ -40,7 +42,6 @@ const int NEST_THRESHOLD = 240;
     [qrDecoder setReaders:readers];
     [qrDecoder setDelegate:self];
     
-    target = _target;
     view = _view;
     
     return self;
@@ -48,6 +49,24 @@ const int NEST_THRESHOLD = 240;
 
 - (UIImage*)getImgThresholdUI {
     return [converter imgThresholdUI];
+}
+
+- (void)start {
+    [self stop];
+    
+    switch(target) {
+        case ImageRecognitionTargetTag:
+            [self setupAVCaptureAt:AVCaptureDevicePositionBack];
+            break;
+            
+        case ImageRecognitionTargetNeighbors:
+            [self setupAVCaptureAt:AVCaptureDevicePositionBack];
+            break;
+        
+        case ImageRecognitionTargetNest:
+            [self setupAVCaptureAt:AVCaptureDevicePositionFront];
+            break;
+    }
 }
 
 - (void)setupAVCaptureAt:(AVCaptureDevicePosition)position {
@@ -123,11 +142,11 @@ bail:
 												  cancelButtonTitle:@"Dismiss"
 												  otherButtonTitles:nil];
 		[alertView show];
-		[self teardownAVCapture];
+		[self stop];
 	}
 }
 
-- (void)teardownAVCapture {
+- (void)stop {
     [session stopRunning];
 	if (videoDataOutputQueue)
 		dispatch_release(videoDataOutputQueue);
@@ -142,7 +161,7 @@ bail:
     //This ensures release of objects from background thread
     @autoreleasepool {
         //If tag has been found, we are searching for neighbors
-        if ([target isEqualToString:@"TAG FOUND"]) {
+        if (target == ImageRecognitionTargetNeighbors) {
             //Filter image
             [self locateQRFinderPatternsIn:sampleBuffer];
             
@@ -182,12 +201,12 @@ bail:
             };
             
             //If searching for nest
-            if ([target isEqualToString:@"NEST ON"]) {
+            if (target == ImageRecognitionTargetNest) {
                 //Retrieve nest centroid
                 centroidList = [self findColorCentroidIn:sampleBuffer usingThreshold:NEST_THRESHOLD];
             }
             //If searching for tags
-            else if ([target isEqualToString:@"TAG ON"]) {
+            else if (target == ImageRecognitionTargetTag) {
                 //Retrieve list of finder pattern centroids
                 centroidList = [self locateQRFinderPatternsIn:sampleBuffer];
             }
@@ -216,7 +235,7 @@ bail:
                 
                 //If we are searching for tags, and a tag has been found in the image
                 //Note that we exploit lazy evaluation here to avoid detecting the same QR tag multiple times
-                if ([target isEqualToString:@"TAG ON"] && ([qrDecoder decodeImage:img] ||
+                if (target == ImageRecognitionTargetTag && ([qrDecoder decodeImage:img] ||
                                                                 [qrDecoder decodeImage:img22] ||
                                                                 [qrDecoder decodeImage:img45] ||
                                                                 [qrDecoder decodeImage:img67] ||
@@ -228,7 +247,7 @@ bail:
                     //Hide all layers
                     hideAllLayers();
                     
-                    target = @"TAG FOUND";
+                    target = ImageRecognitionTargetNeighbors;
                 }
                 //Otherwise
                 else {
@@ -243,13 +262,13 @@ bail:
                         featureLayer = [[CALayer alloc] init];
                         [previewLayer addSublayer:featureLayer];
                         //If using front camera to search for nest
-                        if ([target isEqualToString:@"NEST ON"]) {
+                        if (target == ImageRecognitionTargetNest) {
                             //Rotate layer by 90 degrees clockwise, then rotate it 180 degrees around the y-axis
                             [featureLayer setTransform:CATransform3DScale(CATransform3DMakeRotation(M_PI_2, 0, 0, 1),
                                                                           1, -1, 1)];
                         }
                         //If using back camera to search for tags
-                        else if ([target isEqualToString:@"TAG ON"]) {
+                        else if (target == ImageRecognitionTargetTag) {
                             //Rotate layer by 90 degrees clockwise
                             [featureLayer setTransform:CATransform3DScale(CATransform3DMakeRotation(M_PI_2, 0, 0, 1),
                                                                           1, 1, 1)];
@@ -300,7 +319,7 @@ bail:
                         
                         CGRect rect;
                         //If using front camera to search for nest
-                        if ([target isEqualToString:@"NEST ON"]) {
+                        if (target == ImageRecognitionTargetNest) {
                             //Create frame for square image
                             rect = CGRectMake(([center getX] - [center getHeight]/2) * ([view frame].size.width/FRONT_REZ_HOR),
                                               ([center getY] - [center getWidth]/2) * ([view frame].size.height/FRONT_REZ_VERT),
@@ -308,7 +327,7 @@ bail:
                                               [center getWidth]*([view frame].size.height/FRONT_REZ_VERT));
                         }
                         //If using back camera to search for tags
-                        if ([target isEqualToString:@"TAG ON"]) {
+                        if (target == ImageRecognitionTargetTag) {
                             //Create frame for square image
                             rect = CGRectMake((BACK_REZ_HOR - [center getX] - [center getHeight]/2) * ([view frame].size.width/BACK_REZ_HOR),
                                               ([center getY] - [center getWidth]/2) * ([view frame].size.height/BACK_REZ_VERT),
@@ -333,7 +352,7 @@ bail:
                         
                         CGRect rect;
                         //If using front camera to search for nest
-                        if ([target isEqualToString:@"NEST ON"]) {
+                        if (target == ImageRecognitionTargetNest) {
                             //Create frame for square image
                             rect = CGRectMake(([center getX] - [center getHeight]/2) * ([view frame].size.width/FRONT_REZ_HOR),
                                               ([center getY] - [center getWidth]/2) * ([view frame].size.height/FRONT_REZ_VERT),
@@ -341,7 +360,7 @@ bail:
                                               [center getWidth]*([view frame].size.height/FRONT_REZ_VERT));
                         }
                         //If using back camera to search for tags
-                        if ([target isEqualToString:@"TAG ON"]) {
+                        if (target == ImageRecognitionTargetTag) {
                             //Create frame for square image
                             rect = CGRectMake((BACK_REZ_HOR - [center getX] - [center getHeight]/2) * ([view frame].size.width/BACK_REZ_HOR),
                                               ([center getY] - [center getWidth]/2) * ([view frame].size.height/BACK_REZ_VERT),
@@ -372,7 +391,7 @@ bail:
                                                 heightTo:[meanCenter getHeight]
                                                   areaTo:[meanCenter getArea]];
                     
-                    if ([target isEqualToString:@"NEST ON"]) {
+                    if (target == ImageRecognitionTargetNest) {
                         //Number of pixels between observed and true center
                         data[0] = FRONT_REZ_HOR/2 - [meanCenter getX];
                         
@@ -387,8 +406,11 @@ bail:
                         
                         //Transmit data
                         //[cable send:[NSString stringWithFormat:@"(%d,%d)", data[0], data[1]]];
+                        if(delegate && [delegate respondsToSelector:@selector(didReceiveAlignInfo:)]) {
+                            [delegate didReceiveAlignInfo:[NSValue valueWithCGPoint:CGPointMake(data[0], data[1])]];
+                        }
                     }
-                    else if ([target isEqualToString:@"TAG ON"]) {
+                    else if (target == ImageRecognitionTargetTag) {
                         //Number of pixels between observed and true center
                         /*data[0] = -(BACK_REZ_HOR/2 - [meanCenter getX]);
                         data[1] = BACK_REZ_VERT/2 - [meanCenter getY];
@@ -410,7 +432,7 @@ bail:
                 hideAllLayers();
                 
                 //If searching for nest
-                if ([target isEqualToString:@"NEST ON"]) {
+                if (target == ImageRecognitionTargetNest) {
                     //Construct maintenance message
                     /*data[0] = SHRT_MAX;
                     
