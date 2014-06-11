@@ -19,7 +19,7 @@
 }
 
 - (void)parseString:(NSString*)string withDelimiter:(NSString*)delimiter;
-- (void)send:(NSString*)message;
+- (void)send:(NSString*)message, ...;
 - (void)handle:(NSString*)message callback:(void (^)(NSArray*))callback;
 
 @end

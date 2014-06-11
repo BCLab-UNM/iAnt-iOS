@@ -19,7 +19,11 @@
     return self;
 }
 
-- (void)send:(NSString *)message {
+- (void)send:(NSString *)format, ... {
+    va_list args;
+    va_start(args, format);
+    NSString* message = [[NSString alloc] initWithFormat:format arguments:args];
+    va_end(args);
     NSData *data = [[NSData alloc] initWithData:[message dataUsingEncoding:NSUTF8StringEncoding]];
     [rscMgr write:(UInt8*)[data bytes] Length:[data length]];
 }

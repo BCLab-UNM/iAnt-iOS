@@ -49,7 +49,7 @@
     }
 }
 
-- (void)send:(NSString *)message {}
+- (void)send:(NSString *)message, ... {}
 
 - (void)handle:(NSString*)messageTag callback:(void (^)(NSArray*))callback {
     if(callback) {

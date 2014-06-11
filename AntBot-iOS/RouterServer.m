@@ -23,8 +23,12 @@ const int MAX_RX_BUFFER_SIZE = 100;
     return self;
 }
 
-- (void)send:(NSString*)message {
+- (void)send:(NSString*)format, ... {
     //if([outputStream streamStatus] == NSStreamStatusOpen) {
+        va_list args;
+        va_start(args, format);
+        NSString* message = [[NSString alloc] initWithFormat:format arguments:args];
+        va_end(args);
         NSData *data = [[NSData alloc] initWithData:[message dataUsingEncoding:NSASCIIStringEncoding]];
         [outputStream write:[data bytes] maxLength:[data length]];
     //}
