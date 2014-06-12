@@ -19,6 +19,8 @@
     GKSession* bluetoothSession;
 }
 
+- (id)init;
+- (id)initWithIP:(NSString*)ip port:(int)port;
 - (void)connectTo:(NSString*)server onPort:(int)number;
 - (void)closeConnection;
 

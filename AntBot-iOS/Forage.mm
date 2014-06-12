@@ -8,6 +8,7 @@
 
 #import "Forage.h"
 #import "RouterCable.h"
+#import "RouterServer.h"
 #import "ImageRecognition.h"
 
 #define SLEEP(x) [NSThread sleepForTimeInterval:x];
@@ -16,13 +17,23 @@
 
 @synthesize status;
 
-- (void)setup:(RouterCable*)_cable {
-    cable = _cable;
+- (id)initWithCable:(RouterCable*)_cable server:(RouterServer*)_server {
+    if(self = [super init]) {
+        cable = _cable;
+        server = _server;
+        return self;
+    }
+    
+    return nil;
+}
+
+- (void)setup {
     status = RobotStatusInactive;
     imageRecognition = [[ImageRecognition alloc] init];
     [imageRecognition setDelegate:self];
     
-    [cable send:@"init"];
+    // Give robot its random seed, it will respond with an init message when it's ready.
+    [cable send:@"init,%d", arc4random()];
     
     // init
     [cable handle:@"init" callback:^(NSArray* data) {
@@ -94,6 +105,12 @@
                 NSLog(@"Received alignFinished, but was in inappropriate state %d", status);
                 break;
         }
+    }];
+    
+    // Handle pheromone messages from server.
+    [server handle:@"pheromone" callback:^(NSArray* data) {
+        NSString* pheromone = [data objectAtIndex:0];
+        NSLog(@"%@", pheromone);
     }];
 }
 

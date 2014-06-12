@@ -43,17 +43,22 @@
         
         // Fire registered handlers for the received message.
         if([handlers objectForKey:message]) {
-            void (^handler)(NSArray*) = [handlers objectForKey:message];
-            handler(data);
+            void (^handler)(NSArray*);
+            for(handler in [handlers objectForKey:message]) {
+                handler(data);
+            }
         }
     }
 }
 
 - (void)send:(NSString *)message, ... {}
 
-- (void)handle:(NSString*)messageTag callback:(void (^)(NSArray*))callback {
-    if(callback) {
-        [handlers setObject:callback forKey:messageTag];
+- (void)handle:(NSString*)message callback:(void (^)(NSArray*))callback {
+    if([handlers objectForKey:message]) {
+        [[handlers objectForKey:message] addObject:callback];
+    }
+    else {
+        [handlers setObject:[NSArray arrayWithObject:callback] forKey:message];
     }
 }
 

@@ -23,6 +23,17 @@ const int MAX_RX_BUFFER_SIZE = 100;
     return self;
 }
 
+- (id) initWithIP:(NSString*)ip port:(int)port {
+    self = [self init];
+    
+    if(self) {
+        [self connectTo:ip onPort:port];
+        return self;
+    }
+    
+    return nil;
+}
+
 - (void)send:(NSString*)format, ... {
     //if([outputStream streamStatus] == NSStreamStatusOpen) {
         va_list args;

@@ -15,16 +15,18 @@ typedef NS_ENUM(NSInteger, RobotStatus) {
     RobotStatusReturning
 };
 
-@class RouterCable;
-@class ImageRecognition;
+@class ImageRecognition, RouterCable, RouterServer;
 
 @interface Forage : NSObject {
     RouterCable* cable;
+    RouterServer* server;
     ImageRecognition* imageRecognition;
 }
 
-- (void)setup:(RouterCable*)cable;
+- (id)initWithCable:(RouterCable*)cable server:(RouterServer*)server;
+- (void)setup;
 
 @property (nonatomic) RobotStatus status;
+@property int lastTag;
 
 @end

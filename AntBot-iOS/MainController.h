@@ -6,22 +6,15 @@
 //  Moses Lab, Department of Computer Science, University of New Mexico
 //
 
-@class AbsoluteMotion, Forage, ImageRecognition, RelativeMotion, RouterServer, RouterCable;
+@class Forage, MotionCapture, RouterServer;
 
 @interface MainController : UIViewController {
     
-    AbsoluteMotion *absMotion;
-    RouterServer *server;
-    RouterCable *cable;
-    ImageRecognition *imgRecog;
-    RelativeMotion *relMotion;
     Forage* forage;
+    MotionCapture* motionCapture;
+    RouterServer* server;
     
-    IBOutlet UIView *previewView;
-    
-    NSString *sensorState;
-    int qrCode;
-    int nestDistance;
+    IBOutlet UIView* previewView;
     
     int mocapContext;
     NSString* mocapHeading;
@@ -31,8 +24,7 @@
 }
 
 - (void)initServerHandlers;
-- (void)initCableHandlers;
 
-@property IBOutlet UITextView *infoBox;
+@property IBOutlet UITextView* infoBox;
 
 @end

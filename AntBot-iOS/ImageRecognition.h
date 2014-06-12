@@ -48,7 +48,6 @@ typedef NS_ENUM(NSInteger, ImageRecognitionTarget) {
 - (NSMutableArray*)findColorCentroidIn:(CMSampleBufferRef)buffer usingThreshold:(int)threshold;
 - (NSMutableArray*)locateQRFinderPatternsIn:(CMSampleBufferRef)buffer;
 
-- (void)setupAVCaptureAt:(AVCaptureDevicePosition)position;
 - (void)start;
 - (void)stop;
 
