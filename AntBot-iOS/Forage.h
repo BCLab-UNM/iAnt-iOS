@@ -22,9 +22,8 @@
 - (void)alignFinished;
 - (void)getUltrasound:(NSArray*)data;
 - (void)pheromone:(NSArray*)data;
-- (void)tag:(NSArray*)data;
+- (void)tag:(int)code;
 - (void)alignInfo:(NSValue*)info;
-- (void)QRCodeRead:(int)qrCode;
 @end
 
 // ForageStateDeparting
@@ -40,6 +39,7 @@
 // ForageStateNeighbors
 @interface ForageStateNeighbors : NSObject <ForageState> {
     int turns;
+    int tags;
 }
 - (void)turn;
 @end
@@ -54,6 +54,8 @@
 
 - (id)initWithCable:(RouterCable*)cable server:(RouterServer*)server;
 
+@property int tag;
+@property CGPoint pheromone;
 @property ImageRecognition* imageRecognition;
 @property RouterCable* cable;
 @property RouterServer* server;

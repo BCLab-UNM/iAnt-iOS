@@ -51,6 +51,7 @@
 }
 
 - (void)enter:(id<ForageState>)previous {
+    [[forage imageRecognition] startWithTarget:ImageRecognitionTargetTag];
     [self turn];
 }
 
@@ -62,7 +63,7 @@
     [[forage cable] send:@"drive,%f", random()];
 }
 
-- (void)QRCodeRead:(int)qrCode {
+- (void)tag:(int)code {
     //
     [forage setState:[forage neighbors]];
 }
@@ -77,7 +78,9 @@
 }
 
 - (void)enter:(id<ForageState>)previous {
+    [[forage imageRecognition] startWithTarget:ImageRecognitionTargetNeighbors];
     turns = 0;
+    tags = 0;
     [self turn];
 }
 
@@ -89,8 +92,8 @@
     }
 }
 
-- (void)QRCodeRead:(int)qrCode {
-    //
+- (void)tag:(int)code {
+    tags++;
 }
 @end
 
@@ -120,6 +123,7 @@
 // "Controller"
 @implementation Forage
 
+@synthesize tag, pheromone;
 @synthesize imageRecognition, cable, server;
 @synthesize state, departing, searching, neighbors, returning;
 
@@ -144,6 +148,8 @@
         if([state respondsToSelector:@selector(driveFinished)]) {
             [state driveFinished];
         }
+        
+        [server send:@"%@,%d,%@,%@", [Utilities getMacAddress], /*microseconds*/0, [data objectAtIndex:0], [data objectAtIndex:1]];
     }];
     
     [cable handle:@"alignFinished" callback:^(NSArray* data) {
@@ -159,16 +165,19 @@
     }];
     
     [server handle:@"pheromone" callback:^(NSArray* data) {
-        if([state respondsToSelector:@selector(pheromone:)]) {
-            [state pheromone:data];
-        }
+        pheromone = CGPointMake([[data objectAtIndex:0] floatValue], [[data objectAtIndex:1] floatValue]);
     }];
     
     [server handle:@"tag" callback:^(NSArray* data) {
-        if([state respondsToSelector:@selector(tag:)]) {
-            [state tag:data];
+        if([[data objectAtIndex:0] isEqualToString:@"new"] && [state respondsToSelector:@selector(tag:)]) {
+            [state tag:tag];
         }
+        
+        tag = -1;
     }];
+    
+    tag = -1;
+    pheromone = CGPointMake(INT_MAX, INT_MAX);
     
     state = departing;
     
@@ -187,10 +196,9 @@
     }
 }
 
-- (void)didReadQRCode:(int)qrCode {
-    if([state respondsToSelector:@selector(QRCodeRead:)]) {
-        [state QRCodeRead:qrCode];
-    }
+- (void)didReadQRCode:(int)_tag {
+    tag = _tag;
+    [server send:@"%@,%d", [Utilities getMacAddress], tag];
 }
 
 @end
