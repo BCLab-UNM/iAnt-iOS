@@ -23,6 +23,7 @@ typedef NS_ENUM(NSInteger, ImageRecognitionTarget) {
 
 @interface NSObject(ImageRecognitionDelegate)
     -(void) didReceiveAlignInfo:(NSValue*)info;
+    -(void) didReadQRCode:(int)qrCode;
 @end
 
 @interface ImageRecognition: NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, DecoderDelegate> {
@@ -32,26 +33,24 @@ typedef NS_ENUM(NSInteger, ImageRecognitionTarget) {
     IplImage *maskIpl;
     
     Decoder *qrDecoder;
+    int qrCode;
     
     AVCaptureVideoDataOutput *videoDataOutput;
     AVCaptureVideoPreviewLayer *previewLayer;
     dispatch_queue_t videoDataOutputQueue;
     AVCaptureSession *session;
-
-    UIView* view;
 }
-
-- (id)initResolutionTo:(int)vertical by:(int)horizontal view:(UIView*)view;
 
 - (UIImage*)getImgThresholdUI;
 
 - (NSMutableArray*)findColorCentroidIn:(CMSampleBufferRef)buffer usingThreshold:(int)threshold;
 - (NSMutableArray*)locateQRFinderPatternsIn:(CMSampleBufferRef)buffer;
 
-- (void)start;
+- (void)startWithTarget:(ImageRecognitionTarget)target;
 - (void)stop;
 
 @property id delegate;
-@property ImageRecognitionTarget target;
+@property (nonatomic) ImageRecognitionTarget target;
+@property UIView* view;
 
 @end

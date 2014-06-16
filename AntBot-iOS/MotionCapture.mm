@@ -15,6 +15,10 @@
 @implementation MotionCapture
 
 -(id) initWithCable:(RouterCable *)_cable server:(RouterServer *)_server {
+    if(!(self = [super init])) {
+        return nil;
+    }
+    
     cable = _cable;
     server = _server;
     
@@ -57,6 +61,8 @@
             [cable send:@"(%d,%d)", cmd[0], cmd[1]];
         }
     }];
+    
+    return self;
 }
 
 @end

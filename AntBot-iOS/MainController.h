@@ -23,8 +23,6 @@
     NSString* evolvedParameters;
 }
 
-- (void)initServerHandlers;
-
 @property IBOutlet UITextView* infoBox;
 
 @end

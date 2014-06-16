@@ -10,152 +10,187 @@
 #import "RouterCable.h"
 #import "RouterServer.h"
 #import "ImageRecognition.h"
+#import "Utilities.h"
 
-#define SLEEP(x) [NSThread sleepForTimeInterval:x];
+// Departing State
+@implementation ForageStateDeparting
+@synthesize forage;
 
-@implementation Forage
-
-@synthesize status;
-
-- (id)initWithCable:(RouterCable*)_cable server:(RouterServer*)_server {
-    if(self = [super init]) {
-        cable = _cable;
-        server = _server;
-        return self;
-    }
-    
-    return nil;
+- (void)enter:(id<ForageState>)previous {
+    [[forage cable] send:@"align"];
+    [[forage imageRecognition] startWithTarget:ImageRecognitionTargetNest];
 }
 
-- (void)setup {
-    status = RobotStatusInactive;
-    imageRecognition = [[ImageRecognition alloc] init];
-    [imageRecognition setDelegate:self];
-    
-    // Give robot its random seed, it will respond with an init message when it's ready.
-    [cable send:@"init,%d", arc4random()];
-    
-    // init
-    [cable handle:@"init" callback:^(NSArray* data) {
-        switch(status) {
-            
-            // Arduino is ready for commands.  Start the state machine.
-            case RobotStatusInactive:
-                status = RobotStatusDeparting;
-                break;
-            
-            default:
-                NSLog(@"Received init, but was in inappropriate state %d", status);
-                break;
-        }
-    }];
-    
-    // driveFinished
-    [cable handle:@"driveFinished" callback:^(NSArray* data) {
-        switch(status) {
-                
-            // Robot has reached its destination.  Perform a random walk.
-            case RobotStatusDeparting: {
-                status = RobotStatusSearching;
-                // Fallthrough to RobotStatusSearching
-            }
-                
-            case RobotStatusSearching: {
-                float dTheta = random();
-                [cable send:[NSString stringWithFormat:@"turn,%f", dTheta]];
-                break;
-            }
-                
-            case RobotStatusReturning:
-                // check pheromones from server
-                status = RobotStatusDeparting;
-                // changing to the leaving nest state will pick a random location and tell the arduino to drive there
-                // will probably also involve an align
-                break;
-            
-            default:
-                NSLog(@"Received driveFinished, but was in inappropriate state %d", status);
-                break;
-        }
-    }];
-    
-    // turnFinished
-    [cable handle:@"turnFinished" callback:^(NSArray* data) {
-        switch(status) {
-                
-            // Robot has finished aligning to its destination.  Tell it to drive there.
-            case RobotStatusDeparting: {
-                float distance = random();
-                [cable send:[NSString stringWithFormat:@"drive,%f", distance]];
-                break;
-            }
-                
-            case RobotStatusReturning:
-                // Tell it to drive to the nest
-                break;
-                
-            // Robot has finished adjusting its direction.  Tell it to drive forward.
-            case RobotStatusSearching: {
-                float distance = random();
-                [cable send:[NSString stringWithFormat:@"drive,%f", distance]];
-                break;
-            }
-                
-            default:
-                NSLog(@"Received alignFinished, but was in inappropriate state %d", status);
-                break;
-        }
-    }];
-    
-    // Handle pheromone messages from server.
-    [server handle:@"pheromone" callback:^(NSArray* data) {
-        NSString* pheromone = [data objectAtIndex:0];
-        NSLog(@"%@", pheromone);
-    }];
+- (void)driveFinished {
+    [forage setState:[forage searching]];
 }
 
-- (void)setStatus:(RobotStatus)_status {
-    switch(_status) {
-        case RobotStatusDeparting:
-            [self localize];
-            break;
-            
-        case RobotStatusSearching:
-            [imageRecognition setTarget:ImageRecognitionTargetTag];
-            [imageRecognition start];
-            break;
-            
-        default: break;
-    }
-    
-    status = _status;
+- (void)alignFinished {
+    [[forage cable] send:@"drive,%f", random()];
 }
 
-- (void)didReceiveAlignInfo:(NSValue*)info {
+- (void)alignInfo:(NSValue*)info {
     CGPoint offset = [info CGPointValue];
     bool epsilonCondition = false;
     if(epsilonCondition) {
-        [cable send:@"alignFinished"];
-        switch(status) {
-            case RobotStatusDeparting: {
-                // Decide on a destination based on pheromones and site fidelity.
-                float heading = random();
-                [cable send:[NSString stringWithFormat:@"turnTo,%f", heading]];
-                break;
-            }
-                
-            default: break;
-        }
+        [[forage cable] send:@"alignFinished"];
+        [[forage cable] send:@"turnTo,%f", random()];
     }
     else {
-        [cable send:[NSString stringWithFormat:@"%d,%d", (int)offset.x, (int)offset.y]];
+        [[forage cable] send:@"%d,%d", (int)offset.x, (int)offset.y];
+    }
+}
+@end
+
+// Searching State
+@implementation ForageStateSearching
+@synthesize forage;
+
+- (void)turn {
+    [[forage cable] send:@"turn,%f", random()];
+}
+
+- (void)enter:(id<ForageState>)previous {
+    [self turn];
+}
+
+- (void)driveFinished {
+    [self turn];
+}
+
+- (void)alignFinished {
+    [[forage cable] send:@"drive,%f", random()];
+}
+
+- (void)QRCodeRead:(int)qrCode {
+    //
+    [forage setState:[forage neighbors]];
+}
+@end
+
+// Neighbor Search State
+@implementation ForageStateNeighbors
+@synthesize forage;
+
+- (void)turn {
+    [[forage cable] send:@"turn,%f", random()];
+}
+
+- (void)enter:(id<ForageState>)previous {
+    turns = 0;
+    [self turn];
+}
+
+- (void)turnFinished {
+    [self turn];
+    turns++;
+    if(turns >= 8) {
+        [forage setState:[forage returning]];
     }
 }
 
-- (void)localize {
-    [imageRecognition setTarget:ImageRecognitionTargetNest];
-    [imageRecognition start];
-    [cable send:@"align"]; // Tell the arduino we'll be streaming it motor offsets for a while.
+- (void)QRCodeRead:(int)qrCode {
+    //
+}
+@end
+
+// Returning State
+@implementation ForageStateReturning
+@synthesize forage;
+
+- (void)enter:(id<ForageState>)previous {
+    [[forage cable] send:@"align"];
+    [[forage imageRecognition] startWithTarget:ImageRecognitionTargetNest];
+}
+
+- (void)driveFinished {
+    [forage setState:[forage departing]];
+}
+
+- (void)turnFinished {
+    [[forage cable] send:@"getUltrasound"];
+}
+
+- (void)getUltrasound:(NSArray *)data {
+    float distance = [[data objectAtIndex:0] floatValue];
+    [[forage cable] send:@"drive,%f", distance];
+}
+@end
+
+// "Controller"
+@implementation Forage
+
+@synthesize imageRecognition, cable, server;
+@synthesize state, departing, searching, neighbors, returning;
+
+- (id)initWithCable:(RouterCable*)_cable server:(RouterServer*)_server {
+    if(!(self = [super init])) {
+        return nil;
+    }
+    
+    cable = _cable;
+    server = _server;
+    imageRecognition = [[ImageRecognition alloc] init];
+    [imageRecognition setDelegate:self];
+    
+    departing = [[ForageStateDeparting alloc] init];
+    searching = [[ForageStateSearching alloc] init];
+    neighbors = [[ForageStateNeighbors alloc] init];
+    returning = [[ForageStateReturning alloc] init];
+    
+    departing.forage = searching.forage = neighbors.forage = returning.forage = self;
+    
+    [cable handle:@"driveFinished" callback:^(NSArray* data) {
+        if([state respondsToSelector:@selector(driveFinished)]) {
+            [state driveFinished];
+        }
+    }];
+    
+    [cable handle:@"alignFinished" callback:^(NSArray* data) {
+        if([state respondsToSelector:@selector(alignFinished)]) {
+            [state alignFinished];
+        }
+    }];
+    
+    [cable handle:@"getUltrasound" callback:^(NSArray* data) {
+        if([state respondsToSelector:@selector(getUltrasound:)]) {
+            [state getUltrasound:data];
+        }
+    }];
+    
+    [server handle:@"pheromone" callback:^(NSArray* data) {
+        if([state respondsToSelector:@selector(pheromone:)]) {
+            [state pheromone:data];
+        }
+    }];
+    
+    [server handle:@"tag" callback:^(NSArray* data) {
+        if([state respondsToSelector:@selector(tag:)]) {
+            [state tag:data];
+        }
+    }];
+    
+    state = departing;
+    
+    return self;
+}
+
+- (void)setState:(id)next {
+    if(state){[state leave:next];}
+    if(next){[next enter:state];}
+    state = next;
+}
+
+- (void)didReceiveAlignInfo:(NSValue*)info {
+    if([state respondsToSelector:@selector(alignInfo:)]) {
+        [state alignInfo:info];
+    }
+}
+
+- (void)didReadQRCode:(int)qrCode {
+    if([state respondsToSelector:@selector(QRCodeRead:)]) {
+        [state QRCodeRead:qrCode];
+    }
 }
 
 @end

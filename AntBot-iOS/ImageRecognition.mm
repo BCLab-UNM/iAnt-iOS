@@ -18,60 +18,70 @@ const int NEST_THRESHOLD = 240;
 
 @implementation ImageRecognition
 
-@synthesize delegate, target;
+@synthesize delegate, target, view;
 
-- (id)initResolutionTo:(int)vertical by:(int)horizontal view:(UIView*)_view {
-    self = [super init];
+- (id)init {
+    if(self = [super init]) {
+        converter = [Conversions new];
+        
+        //Load mask for forward-facing camera
+        UIImage *maskUI = [UIImage imageNamed:@"mask"];
+        maskIpl = [converter createIplImageFromUIImage:maskUI];
+        
+        qrDecoder = [[Decoder alloc] init];
+        NSMutableSet *readers = [[NSMutableSet alloc] init];
+        QRCodeReader* qrcodeReader = [[QRCodeReader alloc] init];
+        [readers addObject:qrcodeReader];
+        [qrDecoder setReaders:readers];
+        [qrDecoder setDelegate:self];
+        
+        return self;
+    }
     
-    converter = [Conversions new];
+    return nil;
+}
+
+- (void)setTarget:(ImageRecognitionTarget)_target {
     
-    //Load mask for forward-facing camera
-    UIImage *maskUI = [UIImage imageNamed:@"mask"];
-    maskIpl = [converter createIplImageFromUIImage:maskUI];
+    // Back camera
+    if(_target == ImageRecognitionTargetNeighbors || _target == ImageRecognitionTargetTag) {
+        [converter setImgIpl:cvCreateImage(cvSize(BACK_REZ_VERT, BACK_REZ_HOR), IPL_DEPTH_8U, 4)];
+        [converter setImgData:[NSMutableData new]];
+        imgGray = cvCreateImage(cvSize(BACK_REZ_VERT, BACK_REZ_HOR), IPL_DEPTH_8U, 1);
+        imgGrayBGRA = cvCreateImage(cvSize(BACK_REZ_VERT, BACK_REZ_HOR), IPL_DEPTH_8U, 4);
+    }
     
-    //Setup image containers
-    [converter setImgIpl:cvCreateImage(cvSize(vertical, horizontal), IPL_DEPTH_8U, 4)];
-    [converter setImgData:[NSMutableData new]];
-    imgGray = cvCreateImage(cvSize(vertical, horizontal), IPL_DEPTH_8U, 1);
-    imgGrayBGRA = cvCreateImage(cvSize(vertical, horizontal), IPL_DEPTH_8U, 4);
+    // Front camera
+    else {
+        [converter setImgIpl:cvCreateImage(cvSize(FRONT_REZ_VERT, FRONT_REZ_HOR), IPL_DEPTH_8U, 4)];
+        [converter setImgData:[NSMutableData new]];
+        imgGray = cvCreateImage(cvSize(FRONT_REZ_VERT, FRONT_REZ_HOR), IPL_DEPTH_8U, 1);
+        imgGrayBGRA = cvCreateImage(cvSize(FRONT_REZ_VERT, FRONT_REZ_HOR), IPL_DEPTH_8U, 4);
+    }
     
-    qrDecoder = [[Decoder alloc] init];
-    NSMutableSet *readers = [[NSMutableSet alloc] init];
-    QRCodeReader* qrcodeReader = [[QRCodeReader alloc] init];
-    [readers addObject:qrcodeReader];
-    [qrDecoder setReaders:readers];
-    [qrDecoder setDelegate:self];
-    
-    view = _view;
-    
-    return self;
+    target = _target;
 }
 
 - (UIImage*)getImgThresholdUI {
     return [converter imgThresholdUI];
 }
 
-- (void)start {
+- (void)startWithTarget:(ImageRecognitionTarget)_target {
     [self stop];
-    
-    switch(target) {
-        case ImageRecognitionTargetTag:
-            [self setupAVCaptureAt:AVCaptureDevicePositionBack];
-            break;
-            
-        case ImageRecognitionTargetNeighbors:
-            [self setupAVCaptureAt:AVCaptureDevicePositionBack];
-            break;
-        
-        case ImageRecognitionTargetNest:
-            [self setupAVCaptureAt:AVCaptureDevicePositionFront];
-            break;
-    }
+    [self setTarget:_target];
+    [self setupAVCapture];
 }
 
-- (void)setupAVCaptureAt:(AVCaptureDevicePosition)position {
-	NSError *error = nil;
-	
+- (void)setupAVCapture {
+    
+    AVCaptureDevicePosition position;
+    if(target == ImageRecognitionTargetNest) {
+        position = AVCaptureDevicePositionFront;
+    }
+    else {
+        position = AVCaptureDevicePositionBack;
+    }
+    
 	session = [[AVCaptureSession alloc] init];
 	if (position == AVCaptureDevicePositionBack) {
 	    [session setSessionPreset:AVCaptureSessionPreset352x288];
@@ -133,17 +143,6 @@ const int NEST_THRESHOLD = 240;
 	[previewLayer setFrame:[rootLayer bounds]];
 	[rootLayer addSublayer:previewLayer];
 	[session startRunning];
-    
-bail:
-	if (error) {
-		UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Failed with error %d", (int)[error code]]
-															message:[error localizedDescription]
-														   delegate:nil
-												  cancelButtonTitle:@"Dismiss"
-												  otherButtonTitles:nil];
-		[alertView show];
-		[self stop];
-	}
 }
 
 - (void)stop {
@@ -152,7 +151,6 @@ bail:
 		dispatch_release(videoDataOutputQueue);
 	[previewLayer removeFromSuperlayer];
     [[videoDataOutput connectionWithMediaType:AVMediaTypeVideo] setEnabled:NO];
-    //[[self infoBox] setText:nil];
 }
 
 //AVCapture callback, triggered when a new frame (i.e. image) arrives from video stream
@@ -398,31 +396,20 @@ bail:
                         //Update estimate of distance from nest
                         //nestDistance = 1481 * pow([meanCenter getArea],-0.5127) - 50;
                         
-                        //Update display
-                        /*short int *temp = data; //pointer to data array (because we can't directly refer to C arrays within blocks, see below)
-                        dispatch_async (dispatch_get_main_queue(), ^{
-                            [[self infoBox] setText:[NSString stringWithFormat:@"NEST   (%d,%d)",temp[0],temp[1]]];
-                        });*/
-                        
-                        //Transmit data
-                        //[cable send:[NSString stringWithFormat:@"(%d,%d)", data[0], data[1]]];
+                        // Notify delegate
                         if(delegate && [delegate respondsToSelector:@selector(didReceiveAlignInfo:)]) {
                             [delegate didReceiveAlignInfo:[NSValue valueWithCGPoint:CGPointMake(data[0], data[1])]];
                         }
                     }
                     else if (target == ImageRecognitionTargetTag) {
                         //Number of pixels between observed and true center
-                        /*data[0] = -(BACK_REZ_HOR/2 - [meanCenter getX]);
+                        data[0] = -(BACK_REZ_HOR/2 - [meanCenter getX]);
                         data[1] = BACK_REZ_VERT/2 - [meanCenter getY];
                         
-                        //Update display
-                        short int *temp = data; //pointer to data array (because we can't directly refer to C arrays within blocks, see below)
-                        dispatch_async (dispatch_get_main_queue(), ^{
-                            [[self infoBox] setText:[NSString stringWithFormat:@"TAG     (%d,%d)",temp[0],temp[1]]];
-                        });
-                        
-                        //Transmit data
-                        [cable send:[NSString stringWithFormat:@"(%d,%d)", data[0], data[1]]];*/
+                        // Notify delegate
+                        if(delegate && [delegate respondsToSelector:@selector(didReceiveAlignInfo:)]) {
+                            [delegate didReceiveAlignInfo:[NSValue valueWithCGPoint:CGPointMake(data[0], data[1])]];
+                        }
                     }
                 }
             }
@@ -434,16 +421,12 @@ bail:
                 //If searching for nest
                 if (target == ImageRecognitionTargetNest) {
                     //Construct maintenance message
-                    /*data[0] = SHRT_MAX;
+                    data[0] = SHRT_MAX;
                     
-                    //Update display
-                    short int *temp = data; //pointer to data array (because we can't directly refer to C arrays within blocks, see below)
-                    dispatch_async (dispatch_get_main_queue(), ^{
-                        [[self infoBox] setText:[NSString stringWithFormat:@"NEST     (%d,%d)",temp[0],temp[1]]];
-                    });
-                    
-                    //Transmit data
-                    [cable send:[NSString stringWithFormat:@"(%d,%d)", data[0], data[1]]];*/
+                    // Notify delegate
+                    if(delegate && [delegate respondsToSelector:@selector(didReceiveAlignInfo:)]) {
+                        [delegate didReceiveAlignInfo:[NSValue valueWithCGPoint:CGPointMake(data[0], data[1])]];
+                    }
                 }
             }
             
@@ -454,15 +437,19 @@ bail:
 
 #pragma mark - Decoder methods
 
+// TODO extract into dedicated QR code reader class?
+
 - (void)decoder:(Decoder *)decoder didDecodeImage:(UIImage *)image usingSubset:(UIImage *)subset withResult:(TwoDDecoderResult *)result {
     //If new code is different from previously found code
-    /*if ([[result text] intValue] != qrCode) {
+    if([[result text] intValue] != qrCode) {
+        
         //Create copy of code
         qrCode = [[result text] intValue];
         
-        //Transmit QR code to ABS
-        [server send:[NSString stringWithFormat:@"%@,%d\n", [Utilities getMacAddress], qrCode]];
-    }*/
+        if(delegate && [delegate respondsToSelector:@selector(didReadQRCode:)]) {
+            [delegate didReadQRCode:qrCode];
+        }
+    }
 }
 
 #pragma mark - Higher-level vision functions

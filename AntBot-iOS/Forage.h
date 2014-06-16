@@ -8,25 +8,60 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, RobotStatus) {
-    RobotStatusInactive,
-    RobotStatusDeparting,
-    RobotStatusSearching,
-    RobotStatusReturning
-};
+@class Forage, ImageRecognition, RouterCable, RouterServer;
 
-@class ImageRecognition, RouterCable, RouterServer;
+// ForageState protocol
+@protocol ForageState
+@property Forage* forage;
+@optional
+- (void)enter:(id<ForageState>)previous;
+- (void)leave:(id<ForageState>)next;
 
-@interface Forage : NSObject {
-    RouterCable* cable;
-    RouterServer* server;
-    ImageRecognition* imageRecognition;
+- (void)ready;
+- (void)driveFinished;
+- (void)alignFinished;
+- (void)getUltrasound:(NSArray*)data;
+- (void)pheromone:(NSArray*)data;
+- (void)tag:(NSArray*)data;
+- (void)alignInfo:(NSValue*)info;
+- (void)QRCodeRead:(int)qrCode;
+@end
+
+// ForageStateDeparting
+@interface ForageStateDeparting : NSObject <ForageState>
+
+@end
+
+// ForageStateSearching
+@interface ForageStateSearching : NSObject <ForageState>
+- (void)turn;
+@end
+
+// ForageStateNeighbors
+@interface ForageStateNeighbors : NSObject <ForageState> {
+    int turns;
 }
+- (void)turn;
+@end
+
+// ForageStateReturning
+@interface ForageStateReturning : NSObject <ForageState>
+
+@end
+
+// Forage "Controller"
+@interface Forage : NSObject
 
 - (id)initWithCable:(RouterCable*)cable server:(RouterServer*)server;
-- (void)setup;
 
-@property (nonatomic) RobotStatus status;
-@property int lastTag;
+@property ImageRecognition* imageRecognition;
+@property RouterCable* cable;
+@property RouterServer* server;
+
+@property (nonatomic) id<ForageState, NSObject> state;
+@property ForageStateDeparting* departing;
+@property ForageStateSearching* searching;
+@property ForageStateNeighbors* neighbors;
+@property ForageStateReturning* returning;
 
 @end
