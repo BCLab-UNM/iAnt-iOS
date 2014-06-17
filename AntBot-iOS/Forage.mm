@@ -132,12 +132,12 @@
     imageRecognition = [[ImageRecognition alloc] init];
     [imageRecognition setDelegate:self];
     
-    departing = [[ForageStateDeparting alloc] init];
-    searching = [[ForageStateSearching alloc] init];
-    neighbors = [[ForageStateNeighbors alloc] init];
-    returning = [[ForageStateReturning alloc] init];
-    
-    departing.forage = searching.forage = neighbors.forage = returning.forage = self;
+    NSArray* states = [NSArray arrayWithObjects:@"departing", @"searching", @"neighbors", @"returning", nil];
+    for(NSString* name in states) {
+        id instance = [[NSClassFromString(name) alloc] init];
+        [instance setForage:self];
+        [self setValue:instance forKey:name];
+    }
     
     [cable handle:@"drive" callback:^(NSArray* data) {
         CALL(driveDone);
