@@ -12,70 +12,62 @@
 #import "ImageRecognition.h"
 #import "Utilities.h"
 
-// Departing State
+// Set up a CALL macro for running a selector on the current forage state (with an optional argument).
+#define CALL1(X) if([state respondsToSelector:@selector(X)]){[state X];}
+#define CALL2(X, Y) if([state respondsToSelector:@selector(X:)]){[state X:Y];}
+#define GET_CALL(_1, _2, NAME, ...) NAME
+#define CALL(...) GET_CALL(__VA_ARGS__, CALL2, CALL1)(__VA_ARGS__)
+
+// Depart
 @implementation ForageStateDeparting
 @synthesize forage;
 
 - (void)enter:(id<ForageState>)previous {
-    [[forage cable] send:@"align"];
-    [[forage imageRecognition] startWithTarget:ImageRecognitionTargetNest];
+    [forage localize];
 }
 
-- (void)driveFinished {
-    [forage setState:[forage searching]];
+- (void)localizeDone {
+    [[forage cable] send:@"align,%f", random()];
 }
 
-- (void)alignFinished {
+- (void)alignDone {
     [[forage cable] send:@"drive,%f", random()];
 }
 
-- (void)alignInfo:(NSValue*)info {
-    CGPoint offset = [info CGPointValue];
-    bool epsilonCondition = false;
-    if(epsilonCondition) {
-        [[forage cable] send:@"alignFinished"];
-        [[forage cable] send:@"turnTo,%f", random()];
-    }
-    else {
-        [[forage cable] send:@"%d,%d", (int)offset.x, (int)offset.y];
-    }
+- (void)driveDone {
+    [forage setState:[forage searching]];
 }
 @end
 
-// Searching State
+// Random Walk
 @implementation ForageStateSearching
 @synthesize forage;
-
-- (void)turn {
-    [[forage cable] send:@"turn,%f", random()];
-}
 
 - (void)enter:(id<ForageState>)previous {
     [[forage imageRecognition] startWithTarget:ImageRecognitionTargetTag];
     [self turn];
 }
 
-- (void)driveFinished {
-    [self turn];
+- (void)turn {
+    [[forage cable] send:@"align,%f", random()];
 }
 
-- (void)alignFinished {
+- (void)alignDone {
     [[forage cable] send:@"drive,%f", random()];
 }
 
+- (void)driveDone {
+    [self turn];
+}
+
 - (void)tag:(int)code {
-    //
     [forage setState:[forage neighbors]];
 }
 @end
 
-// Neighbor Search State
+// Neighbor Search
 @implementation ForageStateNeighbors
 @synthesize forage;
-
-- (void)turn {
-    [[forage cable] send:@"turn,%f", random()];
-}
 
 - (void)enter:(id<ForageState>)previous {
     [[forage imageRecognition] startWithTarget:ImageRecognitionTargetNeighbors];
@@ -84,11 +76,16 @@
     [self turn];
 }
 
-- (void)turnFinished {
-    [self turn];
-    turns++;
-    if(turns >= 8) {
+- (void)turn {
+    [[forage cable] send:@"align,%f", random()];
+}
+
+- (void)alignDone {
+    if(++turns >= 8) {
         [forage setState:[forage returning]];
+    }
+    else {
+        [self turn];
     }
 }
 
@@ -97,33 +94,31 @@
 }
 @end
 
-// Returning State
+// Return
 @implementation ForageStateReturning
 @synthesize forage;
 
 - (void)enter:(id<ForageState>)previous {
-    [[forage cable] send:@"align"];
-    [[forage imageRecognition] startWithTarget:ImageRecognitionTargetNest];
+    [forage localize];
 }
 
-- (void)driveFinished {
+- (void)localizeDone {
+    [[forage cable] send:@"drive,%f", random()];
+}
+
+- (void)driveDone {
+    [[forage server] send:@"%@,%d,%@,%@,home", [Utilities getMacAddress], [forage microseconds], 0, 0];
+}
+
+- (void)pheromone {
     [forage setState:[forage departing]];
-}
-
-- (void)turnFinished {
-    [[forage cable] send:@"getUltrasound"];
-}
-
-- (void)getUltrasound:(NSArray *)data {
-    float distance = [[data objectAtIndex:0] floatValue];
-    [[forage cable] send:@"drive,%f", distance];
 }
 @end
 
 // "Controller"
 @implementation Forage
 
-@synthesize tag, pheromone;
+@synthesize position, heading, tag, pheromone, localizing;
 @synthesize imageRecognition, cable, server;
 @synthesize state, departing, searching, neighbors, returning;
 
@@ -144,33 +139,48 @@
     
     departing.forage = searching.forage = neighbors.forage = returning.forage = self;
     
-    [cable handle:@"driveFinished" callback:^(NSArray* data) {
-        if([state respondsToSelector:@selector(driveFinished)]) {
-            [state driveFinished];
+    [cable handle:@"drive" callback:^(NSArray* data) {
+        CALL(driveDone);
+        [server send:@"%@,%d,%@,%@", [Utilities getMacAddress], [self microseconds], position.x, position.y];
+    }];
+    
+    [cable handle:@"align" callback:^(NSArray* data) {
+        CALL(alignDone);
+    }];
+    
+    [cable handle:@"compass" callback:^(NSArray* data) {
+        float result = [[data objectAtIndex:0] floatValue];
+        
+        if(localizing) {
+            [self setHeading:result];
+            [cable send:@"ultrasound"];
         }
         
-        [server send:@"%@,%d,%@,%@", [Utilities getMacAddress], /*microseconds*/0, [data objectAtIndex:0], [data objectAtIndex:1]];
+        CALL(compass, result);
     }];
     
-    [cable handle:@"alignFinished" callback:^(NSArray* data) {
-        if([state respondsToSelector:@selector(alignFinished)]) {
-            [state alignFinished];
+    [cable handle:@"ultrasound" callback:^(NSArray* data) {
+        float result = [[data objectAtIndex:0] floatValue];
+        
+        if(localizing) {
+            // Use heading and result to get a position
+            position = CGPointMake(0, 0);
+            localizing = NO;
+            [imageRecognition stop];
+            CALL(localizeDone);
         }
-    }];
-    
-    [cable handle:@"getUltrasound" callback:^(NSArray* data) {
-        if([state respondsToSelector:@selector(getUltrasound:)]) {
-            [state getUltrasound:data];
-        }
+        
+        CALL(ultrasound, result);
     }];
     
     [server handle:@"pheromone" callback:^(NSArray* data) {
         pheromone = CGPointMake([[data objectAtIndex:0] floatValue], [[data objectAtIndex:1] floatValue]);
+        CALL(pheromone);
     }];
     
     [server handle:@"tag" callback:^(NSArray* data) {
-        if([[data objectAtIndex:0] isEqualToString:@"new"] && [state respondsToSelector:@selector(tag:)]) {
-            [state tag:tag];
+        if([[data objectAtIndex:0] isEqualToString:@"new"]) {
+            CALL(tag, tag);
         }
         
         tag = -1;
@@ -178,6 +188,9 @@
     
     tag = -1;
     pheromone = CGPointMake(INT_MAX, INT_MAX);
+    startTime = [NSDate date];
+    
+    [cable send:@"seed,%d", arc4random()];
     
     state = departing;
     
@@ -190,10 +203,29 @@
     state = next;
 }
 
+- (double)microseconds {
+    return [startTime timeIntervalSinceNow] * -1000000.0;
+}
+
+- (void)localize {
+    localizing = YES;
+    [imageRecognition startWithTarget:ImageRecognitionTargetNest];
+}
+
 - (void)didReceiveAlignInfo:(NSValue*)info {
-    if([state respondsToSelector:@selector(alignInfo:)]) {
-        [state alignInfo:info];
+    CGPoint offset = [info CGPointValue];
+    if(localizing) {
+        bool epsilonCondition = false;
+        if(epsilonCondition) {
+            [cable send:@"motors,%d,%d", 0, 0];
+            [cable send:@"compass"];
+        }
+        else {
+            [cable send:@"motors,%d,%d", (int)offset.x, (int)offset.y];
+        }
     }
+    
+    CALL(alignInfo, offset);
 }
 
 - (void)didReadQRCode:(int)_tag {

@@ -17,18 +17,18 @@
 - (void)enter:(id<ForageState>)previous;
 - (void)leave:(id<ForageState>)next;
 
-- (void)ready;
-- (void)driveFinished;
-- (void)alignFinished;
-- (void)getUltrasound:(NSArray*)data;
-- (void)pheromone:(NSArray*)data;
+- (void)driveDone;
+- (void)alignDone;
+- (void)localizeDone;
+- (void)compass:(float)heading;
+- (void)ultrasound:(float)distance;
+- (void)pheromone;
 - (void)tag:(int)code;
-- (void)alignInfo:(NSValue*)info;
+- (void)alignInfo:(CGPoint)offset;
 @end
 
 // ForageStateDeparting
 @interface ForageStateDeparting : NSObject <ForageState>
-
 @end
 
 // ForageStateSearching
@@ -46,16 +46,23 @@
 
 // ForageStateReturning
 @interface ForageStateReturning : NSObject <ForageState>
-
 @end
 
 // Forage "Controller"
-@interface Forage : NSObject
+@interface Forage : NSObject {
+    NSDate* startTime;
+}
 
 - (id)initWithCable:(RouterCable*)cable server:(RouterServer*)server;
+- (double)microseconds;
+- (void)localize;
 
+@property CGPoint position;
+@property float heading;
 @property int tag;
 @property CGPoint pheromone;
+@property BOOL localizing;
+
 @property ImageRecognition* imageRecognition;
 @property RouterCable* cable;
 @property RouterServer* server;
