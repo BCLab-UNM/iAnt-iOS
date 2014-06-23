@@ -53,4 +53,6 @@ typedef NS_ENUM(NSInteger, ImageRecognitionTarget) {
 @property (nonatomic) ImageRecognitionTarget target;
 @property UIView* view;
 
+@property float nestDistance;
+
 @end

@@ -10,7 +10,6 @@
 #import "RouterCable.h"
 #import "RouterServer.h"
 #import "ImageRecognition.h"
-#import "Utilities.h"
 
 // Set up a CALL macro for running a selector on the current forage state (with an optional argument).
 #define CALL1(X) if([state respondsToSelector:@selector(X)]){[state X];}
@@ -27,11 +26,7 @@
 }
 
 - (void)localizeDone {
-    [[forage cable] send:@"align,%f", random()];
-}
-
-- (void)alignDone {
-    [[forage cable] send:@"drive,%f", random()];
+    [forage driveTo:Cartesian(random(), random())];
 }
 
 - (void)driveDone {
@@ -45,19 +40,15 @@
 
 - (void)enter:(id<ForageState>)previous {
     [[forage imageRecognition] startWithTarget:ImageRecognitionTargetTag];
-    [self turn];
+    [forage turn:[forage dTheta]];
 }
 
-- (void)turn {
-    [[forage cable] send:@"align,%f", random()];
-}
-
-- (void)alignDone {
-    [[forage cable] send:@"drive,%f", random()];
+- (void)turnDone {
+    [forage drive:random()];
 }
 
 - (void)driveDone {
-    [self turn];
+    [forage turn:[forage dTheta]];
 }
 
 - (void)tag:(int)code {
@@ -73,19 +64,15 @@
     [[forage imageRecognition] startWithTarget:ImageRecognitionTargetNeighbors];
     turns = 0;
     tags = 0;
-    [self turn];
+    [forage turn:random()];
 }
 
-- (void)turn {
-    [[forage cable] send:@"align,%f", random()];
-}
-
-- (void)alignDone {
+- (void)turnDone {
     if(++turns >= 8) {
         [forage setState:[forage returning]];
     }
     else {
-        [self turn];
+        [forage turn:random()];
     }
 }
 
@@ -103,11 +90,11 @@
 }
 
 - (void)localizeDone {
-    [[forage cable] send:@"drive,%f", random()];
+    [forage driveTo:Cartesian(0, 0)];
 }
 
 - (void)driveDone {
-    [[forage server] send:@"%@,%d,%@,%@,home", [Utilities getMacAddress], [forage microseconds], 0, 0];
+    [[forage server] send:@"%@,%d,%@,%@,home", [Utilities getMacAddress], [forage microseconds], forage.position.x, forage.position.y];
 }
 
 - (void)pheromone {
@@ -145,7 +132,7 @@
     }];
     
     [cable handle:@"align" callback:^(NSArray* data) {
-        CALL(alignDone);
+        CALL(turnDone);
     }];
     
     [cable handle:@"compass" callback:^(NSArray* data) {
@@ -163,10 +150,8 @@
         float result = [[data objectAtIndex:0] floatValue];
         
         if(localizing) {
-            // Use heading and result to get a position
-            position = CGPointMake(0, 0);
+            position = [Utilities pol2cart:Polar(result, heading)];
             localizing = NO;
-            [imageRecognition stop];
             CALL(localizeDone);
         }
         
@@ -185,14 +170,14 @@
         
         tag = -1;
     }];
-    
+
+    position = Cartesian(0, 0);
+    heading = 0;
     tag = -1;
     pheromone = CGPointMake(INT_MAX, INT_MAX);
     startTime = [NSDate date];
     
-    [cable send:@"seed,%d", arc4random()];
-    
-    state = departing;
+    //state = departing;
     
     return self;
 }
@@ -212,13 +197,37 @@
     [imageRecognition startWithTarget:ImageRecognitionTargetNest];
 }
 
+- (void)driveTo:(Cartesian)destination {
+    Polar pol = [Utilities cart2pol:(destination - position)];
+    [self turnTo:pol.theta];
+    [self drive:pol.r];
+}
+
+- (void)turnTo:(float)target {
+    heading = target;
+    [cable send:@"align,%f", heading];
+}
+
+- (void)drive:(float)distance {
+    [cable send:@"drive,%f", distance];
+    position += [Utilities pol2cart:Polar(distance, heading)];
+}
+
+- (void)turn:(float)radians {
+    [self turnTo:(heading + radians)];
+}
+
+- (float)dTheta {
+    return random();
+}
+
 - (void)didReceiveAlignInfo:(NSValue*)info {
     CGPoint offset = [info CGPointValue];
     if(localizing) {
-        bool epsilonCondition = false;
-        if(epsilonCondition) {
+        if(abs(offset.x <= 1)) {
             [cable send:@"motors,%d,%d", 0, 0];
             [cable send:@"compass"];
+            [imageRecognition stop];
         }
         else {
             [cable send:@"motors,%d,%d", (int)offset.x, (int)offset.y];

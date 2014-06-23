@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Utilities.h"
 
 @class Forage, ImageRecognition, RouterCable, RouterServer;
 
@@ -18,7 +19,7 @@
 - (void)leave:(id<ForageState>)next;
 
 - (void)driveDone;
-- (void)alignDone;
+- (void)turnDone;
 - (void)localizeDone;
 - (void)compass:(float)heading;
 - (void)ultrasound:(float)distance;
@@ -27,26 +28,15 @@
 - (void)alignInfo:(CGPoint)offset;
 @end
 
-// ForageStateDeparting
-@interface ForageStateDeparting : NSObject <ForageState>
-@end
-
-// ForageStateSearching
-@interface ForageStateSearching : NSObject <ForageState>
-- (void)turn;
-@end
-
-// ForageStateNeighbors
+// Forage States
+@interface ForageStateDeparting : NSObject <ForageState> @end
+@interface ForageStateSearching : NSObject <ForageState> @end
 @interface ForageStateNeighbors : NSObject <ForageState> {
     int turns;
     int tags;
 }
-- (void)turn;
 @end
-
-// ForageStateReturning
-@interface ForageStateReturning : NSObject <ForageState>
-@end
+@interface ForageStateReturning : NSObject <ForageState> @end
 
 // Forage "Controller"
 @interface Forage : NSObject {
@@ -56,8 +46,13 @@
 - (id)initWithCable:(RouterCable*)cable server:(RouterServer*)server;
 - (double)microseconds;
 - (void)localize;
+- (void)drive:(float)distance;
+- (void)turn:(float)radians;
+- (void)driveTo:(Cartesian)position;
+- (void)turnTo:(float)heading;
+- (float)dTheta;
 
-@property CGPoint position;
+@property Cartesian position;
 @property float heading;
 @property int tag;
 @property CGPoint pheromone;

@@ -12,10 +12,30 @@
 @interface Utilities : NSObject
 
 struct Cartesian {
+    Cartesian(){}
     Cartesian(float a, float b):x(a),y(b){}
+    Cartesian operator+=(const Cartesian other) {
+        x += other.x;
+        y += other.y;
+        return *this;
+    }
+    Cartesian operator+(const Cartesian b) {
+        *this += b;
+        return *this;
+    }
+    Cartesian operator-=(const Cartesian other) {
+        x -= other.x;
+        y -= other.y;
+        return *this;
+    }
+    Cartesian operator-(const Cartesian b) {
+        *this -= b;
+        return *this;
+    }
     float x,y;
 };
 struct Polar {
+    Polar(){}
     Polar(float a, float b):r(a),theta(b){}
     float r,theta;
 };

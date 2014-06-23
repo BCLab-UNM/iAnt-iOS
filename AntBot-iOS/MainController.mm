@@ -33,7 +33,7 @@
     [server send:[Utilities getMacAddress]];
     
     // Serial cable connection
-    RouterCable* cable = [[RouterCable alloc] init];
+    cable = [[RouterCable alloc] init];
     
     // Motion capture controller
     motionCapture = [[MotionCapture alloc] initWithCable:cable server:server];
@@ -50,6 +50,7 @@
 
 - (void)viewDidUnload {
     [self setInfoBox:nil];
+    [[forage cable] send:@"motor,0,0"];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewDidUnload];
 }

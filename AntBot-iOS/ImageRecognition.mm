@@ -19,6 +19,7 @@ const int NEST_THRESHOLD = 240;
 @implementation ImageRecognition
 
 @synthesize delegate, target, view;
+@synthesize nestDistance;
 
 - (id)init {
     if(self = [super init]) {
@@ -391,10 +392,10 @@ const int NEST_THRESHOLD = 240;
                     
                     if (target == ImageRecognitionTargetNest) {
                         //Number of pixels between observed and true center
-                        data[0] = FRONT_REZ_HOR/2 - [meanCenter getX];
+                        data[0] = FRONT_REZ_HOR / 2 - [meanCenter getX];
                         
                         //Update estimate of distance from nest
-                        //nestDistance = 1481 * pow([meanCenter getArea],-0.5127) - 50;
+                        nestDistance = 1481 * pow([meanCenter getArea], -0.5127) - 50;
                         
                         // Notify delegate
                         if(delegate && [delegate respondsToSelector:@selector(didReceiveAlignInfo:)]) {
