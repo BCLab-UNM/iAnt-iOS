@@ -458,7 +458,7 @@
 					"\"$(SRCROOT)/AntBot-iOS/zxing/objc\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/AntBot-iOS/AntBot-iOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/AntBot-iOS/lib\"";
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -488,7 +488,7 @@
 					"\"$(SRCROOT)/AntBot-iOS/zxing/objc\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/AntBot-iOS/AntBot-iOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/AntBot-iOS/lib\"";
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				ONLY_ACTIVE_ARCH = YES;
