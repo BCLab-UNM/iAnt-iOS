@@ -53,8 +53,8 @@
     size_t height = CVPixelBufferGetHeight(imageBuffer);
     
     //Setup IplImage
-    imgIpl->widthStep = bytesPerRow;
-    imgIpl->imageSize = bytesPerRow * height;
+    imgIpl->widthStep = (int)bytesPerRow;
+    imgIpl->imageSize = (int)(bytesPerRow * height);
     
     //Ensure original buffer and new IplImage container are equal in size
     if (imgIpl->imageSize == height * bytesPerRow) {
@@ -99,7 +99,7 @@
     CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef) imgData);
     CGImageRef imageRef = CGImageCreate(image->width, image->height,
                                         image->depth, image->depth * image->nChannels, image->widthStep,
-                                        colorSpace, kCGImageAlphaPremultipliedLast|kCGBitmapByteOrderDefault,
+                                        colorSpace, kCGImageAlphaPremultipliedFirst|kCGBitmapByteOrder32Little,
                                         provider, NULL, false, kCGRenderingIntentDefault);
     
     imgThresholdUI = [UIImage imageWithCGImage:imageRef];
@@ -117,7 +117,7 @@
     IplImage *imageIpl = cvCreateImage(cvSize([image size].width,[image size].height), IPL_DEPTH_8U, 4);
     CGContextRef contextRef = CGBitmapContextCreate(imageIpl->imageData, imageIpl->width, imageIpl->height,
                                                     imageIpl->depth, imageIpl->widthStep,
-                                                    colorSpace, kCGImageAlphaPremultipliedLast|kCGBitmapByteOrderDefault);
+                                                    colorSpace, kCGImageAlphaPremultipliedFirst|kCGBitmapByteOrder32Little);
     
     CGContextDrawImage(contextRef,CGRectMake(0, 0, [image size].width, [image size].height),imageRef);
     CGColorSpaceRelease(colorSpace);
