@@ -264,7 +264,7 @@ const int MAX_RX_BUFFER_SIZE = 100;
                 int len;
                 
                 while ([inputStream hasBytesAvailable]) {
-                    len = [inputStream read:buffer maxLength:sizeof(buffer)];
+                    len = (int)[inputStream read:buffer maxLength:sizeof(buffer)];
                     if (len > 0) {
                         NSString *data = [[NSString alloc] initWithBytes:buffer length:len encoding:NSASCIIStringEncoding];
                         if (data != nil) {
