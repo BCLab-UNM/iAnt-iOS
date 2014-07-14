@@ -23,7 +23,7 @@
 - (void)send:(NSString*)message
 {
     NSData *data = [[NSData alloc] initWithData:[message dataUsingEncoding:NSUTF8StringEncoding]];
-    [self write:(UInt8*)[data bytes] Length:[data length]];
+    [self write:(UInt8*)[data bytes] Length:(UInt32)[data length]];
 }
 
 - (void)receive:(int)numBytes
