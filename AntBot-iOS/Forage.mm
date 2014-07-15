@@ -26,7 +26,7 @@
 }
 
 - (void)localizeDone {
-    [forage driveTo:Cartesian(random(), random())];
+    [forage driveTo:[forage destination]];
 }
 
 - (void)driveDone {
@@ -40,15 +40,16 @@
 
 - (void)enter:(id<ForageState>)previous {
     [[forage imageRecognition] startWithTarget:ImageRecognitionTargetTag];
-    [forage turn:[forage dTheta]];
+    searchTime = 0;
+    [forage turn:[forage dTheta:searchTime++]];
 }
 
 - (void)turnDone {
-    [forage drive:random()];
+    [forage drive:[forage searchStepSize]];
 }
 
 - (void)driveDone {
-    [forage turn:[forage dTheta]];
+    [forage turn:[forage dTheta:searchTime++]];
 }
 
 - (void)tag:(int)code {
@@ -61,18 +62,19 @@
 @synthesize forage;
 
 - (void)enter:(id<ForageState>)previous {
-    [[forage imageRecognition] startWithTarget:ImageRecognitionTargetNeighbors];
     turns = 0;
     tags = 0;
-    [forage turn:random()];
+    [[forage imageRecognition] startWithTarget:ImageRecognitionTargetNeighbors];
+    [forage turn:10];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setText" object:@"Neighbors"];
 }
 
 - (void)turnDone {
-    if(++turns >= 8) {
+    if(++turns >= 36) {
         [forage setState:[forage returning]];
     }
     else {
-        [forage turn:random()];
+        [forage turn:10];
     }
 }
 
@@ -87,6 +89,7 @@
 
 - (void)enter:(id<ForageState>)previous {
     [forage localize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setText" object:@"Returning"];
 }
 
 - (void)localizeDone {
@@ -105,7 +108,8 @@
 // "Controller"
 @implementation Forage
 
-@synthesize position, heading, tag, pheromone, localizing;
+@synthesize position, heading, informedStatus, tag, lastTagLocation, pheromone, localizing;
+@synthesize fenceRadius, searchStepSize, travelGiveUpProbability, uninformedSearchCorrelation, informedSearchCorrelationDecayRate;
 @synthesize imageRecognition, cable, server;
 @synthesize state, departing, searching, neighbors, returning;
 
@@ -116,15 +120,26 @@
     
     cable = _cable;
     server = _server;
+
     imageRecognition = [[ImageRecognition alloc] init];
     [imageRecognition setDelegate:self];
     
+    // Init states
     NSArray* states = [NSArray arrayWithObjects:@"departing", @"searching", @"neighbors", @"returning", nil];
     for(NSString* name in states) {
-        id instance = [[NSClassFromString(name) alloc] init];
+        NSString* uppercase = [name stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:[[name substringToIndex:1] uppercaseString]];
+        Class stateClass = NSClassFromString([NSString stringWithFormat:@"ForageState%@", uppercase]);
+        id instance = [[stateClass alloc] init];
         [instance setForage:self];
         [self setValue:instance forKey:name];
     }
+    
+    // Serial cable callbacks
+    [cable handle:@"ready" callback:^(NSArray* data) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setText" object:@"Ready"];
+        self.state = departing;
+        startTime = [NSDate date];
+    }];
     
     [cable handle:@"drive" callback:^(NSArray* data) {
         CALL(driveDone);
@@ -158,8 +173,9 @@
         CALL(ultrasound, result);
     }];
     
+    // Server callbacks
     [server handle:@"pheromone" callback:^(NSArray* data) {
-        pheromone = CGPointMake([[data objectAtIndex:0] floatValue], [[data objectAtIndex:1] floatValue]);
+        pheromone = Cartesian([[data objectAtIndex:0] floatValue], [[data objectAtIndex:1] floatValue]);
         CALL(pheromone);
     }];
     
@@ -171,20 +187,27 @@
         tag = -1;
     }];
 
+    // State data
     position = Cartesian(0, 0);
     heading = 0;
+    informedStatus = RobotInformedStatusNone;
     tag = -1;
-    pheromone = CGPointMake(INT_MAX, INT_MAX);
-    startTime = [NSDate date];
+    lastTagLocation = Cartesian(INFINITY, INFINITY);
+    pheromone = Cartesian(INFINITY, INFINITY);
     
-    //state = departing;
+    // Behavior parameters
+    fenceRadius = 500;
+    searchStepSize = 8.15;
+    travelGiveUpProbability = 0.05;
+    uninformedSearchCorrelation = 0.3;
+    informedSearchCorrelationDecayRate = 0.3;
     
     return self;
 }
 
 - (void)setState:(id)next {
-    if(state){[state leave:next];}
-    if(next){[next enter:state];}
+    if([state respondsToSelector:@selector(leave:)]){[state leave:next];}
+    if([next respondsToSelector:@selector(enter:)]){[next enter:state];}
     state = next;
 }
 
@@ -192,6 +215,9 @@
     return [startTime timeIntervalSinceNow] * -1000000.0;
 }
 
+/**
+ * "Library" methods
+ */
 - (void)localize {
     localizing = YES;
     [imageRecognition startWithTarget:ImageRecognitionTargetNest];
@@ -213,21 +239,51 @@
     position += [Utilities pol2cart:Polar(distance, heading)];
 }
 
-- (void)turn:(float)radians {
-    [self turnTo:(heading + radians)];
+- (void)turn:(float)degrees {
+    [self turnTo:(heading + degrees)];
 }
 
-- (float)dTheta {
-    return random();
+- (float)dTheta:(int)searchTime {
+    float sigma = uninformedSearchCorrelation;
+    
+    if(informedStatus != RobotInformedStatusNone) {
+        float quantity = (4 * M_PI) - uninformedSearchCorrelation;
+        sigma += [Utilities exponentialDecay:quantity time:searchTime lambda:informedSearchCorrelationDecayRate];
+    }
+    
+    return [Utilities rad2deg:[Utilities clamp:[Utilities randomWithMean:0 standardDeviation:sigma] min:-M_PI max:M_PI]];
 }
 
+- (Cartesian)destination {
+    if(informedStatus == RobotInformedStatusNone) {
+        float distance = 0;
+        for(distance = 0; distance < fenceRadius; distance += searchStepSize) {
+            if([Utilities randomFloat] < travelGiveUpProbability) {
+                break;
+            }
+        }
+        
+        return [Utilities pol2cart:Polar(distance, [Utilities randomFloat:360])];
+    }
+    else if(informedStatus == RobotInformedStatusPheromone) {
+        return pheromone;
+    }
+    else if (informedStatus == RobotInformedStatusMemory) {
+        return lastTagLocation;
+    }
+    
+    return Cartesian(INFINITY, INFINITY);
+}
+
+/**
+ * Delegate methods
+ */
 - (void)didReceiveAlignInfo:(NSValue*)info {
     CGPoint offset = [info CGPointValue];
     if(localizing) {
-        if(abs(offset.x <= 1)) {
+        if(fabsf(offset.x) <= 1) {
             [cable send:@"motors,%d,%d", 0, 0];
             [cable send:@"compass"];
-            [imageRecognition stop];
         }
         else {
             [cable send:@"motors,%d,%d", (int)offset.x, (int)offset.y];
@@ -239,7 +295,9 @@
 
 - (void)didReadQRCode:(int)_tag {
     tag = _tag;
-    [server send:@"%@,%d", [Utilities getMacAddress], tag];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setText" object:@"QR TAG!"];
+    CALL(tag, tag);
+    //[server send:@"%@,%d", [Utilities getMacAddress], tag];
 }
 
 @end

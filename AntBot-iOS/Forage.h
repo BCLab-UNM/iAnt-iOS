@@ -30,13 +30,23 @@
 
 // Forage States
 @interface ForageStateDeparting : NSObject <ForageState> @end
-@interface ForageStateSearching : NSObject <ForageState> @end
+@interface ForageStateSearching : NSObject <ForageState> {
+    int searchTime;
+}
+@end
 @interface ForageStateNeighbors : NSObject <ForageState> {
     int turns;
     int tags;
 }
 @end
 @interface ForageStateReturning : NSObject <ForageState> @end
+
+// Informed Enum
+typedef NS_ENUM(NSInteger, RobotInformedStatus) {
+    RobotInformedStatusNone,
+    RobotInformedStatusMemory,
+    RobotInformedStatusPheromone
+};
 
 // Forage "Controller"
 @interface Forage : NSObject {
@@ -47,16 +57,27 @@
 - (double)microseconds;
 - (void)localize;
 - (void)drive:(float)distance;
-- (void)turn:(float)radians;
+- (void)turn:(float)degrees;
 - (void)driveTo:(Cartesian)position;
 - (void)turnTo:(float)heading;
-- (float)dTheta;
+- (float)dTheta:(int)searchTime;
+- (Cartesian)destination;
 
+// State data
 @property Cartesian position;
 @property float heading;
+@property RobotInformedStatus informedStatus;
 @property int tag;
-@property CGPoint pheromone;
+@property Cartesian lastTagLocation;
+@property Cartesian pheromone;
 @property BOOL localizing;
+
+// Behavior parameters
+@property float fenceRadius;
+@property float searchStepSize;
+@property float travelGiveUpProbability;
+@property float uninformedSearchCorrelation;
+@property float informedSearchCorrelationDecayRate;
 
 @property ImageRecognition* imageRecognition;
 @property RouterCable* cable;

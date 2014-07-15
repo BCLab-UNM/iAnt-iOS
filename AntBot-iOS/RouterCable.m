@@ -12,7 +12,7 @@
 
 - (id)init {
     if (self = [super init]) {
-        rscMgr = [rscMgr init];
+        rscMgr = [[RscMgr alloc] init];
         [rscMgr setDelegate:self];
     }
     
@@ -24,6 +24,9 @@
     va_start(args, format);
     NSString* message = [[NSString alloc] initWithFormat:format arguments:args];
     va_end(args);
+    if(![message hasSuffix:@"\n"]) {
+        message = [message stringByAppendingString:@"\n"];
+    }
     NSData *data = [[NSData alloc] initWithData:[message dataUsingEncoding:NSUTF8StringEncoding]];
     [rscMgr write:(UInt8*)[data bytes] Length:[data length]];
 }

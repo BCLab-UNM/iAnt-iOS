@@ -26,17 +26,33 @@
 }
 
 /**
+ *	Calculates angle between two compass headings in degrees
+ *	Return value is bounded between -180 and 180
+ **/
++ (float)clamp:(float)x min:(float)min max:(float)max {
+    return MAX(min, MIN(max, x));
+}
+
+/**
  *	Converts degrees to radians
  **/
 + (float)deg2rad:(float)degree {
-	return (degree * (M_PI/180));
+	return (degree * (M_PI / 180));
 }
 
 /**
  *	Converts radians to degrees
  **/
 + (float)rad2deg:(float)radian {
-	return (radian * (180/M_PI));
+	return (radian * (180 / M_PI));
+}
+
+/**
+ * Implements exponential decay function
+ * Returns decay of quantity at time given rate of change lambda
+ **/
++ (float)exponentialDecay:(float)quantity time:(float)time lambda:(float)lambda {
+    return (quantity * exp(-lambda * time));
 }
 
 /**
@@ -76,8 +92,37 @@
 }
 
 /**
+ * Returns a random float in the range [0, 1).
+ **/
++ (float)randomFloat {
+    return ((float)random() / ((unsigned)RAND_MAX + 1));
+}
+
+/**
+ * Returns a random float in the range [0, x).
+ **/
++ (float)randomFloat:(float)x {
+    return [self randomFloat] * x;
+}
+
+/**
+ * Returns a sample from a normal distribution with mean m and standard deviation s.
+ **/
++ (float)randomWithMean:(float)m standardDeviation:(float)s {
+    float u = [self randomFloat];
+    float v = [self randomFloat];
+    float x = sqrtf(-2 * logf(1.0 - u));
+
+    if(roundf([self randomFloat]) == 0){
+        return x * cos(2 * M_PI * v) * s + m;
+    }
+
+    return x * sin(2 * M_PI * v) * s + m;
+}
+
+/**
  *  Return MAC Address of device
- */
+ **/
 + (NSString*)getMacAddress {
     int                 mgmtInfoBase[6];
     char                *msgBuffer = NULL;

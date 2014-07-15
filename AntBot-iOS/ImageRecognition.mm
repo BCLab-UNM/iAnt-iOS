@@ -244,9 +244,15 @@ const int NEST_THRESHOLD = 240;
                     //[cable send:[NSString stringWithFormat:@"(%d,%d)", data[0], data[1]]];
                     
                     //Hide all layers
-                    hideAllLayers();
+                    //hideAllLayers();
                     
-                    target = ImageRecognitionTargetNeighbors;
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if(delegate && [delegate respondsToSelector:@selector(didReadQRCode:)]) {
+                            [delegate didReadQRCode:qrCode];
+                        }
+                    });
+                    
+                    // target = ImageRecognitionTargetNeighbors;
                 }
                 //Otherwise
                 else {
@@ -398,9 +404,11 @@ const int NEST_THRESHOLD = 240;
                         nestDistance = 1481 * pow([meanCenter getArea], -0.5127) - 50;
                         
                         // Notify delegate
-                        if(delegate && [delegate respondsToSelector:@selector(didReceiveAlignInfo:)]) {
-                            [delegate didReceiveAlignInfo:[NSValue valueWithCGPoint:CGPointMake(data[0], data[1])]];
-                        }
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            if(delegate && [delegate respondsToSelector:@selector(didReceiveAlignInfo:)]) {
+                                [delegate didReceiveAlignInfo:[NSValue valueWithCGPoint:CGPointMake(FRONT_REZ_HOR / 2 - [meanCenter getX], 0)]];
+                            }
+                        });
                     }
                     else if (target == ImageRecognitionTargetTag) {
                         //Number of pixels between observed and true center
@@ -408,9 +416,11 @@ const int NEST_THRESHOLD = 240;
                         data[1] = BACK_REZ_VERT/2 - [meanCenter getY];
                         
                         // Notify delegate
-                        if(delegate && [delegate respondsToSelector:@selector(didReceiveAlignInfo:)]) {
-                            [delegate didReceiveAlignInfo:[NSValue valueWithCGPoint:CGPointMake(data[0], data[1])]];
-                        }
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            if(delegate && [delegate respondsToSelector:@selector(didReceiveAlignInfo:)]) {
+                                [delegate didReceiveAlignInfo:[NSValue valueWithCGPoint:CGPointMake(-(BACK_REZ_HOR/2 - [meanCenter getX]), BACK_REZ_VERT/2 - [meanCenter getY])]];
+                            }
+                        });
                     }
                 }
             }
@@ -425,9 +435,11 @@ const int NEST_THRESHOLD = 240;
                     data[0] = SHRT_MAX;
                     
                     // Notify delegate
-                    if(delegate && [delegate respondsToSelector:@selector(didReceiveAlignInfo:)]) {
-                        [delegate didReceiveAlignInfo:[NSValue valueWithCGPoint:CGPointMake(data[0], data[1])]];
-                    }
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if(delegate && [delegate respondsToSelector:@selector(didReceiveAlignInfo:)]) {
+                            [delegate didReceiveAlignInfo:[NSValue valueWithCGPoint:CGPointMake(SHRT_MAX, 0)]];
+                        }
+                    });
                 }
             }
             

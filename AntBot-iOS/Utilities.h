@@ -43,8 +43,15 @@ struct Polar {
 + (float)angleFrom:(float)start to:(float)end;
 + (float)deg2rad:(float)degree;
 + (float)rad2deg:(float)radian;
++ (float)clamp:(float)x min:(float)min max:(float)max;
++ (float)exponentialDecay:(float)quantity time:(float)time lambda:(float)lambda;
+
 + (Cartesian)pol2cart:(Polar)pol;
 + (Polar)cart2pol:(Cartesian)cart;
+
++ (float)randomFloat;
++ (float)randomFloat:(float)x;
++ (float)randomWithMean:(float)m standardDeviation:(float)s;
 
 + (NSString*)getMacAddress;
 

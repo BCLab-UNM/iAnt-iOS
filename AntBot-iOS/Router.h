@@ -15,11 +15,12 @@
 @interface Router : NSObject {
     NSString* rxBuffer;
     NSMutableDictionary* handlers;
-    id delegate;
 }
 
 - (void)parseString:(NSString*)string withDelimiter:(NSString*)delimiter;
 - (void)send:(NSString*)message, ...;
 - (void)handle:(NSString*)message callback:(void (^)(NSArray*))callback;
+
+@property id delegate;
 
 @end

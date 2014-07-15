@@ -10,7 +10,10 @@
 
 @implementation Router
 
+@synthesize delegate;
+
 - (void) parseString:(NSString*)string withDelimiter:(NSString*)delimiter {
+    if(!string || [string length] == 0){return;}
     
     // Strip any beginning null characters.
     int nullCount = 0;
@@ -20,6 +23,7 @@
     }
     
     // Append string to buffer.
+    if(!rxBuffer){rxBuffer = @"";}
     rxBuffer = [rxBuffer stringByAppendingString:string];
     
     // Process all delimiter-terminated messages.
@@ -28,11 +32,18 @@
         
         // Remove complete message from buffer and split it by commas.
         NSArray* components = [[rxBuffer substringToIndex:range.location] componentsSeparatedByString:@","];
-        rxBuffer = [rxBuffer substringFromIndex:range.location + 1];
+        rxBuffer = [rxBuffer substringFromIndex:range.location + [delimiter length]];
         
         // The first component is the message title, the rest are the data.
         NSString* message = [components objectAtIndex:0];
-        NSArray* data = [components subarrayWithRange:NSMakeRange(1, [components count] - 1)];
+        
+        NSArray* data;
+        if([components count] > 1) {
+            data = [components subarrayWithRange:NSMakeRange(1, [components count] - 1)];
+        }
+        else {
+            data = [[NSArray alloc] init];
+        }
         
         // Notify the delegate about the received message.
         if(delegate) {
@@ -54,11 +65,12 @@
 - (void)send:(NSString *)message, ... {}
 
 - (void)handle:(NSString*)message callback:(void (^)(NSArray*))callback {
+    if(!handlers){handlers = [[NSMutableDictionary alloc] init];}
     if([handlers objectForKey:message]) {
         [[handlers objectForKey:message] addObject:callback];
     }
     else {
-        [handlers setObject:[NSArray arrayWithObject:callback] forKey:message];
+        [handlers setObject:[NSMutableArray arrayWithObject:callback] forKey:message];
     }
 }
 
