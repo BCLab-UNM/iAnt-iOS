@@ -54,7 +54,8 @@ typedef NS_ENUM(NSInteger, RobotInformedStatus) {
 }
 
 - (id)initWithCable:(RouterCable*)cable server:(RouterServer*)server;
-- (double)microseconds;
+- (unsigned)microseconds;
+- (void)serverSend:(NSArray*)event;
 - (void)localize;
 - (void)drive:(float)distance;
 - (void)turn:(float)degrees;
@@ -68,16 +69,25 @@ typedef NS_ENUM(NSInteger, RobotInformedStatus) {
 @property float heading;
 @property RobotInformedStatus informedStatus;
 @property int tag;
+@property int lastNeighbors;
 @property Cartesian lastTagLocation;
 @property Cartesian pheromone;
 @property BOOL localizing;
 
-// Behavior parameters
+// Behavior Parameters
 @property float fenceRadius;
 @property float searchStepSize;
 @property float travelGiveUpProbability;
+@property float searchGiveUpProbability;
+
+// Random Walk Parameters
 @property float uninformedSearchCorrelation;
 @property float informedSearchCorrelationDecayRate;
+
+// Information Parameters
+@property float pheromoneDecayRate;
+@property float pheromoneLayingRate;
+@property float siteFidelityRate;
 
 @property ImageRecognition* imageRecognition;
 @property RouterCable* cable;

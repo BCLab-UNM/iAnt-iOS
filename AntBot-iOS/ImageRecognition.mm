@@ -246,11 +246,11 @@ const int NEST_THRESHOLD = 240;
                     //Hide all layers
                     //hideAllLayers();
                     
-                    dispatch_async(dispatch_get_main_queue(), ^{
+                    /*dispatch_async(dispatch_get_main_queue(), ^{
                         if(delegate && [delegate respondsToSelector:@selector(didReadQRCode:)]) {
                             [delegate didReadQRCode:qrCode];
                         }
-                    });
+                    });*/
                     
                     // target = ImageRecognitionTargetNeighbors;
                 }

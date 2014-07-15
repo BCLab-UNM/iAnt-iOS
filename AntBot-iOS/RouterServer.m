@@ -40,6 +40,9 @@ const int MAX_RX_BUFFER_SIZE = 100;
         va_start(args, format);
         NSString* message = [[NSString alloc] initWithFormat:format arguments:args];
         va_end(args);
+        if(![message hasSuffix:@"\n"]) {
+            message = [message stringByAppendingString:@"\n"];
+        }
         NSData *data = [[NSData alloc] initWithData:[message dataUsingEncoding:NSASCIIStringEncoding]];
         [outputStream write:[data bytes] maxLength:[data length]];
     //}
@@ -68,9 +71,6 @@ const int MAX_RX_BUFFER_SIZE = 100;
     //Open connections
     [inputStream open];
     [outputStream open];
-    
-    //Initialize buffer
-    rxBuffer = @"";
 }
 
 - (void)closeConnection {

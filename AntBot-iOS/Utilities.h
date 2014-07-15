@@ -45,6 +45,7 @@ struct Polar {
 + (float)rad2deg:(float)radian;
 + (float)clamp:(float)x min:(float)min max:(float)max;
 + (float)exponentialDecay:(float)quantity time:(float)time lambda:(float)lambda;
++ (float)poissonCDF:(float)k lambda:(float)lambda;
 
 + (Cartesian)pol2cart:(Polar)pol;
 + (Polar)cart2pol:(Cartesian)cart;

@@ -56,6 +56,21 @@
 }
 
 /**
+ * Returns Poisson cumulative probability at a given k and lambda.
+ */
++ (float)poissonCDF:(float)k lambda:(float)lambda {
+    float sumAccumulator = 1;
+    float factorialAccumulator = 1;
+    
+    for(int i = 1; i <= floorf(k); i++) {
+        factorialAccumulator *= i;
+        sumAccumulator += powf(lambda, i) / factorialAccumulator;
+    }
+    
+    return (expf(-lambda) * sumAccumulator);
+}
+
+/**
  *	Converts polar to cartesian coordinates
  **/
 + (Cartesian)pol2cart:(Polar)pol {
@@ -95,7 +110,7 @@
  * Returns a random float in the range [0, 1).
  **/
 + (float)randomFloat {
-    return ((float)random() / ((unsigned)RAND_MAX + 1));
+    return ((float)arc4random() / ((unsigned)RAND_MAX + 1));
 }
 
 /**
@@ -163,7 +178,7 @@
         }
     }
     
-    // Befor going any further...
+    // Before going any further...
     if (errorFlag != nil) {
         free(msgBuffer);
         NSLog(@"Error: %@", errorFlag);
