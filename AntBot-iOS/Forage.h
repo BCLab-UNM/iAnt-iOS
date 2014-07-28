@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Camera.h"
 #import "Utilities.h"
 
-@class Forage, ImageRecognition, RouterCable, RouterServer;
+@class Forage, ImageRecognition, RouterCable, RouterServer, FiducialPipeline;
 
 // ForageState protocol
 @protocol ForageState
@@ -49,18 +50,19 @@ typedef NS_ENUM(NSInteger, RobotInformedStatus) {
 };
 
 // Forage "Controller"
-@interface Forage : NSObject {
+@interface Forage : NSObject<CameraPipelineDelegate> {
     NSDate* startTime;
 }
 
-- (id)initWithCable:(RouterCable*)cable server:(RouterServer*)server;
+- (id)initWithCable:(RouterCable*)cable server:(RouterServer*)server camera:(Camera*)camera;
 - (unsigned)microseconds;
 - (void)serverSend:(NSArray*)event;
 - (void)localize;
-- (void)drive:(float)distance;
-- (void)turn:(float)degrees;
 - (void)driveTo:(Cartesian)position;
 - (void)turnTo:(float)heading;
+- (void)drive:(float)distance;
+- (void)turn:(float)degrees;
+- (void)delay:(float)seconds;
 - (float)dTheta:(int)searchTime;
 - (Cartesian)destination;
 
@@ -89,9 +91,13 @@ typedef NS_ENUM(NSInteger, RobotInformedStatus) {
 @property float pheromoneLayingRate;
 @property float siteFidelityRate;
 
+// Image Recognition Pipelines
+@property FiducialPipeline* fiducialPipeline;
+
 @property ImageRecognition* imageRecognition;
 @property RouterCable* cable;
 @property RouterServer* server;
+@property Camera* camera;
 
 @property (nonatomic) id<ForageState, NSObject> state;
 @property ForageStateDeparting* departing;

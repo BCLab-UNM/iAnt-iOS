@@ -11,6 +11,9 @@
 #import "RouterServer.h"
 #import "ImageRecognition.h"
 
+#import "Camera.h"
+#import "FiducialPipeline.h"
+
 // Set up a CALL macro for running a selector on the current forage state (with an optional argument).
 #define CALL1(X) if([state respondsToSelector:@selector(X)]){[state X];}
 #define CALL2(X, Y) if([state respondsToSelector:@selector(X:)]){[state X:Y];}
@@ -40,17 +43,19 @@
 @synthesize forage;
 
 - (void)enter:(id<ForageState>)previous {
-    [[forage imageRecognition] startWithTarget:ImageRecognitionTargetTag];
+    [[forage camera] startPipeline:[forage fiducialPipeline]];
     searchTime = 0;
     [forage turn:[forage dTheta:searchTime++]];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"setText" object:@"Searching"];
 }
 
 - (void)turnDone {
+    [forage delay:.05f];
     [forage drive:[forage searchStepSize]];
 }
 
 - (void)driveDone {
+    [forage delay:.05f];
     [forage turn:[forage dTheta:searchTime++]];
 }
 
@@ -65,8 +70,8 @@
 
 - (void)enter:(id<ForageState>)previous {
     turns = 0;
-    tags = 0;
-    [[forage imageRecognition] startWithTarget:ImageRecognitionTargetNeighbors];
+    tags = 1;
+    [[forage camera] startPipeline:[forage fiducialPipeline]];
     [forage turn:10];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"setText" object:@"Neighbors"];
 }
@@ -80,6 +85,7 @@
         [forage setLastNeighbors:tags];
     }
     else {
+        [forage delay:.2f];
         [forage turn:10];
     }
 }
@@ -118,16 +124,18 @@
 @synthesize fenceRadius, searchStepSize, travelGiveUpProbability, searchGiveUpProbability;
 @synthesize uninformedSearchCorrelation, informedSearchCorrelationDecayRate;
 @synthesize pheromoneDecayRate, pheromoneLayingRate, siteFidelityRate;
-@synthesize imageRecognition, cable, server;
+@synthesize fiducialPipeline;
+@synthesize imageRecognition, cable, server, camera;
 @synthesize state, departing, searching, neighbors, returning;
 
-- (id)initWithCable:(RouterCable*)_cable server:(RouterServer*)_server {
+- (id)initWithCable:(RouterCable*)_cable server:(RouterServer*)_server camera:(Camera*)_camera {
     if(!(self = [super init])) {
         return nil;
     }
     
     cable = _cable;
     server = _server;
+    camera = _camera;
 
     imageRecognition = [[ImageRecognition alloc] init];
     [imageRecognition setDelegate:self];
@@ -145,9 +153,11 @@
     // Serial cable callbacks
     [cable handle:@"ready" callback:^(NSArray* data) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setText" object:@"Ready"];
-        self.state = departing;
-        startTime = [NSDate date];
-        [server send:[Utilities getMacAddress]];
+        if(!startTime) {
+            self.state = departing;
+            startTime = [NSDate date];
+            [server send:[Utilities getMacAddress]];
+        }
     }];
     
     [cable handle:@"drive" callback:^(NSArray* data) {
@@ -176,6 +186,7 @@
         if(localizing) {
             position = [Utilities pol2cart:Polar(result, heading)];
             localizing = NO;
+            [imageRecognition stop];
             CALL(localizeDone);
         }
         
@@ -217,6 +228,10 @@
     
     // Information parameters
     siteFidelityRate = 4.0;
+    
+    // Image recognition pipelines
+    fiducialPipeline = [[FiducialPipeline alloc] init];
+    [fiducialPipeline setDelegate:self];
     
     return self;
 }
@@ -271,6 +286,10 @@
     [self turnTo:(heading + degrees)];
 }
 
+- (void)delay:(float)seconds {
+    [cable send:@"delay,%d", (int)roundf(seconds * 1000)];
+}
+
 - (float)dTheta:(int)searchTime {
     float sigma = uninformedSearchCorrelation;
     
@@ -314,7 +333,7 @@
             [cable send:@"compass"];
         }
         else {
-            [cable send:@"motors,%d,%d", (int)offset.x, (int)offset.y];
+            [cable send:@"motors,%d,%d,%d", (int)offset.x, (int)offset.y, MAX(fabsf(offset.x), 5)];
         }
     }
     
@@ -325,6 +344,13 @@
     tag = _tag;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"setText" object:@"QR TAG!"];
     [server send:@"%@,%d", [Utilities getMacAddress], tag];
+}
+
+- (void)pipeline:(id)pipeline didProcessFrame:(NSNumber*)result {
+    if([pipeline isMemberOfClass:[FiducialPipeline class]]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setText" object:@"Fiducial!"];
+        CALL(tag, [result intValue]);
+    }
 }
 
 @end
