@@ -110,7 +110,7 @@
  * Returns a random float in the range [0, 1).
  **/
 + (float)randomFloat {
-    return ((float)arc4random() / ((unsigned)RAND_MAX + 1));
+    return ((float)arc4random() / 0x100000000);
 }
 
 /**
