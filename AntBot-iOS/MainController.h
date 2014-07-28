@@ -6,10 +6,11 @@
 //  Moses Lab, Department of Computer Science, University of New Mexico
 //
 
-@class Forage, MotionCapture, RouterCable, RouterServer;
+@class Camera, Forage, MotionCapture, RouterCable, RouterServer;
 
 @interface MainController : UIViewController {
     
+    Camera* camera;
     Forage* forage;
     MotionCapture* motionCapture;
     RouterCable* cable;

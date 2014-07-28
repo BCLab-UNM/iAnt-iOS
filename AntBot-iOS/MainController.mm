@@ -8,6 +8,7 @@
 
 #import "MainController.h"
 
+#import "Camera.h"
 #import "Forage.h"
 #import "ImageRecognition.h"
 #import "MotionCapture.h"
@@ -29,21 +30,24 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:@"Stream closed" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:@"setText" object:nil];
     
+    // Camera
+    camera = [[Camera alloc] init];
+    [camera setView: previewView];
+    
     // Communication
-    server = [[RouterServer alloc] initWithIP:@"64.106.39.146" port:2223];
+    server = [[RouterServer alloc] initWithIP:@"64.106.39.136" port:2223];
     cable = [[RouterCable alloc] init];
     
     // Logic
     //motionCapture = [[MotionCapture alloc] initWithCable:cable server:server];
-    forage = [[Forage alloc] initWithCable:cable server:server];
-    [[forage imageRecognition] setView:previewView];
+    forage = [[Forage alloc] initWithCable:cable server:server camera:camera];
     
     [[self infoBox] setFont:[UIFont fontWithName:@"Courier New" size:8]];
 }
 
 - (void)viewDidUnload {
     [self setInfoBox:nil];
-    [[forage cable] send:@"motor,0,0"];
+    [[forage cable] send:@"motors,0,0"];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewDidUnload];
 }
