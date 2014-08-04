@@ -7,10 +7,12 @@
 //
 
 #import "Camera.h"
+#import "CameraView.h"
 
 @implementation Camera
 
-@synthesize pipeline;
+@synthesize pipeline, view;
+@synthesize previewLayer;
 
 - (void)startPipeline:(id<CameraPipeline>)_pipeline {
     pipeline = _pipeline;
@@ -33,7 +35,7 @@
 
 - (void)setup {
     session = [[AVCaptureSession alloc] init];
-    [session setSessionPreset:[pipeline quality] ? [pipeline quality] : AVCaptureSessionPresetLow];
+    [session setSessionPreset:[pipeline quality]];
     
     // Find right camera
     AVCaptureDevicePosition position = [pipeline devicePosition];
@@ -59,15 +61,26 @@
     // Create output
     output = [[AVCaptureVideoDataOutput alloc] init];
     [output setAlwaysDiscardsLateVideoFrames:YES];
+    [[output connectionWithMediaType:AVMediaTypeVideo] setEnabled:YES];
+    NSNumber* format = [NSNumber numberWithInt:kCMPixelFormat_32BGRA];
+	[output setVideoSettings:[NSDictionary dictionaryWithObject:format forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
+    if([session canAddOutput:output]) {
+        [session addOutput:output];
+    }
     
     // Create preview layer
     previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:session];
 	[previewLayer setBackgroundColor:[[UIColor blackColor] CGColor]];
 	[previewLayer setVideoGravity:AVLayerVideoGravityResize];
+    [view setPreviewLayer:previewLayer];
     
     // Serial GCD queue for processing frames
-    dispatch_queue_t queue = dispatch_queue_create("VideoDataOutputQueue", DISPATCH_QUEUE_SERIAL);
+    queue = dispatch_queue_create("VideoDataOutputQueue", DISPATCH_QUEUE_SERIAL);
 	[output setSampleBufferDelegate:self queue:queue];
+}
+
+- (void)captureOutput:(AVCaptureOutput*)output didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection*)connection {
+    [pipeline didReceiveFrame:sampleBuffer fromCamera:self];
 }
 
 @end
