@@ -13,6 +13,19 @@
 		062C18F31975F9CE00B3A604 /* Camera.m in Sources */ = {isa = PBXBuildFile; fileRef = 062C18F21975F9CE00B3A604 /* Camera.m */; };
 		06B08010194A251D001DFC01 /* MotionCapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 06B0800F194A251D001DFC01 /* MotionCapture.mm */; };
 		06BFD92D1940EE8D0040034E /* Forage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 06BFD92C1940EE8D0040034E /* Forage.mm */; };
+		406BB69B1986DE4F0023A95B /* CameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 406BB69A1986DE4F0023A95B /* CameraView.m */; };
+		409DCD7219770DF300EA9258 /* FiducialPipeline.mm in Sources */ = {isa = PBXBuildFile; fileRef = 409DCD7119770DF300EA9258 /* FiducialPipeline.mm */; };
+		409DCD891977161500EA9258 /* all.trees in Resources */ = {isa = PBXBuildFile; fileRef = 409DCD741977161500EA9258 /* all.trees */; };
+		409DCD8A1977161500EA9258 /* changelog.txt in Resources */ = {isa = PBXBuildFile; fileRef = 409DCD751977161500EA9258 /* changelog.txt */; };
+		409DCD8B1977161500EA9258 /* dump_graph.c in Sources */ = {isa = PBXBuildFile; fileRef = 409DCD771977161500EA9258 /* dump_graph.c */; };
+		409DCD8C1977161500EA9258 /* fidtrack120.c in Sources */ = {isa = PBXBuildFile; fileRef = 409DCD791977161500EA9258 /* fidtrack120.c */; };
+		409DCD8D1977161500EA9258 /* fidtrackX.c in Sources */ = {isa = PBXBuildFile; fileRef = 409DCD7B1977161500EA9258 /* fidtrackX.c */; };
+		409DCD8E1977161500EA9258 /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = 409DCD7E1977161500EA9258 /* license.txt */; };
+		409DCD8F1977161500EA9258 /* segment.c in Sources */ = {isa = PBXBuildFile; fileRef = 409DCD7F1977161500EA9258 /* segment.c */; };
+		409DCD901977161500EA9258 /* threshold.c in Sources */ = {isa = PBXBuildFile; fileRef = 409DCD811977161500EA9258 /* threshold.c */; };
+		409DCD911977161500EA9258 /* tiled_bernsen_threshold.c in Sources */ = {isa = PBXBuildFile; fileRef = 409DCD831977161500EA9258 /* tiled_bernsen_threshold.c */; };
+		409DCD921977161500EA9258 /* topologysearch.c in Sources */ = {isa = PBXBuildFile; fileRef = 409DCD851977161500EA9258 /* topologysearch.c */; };
+		409DCD931977161500EA9258 /* treeidmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 409DCD871977161500EA9258 /* treeidmap.cpp */; };
 		420CC92D151639A6003B29D3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 420CC92C151639A6003B29D3 /* CoreLocation.framework */; };
 		421743851514D0830003BF49 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 421743831514D0830003BF49 /* InfoPlist.strings */; };
 		4221A9BD162246020055C9C8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4221A9BB162245F60055C9C8 /* AudioToolbox.framework */; };
@@ -66,6 +79,31 @@
 		06B0800F194A251D001DFC01 /* MotionCapture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MotionCapture.mm; path = "AntBot-iOS/MotionCapture.mm"; sourceTree = SOURCE_ROOT; };
 		06BFD92B1940EE8D0040034E /* Forage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Forage.h; path = "AntBot-iOS/Forage.h"; sourceTree = SOURCE_ROOT; };
 		06BFD92C1940EE8D0040034E /* Forage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Forage.mm; path = "AntBot-iOS/Forage.mm"; sourceTree = SOURCE_ROOT; };
+		406BB6991986DE4F0023A95B /* CameraView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraView.h; path = "AntBot-iOS/CameraView.h"; sourceTree = SOURCE_ROOT; };
+		406BB69A1986DE4F0023A95B /* CameraView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CameraView.m; path = "AntBot-iOS/CameraView.m"; sourceTree = SOURCE_ROOT; };
+		409DCD7019770DF300EA9258 /* FiducialPipeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FiducialPipeline.h; path = "AntBot-iOS/FiducialPipeline.h"; sourceTree = SOURCE_ROOT; };
+		409DCD7119770DF300EA9258 /* FiducialPipeline.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FiducialPipeline.mm; path = "AntBot-iOS/FiducialPipeline.mm"; sourceTree = SOURCE_ROOT; };
+		409DCD741977161500EA9258 /* all.trees */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = all.trees; sourceTree = "<group>"; };
+		409DCD751977161500EA9258 /* changelog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = changelog.txt; sourceTree = "<group>"; };
+		409DCD761977161500EA9258 /* default_trees.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = default_trees.h; sourceTree = "<group>"; };
+		409DCD771977161500EA9258 /* dump_graph.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dump_graph.c; sourceTree = "<group>"; };
+		409DCD781977161500EA9258 /* dump_graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dump_graph.h; sourceTree = "<group>"; };
+		409DCD791977161500EA9258 /* fidtrack120.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fidtrack120.c; sourceTree = "<group>"; };
+		409DCD7A1977161500EA9258 /* fidtrack120.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fidtrack120.h; sourceTree = "<group>"; };
+		409DCD7B1977161500EA9258 /* fidtrackX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fidtrackX.c; sourceTree = "<group>"; };
+		409DCD7C1977161500EA9258 /* fidtrackX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fidtrackX.h; sourceTree = "<group>"; };
+		409DCD7D1977161500EA9258 /* floatpoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = floatpoint.h; sourceTree = "<group>"; };
+		409DCD7E1977161500EA9258 /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = "<group>"; };
+		409DCD7F1977161500EA9258 /* segment.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = segment.c; sourceTree = "<group>"; };
+		409DCD801977161500EA9258 /* segment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = segment.h; sourceTree = "<group>"; };
+		409DCD811977161500EA9258 /* threshold.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = threshold.c; sourceTree = "<group>"; };
+		409DCD821977161500EA9258 /* threshold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threshold.h; sourceTree = "<group>"; };
+		409DCD831977161500EA9258 /* tiled_bernsen_threshold.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tiled_bernsen_threshold.c; sourceTree = "<group>"; };
+		409DCD841977161500EA9258 /* tiled_bernsen_threshold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tiled_bernsen_threshold.h; sourceTree = "<group>"; };
+		409DCD851977161500EA9258 /* topologysearch.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = topologysearch.c; sourceTree = "<group>"; };
+		409DCD861977161500EA9258 /* topologysearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = topologysearch.h; sourceTree = "<group>"; };
+		409DCD871977161500EA9258 /* treeidmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = treeidmap.cpp; sourceTree = "<group>"; };
+		409DCD881977161500EA9258 /* treeidmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = treeidmap.h; sourceTree = "<group>"; };
 		42042CEE156E78780053FC41 /* OpenCV.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCV.framework; path = "AntBot-iOS/OpenCV.framework"; sourceTree = "<group>"; };
 		420CC92C151639A6003B29D3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		421743841514D0830003BF49 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "AntBot-iOS/en.lproj/InfoPlist.strings"; sourceTree = SOURCE_ROOT; };
@@ -149,9 +187,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		409DCD731977161500EA9258 /* libfidtrack */ = {
+			isa = PBXGroup;
+			children = (
+				409DCD741977161500EA9258 /* all.trees */,
+				409DCD751977161500EA9258 /* changelog.txt */,
+				409DCD761977161500EA9258 /* default_trees.h */,
+				409DCD771977161500EA9258 /* dump_graph.c */,
+				409DCD781977161500EA9258 /* dump_graph.h */,
+				409DCD791977161500EA9258 /* fidtrack120.c */,
+				409DCD7A1977161500EA9258 /* fidtrack120.h */,
+				409DCD7B1977161500EA9258 /* fidtrackX.c */,
+				409DCD7C1977161500EA9258 /* fidtrackX.h */,
+				409DCD7D1977161500EA9258 /* floatpoint.h */,
+				409DCD7E1977161500EA9258 /* license.txt */,
+				409DCD7F1977161500EA9258 /* segment.c */,
+				409DCD801977161500EA9258 /* segment.h */,
+				409DCD811977161500EA9258 /* threshold.c */,
+				409DCD821977161500EA9258 /* threshold.h */,
+				409DCD831977161500EA9258 /* tiled_bernsen_threshold.c */,
+				409DCD841977161500EA9258 /* tiled_bernsen_threshold.h */,
+				409DCD851977161500EA9258 /* topologysearch.c */,
+				409DCD861977161500EA9258 /* topologysearch.h */,
+				409DCD871977161500EA9258 /* treeidmap.cpp */,
+				409DCD881977161500EA9258 /* treeidmap.h */,
+			);
+			name = libfidtrack;
+			path = "AntBot-iOS/libfidtrack";
+			sourceTree = SOURCE_ROOT;
+		};
 		42388E6515EF1974009F0D7E /* IR Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				409DCD731977161500EA9258 /* libfidtrack */,
 				423B0EA215EF216C00DC71CD /* Conversions.h */,
 				423B0EA315EF216C00DC71CD /* Conversions.mm */,
 				42388E6F15EF1C6C009F0D7E /* FinderPattern.h */,
@@ -230,6 +298,10 @@
 				423D2E141514CFEB00B5231E /* AppDelegate.m */,
 				062C18F11975F9CE00B3A604 /* Camera.h */,
 				062C18F21975F9CE00B3A604 /* Camera.m */,
+				406BB6991986DE4F0023A95B /* CameraView.h */,
+				406BB69A1986DE4F0023A95B /* CameraView.m */,
+				409DCD7019770DF300EA9258 /* FiducialPipeline.h */,
+				409DCD7119770DF300EA9258 /* FiducialPipeline.mm */,
 				06BFD92B1940EE8D0040034E /* Forage.h */,
 				06BFD92C1940EE8D0040034E /* Forage.mm */,
 				423F669E152237A70001F9D3 /* ImageRecognition.h */,
@@ -333,6 +405,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				409DCD8E1977161500EA9258 /* license.txt in Resources */,
 				425975BE17FCB430002B1BA9 /* Default@2x.png in Resources */,
 				421743851514D0830003BF49 /* InfoPlist.strings in Resources */,
 				4257B683159808A10072054D /* MainStoryboard.storyboard in Resources */,
@@ -340,6 +413,8 @@
 				425975C217FCB430002B1BA9 /* squarePNG.png in Resources */,
 				425975BF17FCB430002B1BA9 /* Icon.png in Resources */,
 				425975C017FCB430002B1BA9 /* Icon@2x.png in Resources */,
+				409DCD8A1977161500EA9258 /* changelog.txt in Resources */,
+				409DCD891977161500EA9258 /* all.trees in Resources */,
 				425975C117FCB430002B1BA9 /* mask.png in Resources */,
 				425975BD17FCB430002B1BA9 /* Default.png in Resources */,
 			);
@@ -352,15 +427,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				409DCD8C1977161500EA9258 /* fidtrack120.c in Sources */,
 				0618ACBB1939010C00AE30B6 /* RouterCable.m in Sources */,
 				423D2E251514D04700B5231E /* main.m in Sources */,
 				423D2E1A1514CFEB00B5231E /* AppDelegate.m in Sources */,
+				409DCD921977161500EA9258 /* topologysearch.c in Sources */,
+				409DCD7219770DF300EA9258 /* FiducialPipeline.mm in Sources */,
 				0618ACB81938F9F300AE30B6 /* Router.m in Sources */,
 				0618ACBE193905B400AE30B6 /* RouterServer.m in Sources */,
+				409DCD8F1977161500EA9258 /* segment.c in Sources */,
+				406BB69B1986DE4F0023A95B /* CameraView.m in Sources */,
 				423F66A0152237A70001F9D3 /* ImageRecognition.mm in Sources */,
 				06BFD92D1940EE8D0040034E /* Forage.mm in Sources */,
 				423D2E1C1514CFEB00B5231E /* MainController.mm in Sources */,
+				409DCD931977161500EA9258 /* treeidmap.cpp in Sources */,
 				06B08010194A251D001DFC01 /* MotionCapture.mm in Sources */,
+				409DCD911977161500EA9258 /* tiled_bernsen_threshold.c in Sources */,
+				409DCD8B1977161500EA9258 /* dump_graph.c in Sources */,
+				409DCD8D1977161500EA9258 /* fidtrackX.c in Sources */,
 				42388E7515EF1FC4009F0D7E /* FinderPattern.m in Sources */,
 				42388E7615EF1FC4009F0D7E /* LineSegment2D.m in Sources */,
 				42388E7715EF1FC4009F0D7E /* Rect2D.m in Sources */,
@@ -368,6 +452,7 @@
 				423B0EA415EF216C00DC71CD /* Conversions.mm in Sources */,
 				423B0EA815EF250300DC71CD /* ThresholdRange.mm in Sources */,
 				42BEFEC216BC7FE80095EE7C /* Utilities.mm in Sources */,
+				409DCD901977161500EA9258 /* threshold.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

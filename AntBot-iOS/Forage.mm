@@ -26,7 +26,6 @@
 
 - (void)enter:(id<ForageState>)previous {
     [forage localize];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"setText" object:@"Departing"];
 }
 
 - (void)localizeDone {
@@ -46,16 +45,15 @@
     [[forage camera] startPipeline:[forage fiducialPipeline]];
     searchTime = 0;
     [forage turn:[forage dTheta:searchTime++]];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"setText" object:@"Searching"];
 }
 
 - (void)turnDone {
-    [forage delay:.05f];
+    [forage delay:.02f];
     [forage drive:[forage searchStepSize]];
 }
 
 - (void)driveDone {
-    [forage delay:.05f];
+    [forage delay:.11f];
     [forage turn:[forage dTheta:searchTime++]];
 }
 
@@ -73,7 +71,6 @@
     tags = 1;
     [[forage camera] startPipeline:[forage fiducialPipeline]];
     [forage turn:10];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"setText" object:@"Neighbors"];
 }
 
 - (void)turnDone {
@@ -101,7 +98,6 @@
 
 - (void)enter:(id<ForageState>)previous {
     [forage localize];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"setText" object:@"Returning"];
 }
 
 - (void)localizeDone {
@@ -152,7 +148,6 @@
     
     // Serial cable callbacks
     [cable handle:@"ready" callback:^(NSArray* data) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"setText" object:@"Ready"];
         if(!startTime) {
             self.state = departing;
             startTime = [NSDate date];
@@ -200,7 +195,6 @@
     }];
     
     [server handle:@"tag" callback:^(NSArray* data) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"setText" object:[data objectAtIndex:0]];
         if([[data objectAtIndex:0] isEqualToString:@"new"]) {
             CALL(tag, tag);
         }
@@ -213,13 +207,15 @@
     heading = 0;
     informedStatus = RobotInformedStatusNone;
     tag = -1;
+    lastNeighbors = 0;
     lastTagLocation = Cartesian(INFINITY, INFINITY);
     pheromone = Cartesian(INFINITY, INFINITY);
+    localizing = NO;
     
     // Behavior parameters
     fenceRadius = 500;
     searchStepSize = 8.15;
-    travelGiveUpProbability = 0.5;
+    travelGiveUpProbability = 0.05;
     searchGiveUpProbability = 0.01;
     
     // Random walk parameters
@@ -298,7 +294,16 @@
         sigma += [Utilities exponentialDecay:quantity time:searchTime lambda:informedSearchCorrelationDecayRate];
     }
     
-    return [Utilities rad2deg:[Utilities clamp:[Utilities randomWithMean:0 standardDeviation:sigma] min:-M_PI max:M_PI]];
+    float result = [Utilities rad2deg:[Utilities clamp:[Utilities randomWithMean:0 standardDeviation:sigma] min:-M_PI max:M_PI]];
+    float distance = sqrtf(position.x * position.x + position.y * position.y);
+    
+    // Fence bias
+    if(distance > fenceRadius) {
+        float correction = [Utilities angleFrom:(heading + result) to:(heading - 180)];
+        result += [Utilities poissonCDF:(distance - fenceRadius) / 100.0f lambda:3] * correction;
+    }
+    
+    return result;
 }
 
 - (Cartesian)destination {
@@ -340,15 +345,8 @@
     CALL(alignInfo, offset);
 }
 
-- (void)didReadQRCode:(int)_tag {
-    tag = _tag;
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"setText" object:@"QR TAG!"];
-    [server send:@"%@,%d", [Utilities getMacAddress], tag];
-}
-
 - (void)pipeline:(id)pipeline didProcessFrame:(NSNumber*)result {
     if([pipeline isMemberOfClass:[FiducialPipeline class]]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"setText" object:@"Fiducial!"];
         CALL(tag, [result intValue]);
     }
 }
