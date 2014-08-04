@@ -214,7 +214,7 @@ const int NEST_THRESHOLD = 240;
             [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
             
             //If centroids were found
-            if ((numberOfCentroids = [centroidList count])) {
+            if ((numberOfCentroids = (int)[centroidList count])) {
                 //Ensure mocapHeading observer has been removed
                 /*@try {
                     [server removeObserver:self forKeyPath:@"mocapHeading"];
@@ -450,8 +450,6 @@ const int NEST_THRESHOLD = 240;
 
 #pragma mark - Decoder methods
 
-// TODO extract into dedicated QR code reader class?
-
 - (void)decoder:(Decoder *)decoder didDecodeImage:(UIImage *)image usingSubset:(UIImage *)subset withResult:(TwoDDecoderResult *)result {
     //If new code is different from previously found code
     if([[result text] intValue] != qrCode) {
@@ -532,7 +530,7 @@ const int NEST_THRESHOLD = 240;
     cvReleaseMemStorage(&storage);
     
     //Free memory
-    cvReleaseImage(&imgThreshold);    
+    cvReleaseImage(&imgThreshold);
     
     return centroidList;
 }
@@ -695,7 +693,7 @@ const int NEST_THRESHOLD = 240;
                 //If pattern has not been modified after modifiedThreshold columns
                 if ([pattern columnsSinceLastModified] > modifiedThreshold) {
                     //Remove pattern from array
-                    int index = [finderPatterns indexOfObject:pattern];
+                    int index = (int)[finderPatterns indexOfObject:pattern];
                     if ([finderPatterns count] > index) {
                         [finderPatterns removeObjectAtIndex:index];
                     }

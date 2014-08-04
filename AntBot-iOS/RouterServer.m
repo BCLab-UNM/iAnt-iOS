@@ -94,18 +94,15 @@ const int MAX_RX_BUFFER_SIZE = 100;
     switch (streamEvent) {
 		case NSStreamEventOpenCompleted:
 			NSLog(@"Stream opened");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"Stream opened" object:self];
 			break;
         
         case NSStreamEventErrorOccurred:
             NSLog(@"Error: %@", [[theStream streamError] localizedDescription]);
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"Stream closed" object:self];
 			break;
             
         //If remote host closes the connection, close stream on this end and remove from schedule
 		case NSStreamEventEndEncountered:
             NSLog(@"Connection to server closed");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"Stream closed" object:self];
 			break;
             
         //If remote host has sent data, read everything into a buffer
@@ -115,7 +112,7 @@ const int MAX_RX_BUFFER_SIZE = 100;
                 int len;
                 
                 while ([inputStream hasBytesAvailable]) {
-                    len = [inputStream read:buffer maxLength:sizeof(buffer)];
+                    len = (int)[inputStream read:buffer maxLength:sizeof(buffer)];
                     if (len > 0) {
                         NSString *string = [[NSString alloc] initWithBytes:buffer length:len encoding:NSASCIIStringEncoding];
                         if (string) {

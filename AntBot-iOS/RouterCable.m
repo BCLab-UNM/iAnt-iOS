@@ -28,7 +28,7 @@
         message = [message stringByAppendingString:@"\n"];
     }
     NSData *data = [[NSData alloc] initWithData:[message dataUsingEncoding:NSUTF8StringEncoding]];
-    [rscMgr write:(UInt8*)[data bytes] Length:[data length]];
+    [rscMgr write:(UInt8*)[data bytes] Length:(int)[data length]];
 }
 
 - (void)readBytesAvailable:(UInt32)length {
@@ -49,6 +49,7 @@
 - (void)cableConnected:(NSString *)protocol {
     [rscMgr setBaud:9600];
 	[rscMgr open];
+    [self send:@"ready"];
 }
 
 - (void)cableDisconnected {}
