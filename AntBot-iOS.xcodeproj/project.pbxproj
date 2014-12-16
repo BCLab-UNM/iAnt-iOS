@@ -14,6 +14,7 @@
 		06B08010194A251D001DFC01 /* MotionCapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 06B0800F194A251D001DFC01 /* MotionCapture.mm */; };
 		06BFD92D1940EE8D0040034E /* Forage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 06BFD92C1940EE8D0040034E /* Forage.mm */; };
 		406BB69B1986DE4F0023A95B /* CameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 406BB69A1986DE4F0023A95B /* CameraView.m */; };
+		4075742319A372FB00CDACEC /* DebugView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4075742219A372FB00CDACEC /* DebugView.mm */; };
 		409DCD7219770DF300EA9258 /* FiducialPipeline.mm in Sources */ = {isa = PBXBuildFile; fileRef = 409DCD7119770DF300EA9258 /* FiducialPipeline.mm */; };
 		409DCD891977161500EA9258 /* all.trees in Resources */ = {isa = PBXBuildFile; fileRef = 409DCD741977161500EA9258 /* all.trees */; };
 		409DCD8A1977161500EA9258 /* changelog.txt in Resources */ = {isa = PBXBuildFile; fileRef = 409DCD751977161500EA9258 /* changelog.txt */; };
@@ -81,6 +82,8 @@
 		06BFD92C1940EE8D0040034E /* Forage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Forage.mm; path = "AntBot-iOS/Forage.mm"; sourceTree = SOURCE_ROOT; };
 		406BB6991986DE4F0023A95B /* CameraView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraView.h; path = "AntBot-iOS/CameraView.h"; sourceTree = SOURCE_ROOT; };
 		406BB69A1986DE4F0023A95B /* CameraView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CameraView.m; path = "AntBot-iOS/CameraView.m"; sourceTree = SOURCE_ROOT; };
+		4075742119A372FB00CDACEC /* DebugView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugView.h; path = "AntBot-iOS/DebugView.h"; sourceTree = SOURCE_ROOT; };
+		4075742219A372FB00CDACEC /* DebugView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = DebugView.mm; path = "AntBot-iOS/DebugView.mm"; sourceTree = SOURCE_ROOT; };
 		409DCD7019770DF300EA9258 /* FiducialPipeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FiducialPipeline.h; path = "AntBot-iOS/FiducialPipeline.h"; sourceTree = SOURCE_ROOT; };
 		409DCD7119770DF300EA9258 /* FiducialPipeline.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FiducialPipeline.mm; path = "AntBot-iOS/FiducialPipeline.mm"; sourceTree = SOURCE_ROOT; };
 		409DCD741977161500EA9258 /* all.trees */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = all.trees; sourceTree = "<group>"; };
@@ -300,6 +303,8 @@
 				062C18F21975F9CE00B3A604 /* Camera.m */,
 				406BB6991986DE4F0023A95B /* CameraView.h */,
 				406BB69A1986DE4F0023A95B /* CameraView.m */,
+				4075742119A372FB00CDACEC /* DebugView.h */,
+				4075742219A372FB00CDACEC /* DebugView.mm */,
 				409DCD7019770DF300EA9258 /* FiducialPipeline.h */,
 				409DCD7119770DF300EA9258 /* FiducialPipeline.mm */,
 				06BFD92B1940EE8D0040034E /* Forage.h */,
@@ -446,6 +451,7 @@
 				409DCD8B1977161500EA9258 /* dump_graph.c in Sources */,
 				409DCD8D1977161500EA9258 /* fidtrackX.c in Sources */,
 				42388E7515EF1FC4009F0D7E /* FinderPattern.m in Sources */,
+				4075742319A372FB00CDACEC /* DebugView.mm in Sources */,
 				42388E7615EF1FC4009F0D7E /* LineSegment2D.m in Sources */,
 				42388E7715EF1FC4009F0D7E /* Rect2D.m in Sources */,
 				062C18F31975F9CE00B3A604 /* Camera.m in Sources */,

@@ -148,8 +148,8 @@ const int NEST_THRESHOLD = 240;
 
 - (void)stop {
     [session stopRunning];
-	if (videoDataOutputQueue)
-		dispatch_release(videoDataOutputQueue);
+	/*if (videoDataOutputQueue)
+		dispatch_release(videoDataOutputQueue);*/
 	[previewLayer removeFromSuperlayer];
     [[videoDataOutput connectionWithMediaType:AVMediaTypeVideo] setEnabled:NO];
 }
@@ -437,7 +437,7 @@ const int NEST_THRESHOLD = 240;
                     // Notify delegate
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if(delegate && [delegate respondsToSelector:@selector(didReceiveAlignInfo:)]) {
-                            [delegate didReceiveAlignInfo:[NSValue valueWithCGPoint:CGPointMake(SHRT_MAX, 0)]];
+                            [delegate didReceiveAlignInfo:[NSValue valueWithCGPoint:CGPointMake(FRONT_REZ_HOR / 2, 0)]];
                         }
                     });
                 }

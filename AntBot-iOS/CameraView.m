@@ -7,10 +7,12 @@
 //
 
 #import "CameraView.h"
+#import "MainController.h"
 
 @implementation CameraView
 
 @synthesize previewLayer;
+@synthesize delegate;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -25,6 +27,12 @@
     CALayer* layer = [self layer];
     [layer addSublayer:previewLayer];
     [previewLayer setFrame:[layer frame]];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    if([delegate respondsToSelector:@selector(swapView:)]) {
+        [delegate swapView:self];
+    }
 }
 
 @end

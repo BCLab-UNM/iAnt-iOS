@@ -12,5 +12,6 @@
 @interface CameraView : UIView
 
 @property (nonatomic) AVCaptureVideoPreviewLayer* previewLayer;
+@property id delegate;
 
 @end

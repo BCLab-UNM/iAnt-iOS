@@ -10,7 +10,7 @@
 #import "Camera.h"
 #import "Utilities.h"
 
-@class Forage, ImageRecognition, RouterCable, RouterServer, FiducialPipeline;
+@class Forage, ImageRecognition, RouterCable, RouterServer, FiducialPipeline, DebugView;
 
 // ForageState protocol
 @protocol ForageState
@@ -94,15 +94,22 @@ typedef NS_ENUM(NSInteger, RobotInformedStatus) {
 // Image Recognition Pipelines
 @property FiducialPipeline* fiducialPipeline;
 
+// Debug Data
+@property BOOL driveEnabled;
+@property BOOL turnEnabled;
+
 @property ImageRecognition* imageRecognition;
 @property RouterCable* cable;
 @property RouterServer* server;
 @property Camera* camera;
+@property DebugView* debug;
 
 @property (nonatomic) id<ForageState, NSObject> state;
 @property ForageStateDeparting* departing;
 @property ForageStateSearching* searching;
 @property ForageStateNeighbors* neighbors;
 @property ForageStateReturning* returning;
+
+@property NSMutableDictionary* distinctTags;
 
 @end

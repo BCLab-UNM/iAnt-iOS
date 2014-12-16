@@ -10,6 +10,7 @@
 
 #import "Camera.h"
 #import "CameraView.h"
+#import "DebugView.h"
 #import "Forage.h"
 #import "ImageRecognition.h"
 #import "MotionCapture.h"
@@ -24,18 +25,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [cameraView setDelegate:self];
+    [debugView setDelegate:self];
+    
     // Camera
     camera = [[Camera alloc] init];
     [camera setView:cameraView];
     
     // Communication
-    server = [[RouterServer alloc] initWithIP:@"64.106.39.136" port:2223];
+    //server = [[RouterServer alloc] initWithIP:@"192.168.1.10" port:2223];
     cable = [[RouterCable alloc] init];
     
     // Logic
     //motionCapture = [[MotionCapture alloc] initWithCable:cable server:server];
     forage = [[Forage alloc] initWithCable:cable server:server camera:camera];
     [[forage imageRecognition] setView:cameraView];
+    
+    [forage setDebug:debugView];
+    [debugView setForage:forage];
 }
 
 - (void)viewDidUnload {
@@ -46,6 +53,12 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)swapView:(UIView*)view {
+    UIView* newView = (view == cameraView) ? debugView : cameraView;
+    UIViewAnimationOptions transition = (view == cameraView) ? UIViewAnimationOptionTransitionCurlDown : UIViewAnimationOptionTransitionCurlUp;
+    [UIView transitionFromView:view toView:newView duration:.35f options:transition completion:^(BOOL finished){}];
 }
 
 @end

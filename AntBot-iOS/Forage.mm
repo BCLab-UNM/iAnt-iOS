@@ -10,6 +10,7 @@
 #import "RouterCable.h"
 #import "RouterServer.h"
 #import "ImageRecognition.h"
+#import "DebugView.h"
 
 #import "Camera.h"
 #import "FiducialPipeline.h"
@@ -89,6 +90,10 @@
 
 - (void)tag:(int)code {
     tags++;
+    [[forage distinctTags] setObject:[NSNumber numberWithBool:YES] forKey:[NSNumber numberWithInt:code]];
+    [[forage.debug data] setObject:[NSNumber numberWithInt:(int)[forage.distinctTags count]] forKey:@"unique"];
+    [[forage.debug data] setObject:[NSNumber numberWithInt:([[[forage.debug data] objectForKey:@"total"] intValue] + 1)] forKey:@"total"];
+    [[forage.debug table] reloadData];
 }
 @end
 
@@ -120,9 +125,11 @@
 @synthesize fenceRadius, searchStepSize, travelGiveUpProbability, searchGiveUpProbability;
 @synthesize uninformedSearchCorrelation, informedSearchCorrelationDecayRate;
 @synthesize pheromoneDecayRate, pheromoneLayingRate, siteFidelityRate;
+@synthesize driveEnabled, turnEnabled;
 @synthesize fiducialPipeline;
-@synthesize imageRecognition, cable, server, camera;
+@synthesize imageRecognition, cable, server, camera, debug;
 @synthesize state, departing, searching, neighbors, returning;
+@synthesize distinctTags;
 
 - (id)initWithCable:(RouterCable*)_cable server:(RouterServer*)_server camera:(Camera*)_camera {
     if(!(self = [super init])) {
@@ -149,9 +156,9 @@
     // Serial cable callbacks
     [cable handle:@"ready" callback:^(NSArray* data) {
         if(!startTime) {
-            self.state = departing;
+            self.state = searching;
             startTime = [NSDate date];
-            [server send:[Utilities getMacAddress]];
+            //[server send:[Utilities getMacAddress]];
         }
     }];
     
@@ -181,7 +188,6 @@
         if(localizing) {
             position = [Utilities pol2cart:Polar(result, heading)];
             localizing = NO;
-            [imageRecognition stop];
             CALL(localizeDone);
         }
         
@@ -213,21 +219,23 @@
     localizing = NO;
     
     // Behavior parameters
-    fenceRadius = 500;
+    fenceRadius = 200;
     searchStepSize = 8.15;
-    travelGiveUpProbability = 0.05;
-    searchGiveUpProbability = 0.01;
+    travelGiveUpProbability = 0.322792589664459;
+    searchGiveUpProbability = 0.000770092010498047;
     
     // Random walk parameters
-    uninformedSearchCorrelation = 0.3;
-    informedSearchCorrelationDecayRate = 0.3;
+    uninformedSearchCorrelation = 0.279912143945694;
+    informedSearchCorrelationDecayRate = 0.251652657985687;
     
     // Information parameters
-    siteFidelityRate = 4.0;
+    siteFidelityRate = 3.53300333023071;
     
     // Image recognition pipelines
     fiducialPipeline = [[FiducialPipeline alloc] init];
     [fiducialPipeline setDelegate:self];
+
+    distinctTags = [[NSMutableDictionary alloc] init];
     
     return self;
 }
@@ -246,6 +254,7 @@
  * "Library" methods
  */
 - (void)serverSend:(NSArray *)event {
+    return;
     int x = (int)roundf(position.x);
     int y = (int)roundf(position.y);
     NSString* message = [NSString stringWithFormat:@"%@,%d,%d,%d,", [Utilities getMacAddress], [self microseconds], x, y];
@@ -270,12 +279,31 @@
 
 - (void)turnTo:(float)target {
     heading = target;
+    
+    [[debug data] setObject:[NSNumber numberWithInt:heading] forKey:@"heading"];
+    [[debug table] reloadData];
+    
+    if(!turnEnabled) {
+        CALL(turnDone);
+        return;
+    }
+    
     [cable send:@"align,%f", heading];
 }
 
 - (void)drive:(float)distance {
-    [cable send:@"drive,%f", distance];
     position += [Utilities pol2cart:Polar(distance, heading)];
+    
+    [[debug data] setObject:[NSNumber numberWithInt:position.x] forKey:@"x"];
+    [[debug data] setObject:[NSNumber numberWithInt:position.y] forKey:@"y"];
+    [[debug table] reloadData];
+    
+    if(!driveEnabled) {
+        CALL(driveDone);
+        return;
+    }
+    
+    [cable send:@"drive,%f", distance];
 }
 
 - (void)turn:(float)degrees {
@@ -299,8 +327,10 @@
     
     // Fence bias
     if(distance > fenceRadius) {
-        float correction = [Utilities angleFrom:(heading + result) to:(heading - 180)];
-        result += [Utilities poissonCDF:(distance - fenceRadius) / 100.0f lambda:3] * correction;
+        //float correction = [Utilities angleFrom:(heading + result) to:(heading - 180)];
+        //result += [Utilities poissonCDF:(distance - fenceRadius) / 100.0f lambda:3] * correction;
+        Polar p = [Utilities cart2pol:position];
+        result = (p.theta + 180) - heading;
     }
     
     return result;
@@ -309,7 +339,7 @@
 - (Cartesian)destination {
     BOOL useSiteFidelity = [Utilities randomFloat] < [Utilities poissonCDF:lastNeighbors lambda:siteFidelityRate];
     BOOL usePheromone = true;
-    if(informedStatus == RobotInformedStatusPheromone && pheromone.x != INT_MAX && pheromone.y != INT_MAX && usePheromone) {
+    if(informedStatus == RobotInformedStatusPheromone && pheromone.x != 0 && pheromone.y != 0 && usePheromone) {
         return pheromone;
     }
     else if (informedStatus == RobotInformedStatusMemory && useSiteFidelity) {
@@ -336,9 +366,10 @@
         if(fabsf(offset.x) <= 1) {
             [cable send:@"motors,%d,%d", 0, 0];
             [cable send:@"compass"];
+            [imageRecognition stop];
         }
         else {
-            [cable send:@"motors,%d,%d,%d", (int)offset.x, (int)offset.y, MAX(fabsf(offset.x), 5)];
+            [cable send:@"motors,%d,%d,%d", (int)offset.x, (int)offset.y, MIN(MAX((int)fabsf(offset.x), 5), 150)];
         }
     }
     
@@ -347,7 +378,10 @@
 
 - (void)pipeline:(id)pipeline didProcessFrame:(NSNumber*)result {
     if([pipeline isMemberOfClass:[FiducialPipeline class]]) {
-        CALL(tag, [result intValue]);
+        //[server send:[NSString stringWithFormat:@"%@,%@", [Utilities getMacAddress], [result stringValue], nil]];
+        //lastTagLocation = position;
+        tag = [result intValue];
+        CALL(tag, tag);
     }
 }
 

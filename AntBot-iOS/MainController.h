@@ -6,12 +6,13 @@
 //  Moses Lab, Department of Computer Science, University of New Mexico
 //
 
-@class Camera, CameraView, Forage, MotionCapture, RouterCable, RouterServer;
+@class Camera, CameraView, DebugView, Forage, MotionCapture, RouterCable, RouterServer;
 
 @interface MainController : UIViewController {
     
     Camera* camera;
     IBOutlet CameraView* cameraView;
+    IBOutlet DebugView* debugView;
     Forage* forage;
     MotionCapture* motionCapture;
     RouterCable* cable;
@@ -22,6 +23,11 @@
     bool mocapMonitor;
     
     NSString* evolvedParameters;
+    
+    UIView* frontView;
+    UIView* backView;
 }
+
+- (void)swapView:(UIView*)view;
 
 @end
