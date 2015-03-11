@@ -139,6 +139,9 @@
     cable = _cable;
     server = _server;
     camera = _camera;
+    
+    driveEnabled =
+    turnEnabled = YES;
 
     imageRecognition = [[ImageRecognition alloc] init];
     [imageRecognition setDelegate:self];
@@ -284,6 +287,7 @@
     [[debug table] reloadData];
     
     if(!turnEnabled) {
+        NSLog(@"NOT HERE!");
         CALL(turnDone);
         return;
     }
