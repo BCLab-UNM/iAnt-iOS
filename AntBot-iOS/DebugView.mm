@@ -23,9 +23,6 @@
         labels = [[NSArray alloc] initWithObjects: @"x", @"y", @"heading", nil];
         data = [[NSMutableDictionary alloc] init];
         [data setObject:[NSNumber numberWithInt:0] forKey:@"total"];
-        
-        [driveSwitch addTarget:self action:@selector(driveToggle:) forControlEvents:UIControlEventValueChanged];
-        [turnSwitch addTarget:self action:@selector(turnToggle:) forControlEvents:UIControlEventValueChanged];
     }
     return self;
 }
@@ -57,11 +54,13 @@
     return cell;
 }
 
-- (void)driveToggle:(id)sender {
+
+//Recognize when switches are triggered and copy the result to Forage
+- (IBAction)driveToggle:(id)sender {
     [[self forage] setDriveEnabled:[sender isOn]];
 }
 
-- (void)turnToggle:(id)sender {
+- (IBAction)turnToggle:(id)sender {
     [[self forage] setTurnEnabled:[sender isOn]];
 }
 

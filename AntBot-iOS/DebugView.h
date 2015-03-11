@@ -20,4 +20,7 @@
 @property NSArray* labels;
 @property NSMutableDictionary* data;
 
+- (IBAction)driveToggle:(id)sender;
+- (IBAction)turnToggle:(id)sender;
+
 @end
