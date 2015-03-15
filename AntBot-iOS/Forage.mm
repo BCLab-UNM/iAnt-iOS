@@ -59,6 +59,8 @@
 }
 
 - (void)tag:(int)code {
+    [forage setLastTagLocation:[forage position]];
+    [forage setTag:code];
     [forage setState:[forage neighbors]];
 }
 @end
@@ -161,13 +163,11 @@
         if(!startTime) {
             self.state = searching;
             startTime = [NSDate date];
-            //[server send:[Utilities getMacAddress]];
         }
     }];
     
     [cable handle:@"drive" callback:^(NSArray* data) {
         CALL(driveDone);
-        [self serverSend:nil];
     }];
     
     [cable handle:@"align" callback:^(NSArray* data) {
@@ -198,17 +198,25 @@
     }];
     
     // Server callbacks
+    [server handle:@"parameters" callback:^(NSArray* data) {
+        if ([data count] == 5) {
+            travelGiveUpProbability = [[data objectAtIndex:0] floatValue];
+            searchGiveUpProbability = [[data objectAtIndex:1] floatValue];
+            uninformedSearchCorrelation = [[data objectAtIndex:2] floatValue];
+            informedSearchCorrelationDecayRate = [[data objectAtIndex:3] floatValue];
+            siteFidelityRate = [[data objectAtIndex:4] floatValue];
+        }
+    }];
+    
     [server handle:@"pheromone" callback:^(NSArray* data) {
         pheromone = Cartesian([[data objectAtIndex:0] floatValue], [[data objectAtIndex:1] floatValue]);
         CALL(pheromone);
     }];
     
     [server handle:@"tag" callback:^(NSArray* data) {
-        if([[data objectAtIndex:0] isEqualToString:@"new"]) {
-            CALL(tag, tag);
+        if([[data objectAtIndex:1] isEqualToString:@"new"]) {
+            CALL(tag, [[data objectAtIndex:0] intValue]);
         }
-        
-        tag = -1;
     }];
 
     // State data
@@ -221,6 +229,9 @@
     pheromone = Cartesian(INFINITY, INFINITY);
     localizing = NO;
     
+    /**
+     * Default parameter settings
+     **/
     // Behavior parameters
     fenceRadius = 200;
     searchStepSize = 8.15;
@@ -257,7 +268,6 @@
  * "Library" methods
  */
 - (void)serverSend:(NSArray *)event {
-    return;
     int x = (int)roundf(position.x);
     int y = (int)roundf(position.y);
     NSString* message = [NSString stringWithFormat:@"%@,%d,%d,%d,", [Utilities getMacAddress], [self microseconds], x, y];
@@ -286,12 +296,6 @@
     [[debug data] setObject:[NSNumber numberWithInt:heading] forKey:@"heading"];
     [[debug table] reloadData];
     
-    if(!turnEnabled) {
-        NSLog(@"NOT HERE!");
-        CALL(turnDone);
-        return;
-    }
-    
     [cable send:@"align,%f", heading];
 }
 
@@ -302,11 +306,7 @@
     [[debug data] setObject:[NSNumber numberWithInt:position.y] forKey:@"y"];
     [[debug table] reloadData];
     
-    if(!driveEnabled) {
-        CALL(driveDone);
-        return;
-    }
-    
+    [self serverSend:nil];
     [cable send:@"drive,%f", distance];
 }
 
@@ -382,10 +382,7 @@
 
 - (void)pipeline:(id)pipeline didProcessFrame:(NSNumber*)result {
     if([pipeline isMemberOfClass:[FiducialPipeline class]]) {
-        //[server send:[NSString stringWithFormat:@"%@,%@", [Utilities getMacAddress], [result stringValue], nil]];
-        //lastTagLocation = position;
-        tag = [result intValue];
-        CALL(tag, tag);
+        [server send:[NSString stringWithFormat:@"%@,%@", [Utilities getMacAddress], [result stringValue], nil]];
     }
 }
 
