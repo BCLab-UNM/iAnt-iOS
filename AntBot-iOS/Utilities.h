@@ -11,6 +11,7 @@
 
 @interface Utilities : NSObject
 
+#ifdef __cplusplus
 struct Cartesian {
     Cartesian(){}
     Cartesian(float a, float b):x(a),y(b){}
@@ -53,6 +54,7 @@ struct Polar {
 + (float)randomFloat;
 + (float)randomFloat:(float)x;
 + (float)randomWithMean:(float)m standardDeviation:(float)s;
+#endif
 
 + (NSString*)getMacAddress;
 
