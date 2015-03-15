@@ -33,7 +33,7 @@
     [camera setView:cameraView];
     
     // Communication
-    //server = [[RouterServer alloc] initWithIP:@"192.168.1.10" port:2223];
+    server = [[RouterServer alloc] init];
     cable = [[RouterCable alloc] init];
     
     // Logic
