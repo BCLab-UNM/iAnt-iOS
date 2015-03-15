@@ -65,7 +65,7 @@
     
     int fid;
     for(int i = 0; i < fidCount; i++) {
-        if((fid = fiducials[i].id) != lastId) {
+        if(((fid = fiducials[i].id) != lastId) && (fid > 0)) {
             if([delegate respondsToSelector:@selector(pipeline:didProcessFrame:)]) {
                 dispatch_async(dispatch_get_main_queue(), ^ {
                     [delegate pipeline:self didProcessFrame:[NSNumber numberWithInt:fid]];
