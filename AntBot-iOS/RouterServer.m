@@ -8,51 +8,51 @@
 
 #import "RouterServer.h"
 
-const NSString* sessionID = @"Colony";
 const int MAX_RX_BUFFER_SIZE = 100;
+NSString*  const sessionID = @"Colony";
+NSString* const netServiceType = @"_abs._tcp.";
 
 @implementation RouterServer
 
 - (id)init {
     if (self = [super init]) {
-        bluetoothSession = [[GKSession alloc] initWithSessionID:@"Colony" displayName:nil sessionMode:GKSessionModePeer];
+        bluetoothSession = [[GKSession alloc] initWithSessionID:sessionID displayName:nil sessionMode:GKSessionModePeer];
         [bluetoothSession setDelegate:self];
         [bluetoothSession setAvailable:YES];
+        
+        browser = [[NSNetServiceBrowser alloc] init];
+        [browser setDelegate:self];
+        [browser searchForServicesOfType:netServiceType inDomain:@""];
+        
+        txBuffer = [[NSMutableArray alloc] init];
+        isConnected = NO;
+        [self send:[Utilities getMacAddress]];
     }
     
     return self;
 }
 
-- (id) initWithIP:(NSString*)ip port:(int)port {
-    self = [self init];
-    
-    if(self) {
-        [self connectTo:ip onPort:port];
-        return self;
-    }
-    
-    return nil;
-}
-
 - (void)send:(NSString*)format, ... {
-    //if([outputStream streamStatus] == NSStreamStatusOpen) {
-        va_list args;
-        va_start(args, format);
-        NSString* message = [[NSString alloc] initWithFormat:format arguments:args];
-        va_end(args);
-        if(![message hasSuffix:@"\n"]) {
-            message = [message stringByAppendingString:@"\n"];
-        }
-        NSData *data = [[NSData alloc] initWithData:[message dataUsingEncoding:NSASCIIStringEncoding]];
+    va_list args;
+    va_start(args, format);
+    NSString* message = [[NSString alloc] initWithFormat:format arguments:args];
+    va_end(args);
+    if(![message hasSuffix:@"\n"]) {
+        message = [message stringByAppendingString:@"\n"];
+    }
+    NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
+    [txBuffer addObject:data];
+    
+    while (isConnected && ([txBuffer count] > 0)) {
+        data = [txBuffer firstObject];
+        [txBuffer removeObjectAtIndex:0];
         [outputStream write:[data bytes] maxLength:[data length]];
-    //}
+    }
 }
 
 - (void)connectTo:(NSString*)server onPort:(int)number {
     //Ensure lower level BSD streams are closed whenever the connection is closed
-    //CFReadStreamSetProperty(readStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue);
-    //CFWriteStreamSetProperty(writeStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue);
-    
+   
     //Inititate socket connection with remote host
     CFStreamCreatePairWithSocketToHost(NULL,(__bridge CFStringRef)server,number,&readStream,&writeStream);
     
@@ -103,6 +103,7 @@ const int MAX_RX_BUFFER_SIZE = 100;
         //If remote host closes the connection, close stream on this end and remove from schedule
 		case NSStreamEventEndEncountered:
             NSLog(@"Connection to server closed");
+            isConnected = NO;
 			break;
             
         //If remote host has sent data, read everything into a buffer
@@ -123,9 +124,32 @@ const int MAX_RX_BUFFER_SIZE = 100;
             }
             break;
         
-        case NSStreamEventHasSpaceAvailable: case NSStreamEventNone:
+        //If remote host available for writing, set flag
+        case NSStreamEventHasSpaceAvailable:
+            isConnected = YES;
+            break;
+            
+        case NSStreamEventNone:
             break;
 	}
+}
+
+
+#pragma mark - NSNetService(Browser)Delegate methods
+
+- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
+    remote = aNetService;
+    [aNetService setDelegate:self];
+    [aNetService resolveWithTimeout:0];
+}
+
+- (void)netServiceDidResolveAddress:(NSNetService *)sender {
+    NSData* address = [[sender addresses] objectAtIndex:0];
+    struct sockaddr_in *socketAddress = (struct sockaddr_in *) [address bytes];
+    
+    NSString *ip = [NSString stringWithFormat: @"%s",inet_ntoa(socketAddress->sin_addr)];
+    int port = ntohs(socketAddress->sin_port);
+    [self connectTo:ip onPort:port];
 }
 
 
