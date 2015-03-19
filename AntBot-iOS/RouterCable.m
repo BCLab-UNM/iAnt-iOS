@@ -47,7 +47,7 @@
 }
 
 - (void)cableConnected:(NSString *)protocol {
-    [rscMgr setBaud:9600];
+    [rscMgr setBaud:57600];
 	[rscMgr open];
     [self send:@"ready"];
 }
