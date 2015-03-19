@@ -15,6 +15,12 @@
 struct Cartesian {
     Cartesian(){}
     Cartesian(float a, float b):x(a),y(b){}
+    bool operator==(const Cartesian other) {
+        return ((x == other.x) && (y == other.y));
+    }
+    bool operator!=(const Cartesian other) {
+        return ((x != other.x) || (y != other.y));
+    }
     Cartesian operator+=(const Cartesian other) {
         x += other.x;
         y += other.y;
