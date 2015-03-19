@@ -10,6 +10,8 @@
 #import "Camera.h"
 #import "Utilities.h"
 
+static const Cartesian NullPoint = Cartesian(INFINITY, INFINITY);
+
 @class Forage, ImageRecognition, RouterCable, RouterServer, FiducialPipeline, DebugView;
 
 // ForageState protocol
@@ -30,7 +32,10 @@
 @end
 
 // Forage States
-@interface ForageStateDeparting : NSObject <ForageState> @end
+@interface ForageStateDeparting : NSObject <ForageState> {
+    Polar path;
+}
+@end
 @interface ForageStateSearching : NSObject <ForageState> {
     int searchTime;
 }
@@ -40,7 +45,10 @@
     int tags;
 }
 @end
-@interface ForageStateReturning : NSObject <ForageState> @end
+@interface ForageStateReturning : NSObject <ForageState> {
+    Polar path;
+}
+@end
 
 // Informed Enum
 typedef NS_ENUM(NSInteger, RobotInformedStatus) {
@@ -58,13 +66,11 @@ typedef NS_ENUM(NSInteger, RobotInformedStatus) {
 - (unsigned)microseconds;
 - (void)serverSend:(NSArray*)event;
 - (void)localize;
-- (void)driveTo:(Cartesian)position;
-- (void)turnTo:(float)heading;
 - (void)drive:(float)distance;
 - (void)turn:(float)degrees;
 - (void)delay:(float)seconds;
 - (float)dTheta:(int)searchTime;
-- (Cartesian)destination;
+- (Cartesian)nextDestination;
 
 // State data
 @property Cartesian position;

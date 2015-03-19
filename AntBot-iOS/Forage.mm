@@ -30,7 +30,13 @@
 }
 
 - (void)localizeDone {
-    [forage driveTo:[forage destination]];
+    [forage serverSend:nil];
+    path = [Utilities cart2pol:([forage nextDestination] - [forage position])];
+    [forage turn:path.theta];
+}
+
+- (void)turnDone {
+    [forage drive:path.r];
 }
 
 - (void)driveDone {
@@ -78,11 +84,11 @@
 
 - (void)turnDone {
     if(++turns >= 36) {
-        [forage setState:[forage returning]];
         NSNumber* tag = [NSNumber numberWithInt:[forage tag]];
         NSNumber* neighbors = [NSNumber numberWithInt:tags];
         [forage serverSend:[NSArray arrayWithObjects:@"tag", tag, neighbors, nil]];
         [forage setLastNeighbors:tags];
+        [forage setState:[forage returning]];
     }
     else {
         [forage delay:.2f];
@@ -108,7 +114,12 @@
 }
 
 - (void)localizeDone {
-    [forage driveTo:Cartesian(0, 0)];
+    path = [Utilities cart2pol:(Cartesian(0,0) - [forage position])];
+    [forage turn:path.theta];
+}
+
+- (void)turnDone {
+    [forage drive:path.r];
 }
 
 - (void)driveDone {
@@ -161,7 +172,7 @@
     // Serial cable callbacks
     [cable handle:@"ready" callback:^(NSArray* data) {
         if(!startTime) {
-            self.state = searching;
+            self.state = departing;
             startTime = [NSDate date];
         }
     }];
@@ -209,7 +220,12 @@
     }];
     
     [server handle:@"pheromone" callback:^(NSArray* data) {
-        pheromone = Cartesian([[data objectAtIndex:0] floatValue], [[data objectAtIndex:1] floatValue]);
+        if ([data count] > 0) {
+            pheromone = Cartesian([[data objectAtIndex:0] floatValue], [[data objectAtIndex:1] floatValue]);
+        }
+        else {
+            pheromone = NullPoint;
+        }
         CALL(pheromone);
     }];
     
@@ -225,8 +241,8 @@
     informedStatus = RobotInformedStatusNone;
     tag = -1;
     lastNeighbors = 0;
-    lastTagLocation = Cartesian(INFINITY, INFINITY);
-    pheromone = Cartesian(INFINITY, INFINITY);
+    lastTagLocation = NullPoint;
+    pheromone = NullPoint;
     localizing = NO;
     
     /**
@@ -284,14 +300,8 @@
     [imageRecognition startWithTarget:ImageRecognitionTargetNest];
 }
 
-- (void)driveTo:(Cartesian)destination {
-    Polar pol = [Utilities cart2pol:(destination - position)];
-    [self turnTo:pol.theta];
-    [self drive:pol.r];
-}
-
-- (void)turnTo:(float)target {
-    heading = target;
+- (void)turn:(float)degrees {
+    heading = heading + degrees;
     
     [[debug data] setObject:[NSNumber numberWithInt:heading] forKey:@"heading"];
     [[debug table] reloadData];
@@ -308,10 +318,6 @@
     
     [self serverSend:nil];
     [cable send:@"drive,%f", distance];
-}
-
-- (void)turn:(float)degrees {
-    [self turnTo:(heading + degrees)];
 }
 
 - (void)delay:(float)seconds {
@@ -340,14 +346,15 @@
     return result;
 }
 
-- (Cartesian)destination {
+- (Cartesian)nextDestination {
     BOOL useSiteFidelity = [Utilities randomFloat] < [Utilities poissonCDF:lastNeighbors lambda:siteFidelityRate];
-    BOOL usePheromone = true;
-    if(informedStatus == RobotInformedStatusPheromone && pheromone.x != 0 && pheromone.y != 0 && usePheromone) {
-        return pheromone;
-    }
-    else if (informedStatus == RobotInformedStatusMemory && useSiteFidelity) {
+    if ((lastTagLocation != NullPoint) && useSiteFidelity) {
+        informedStatus = RobotInformedStatusMemory;
         return lastTagLocation;
+    }
+    else if ((lastTagLocation != NullPoint) && !useSiteFidelity) {
+        informedStatus = RobotInformedStatusPheromone;
+        return pheromone;
     }
     else {
         float distance = 0;
@@ -357,6 +364,7 @@
             }
         }
         
+        informedStatus = RobotInformedStatusNone;
         return [Utilities pol2cart:Polar(distance, [Utilities randomFloat:360])];
     }
 }
@@ -368,7 +376,7 @@
     CGPoint offset = [info CGPointValue];
     if(localizing) {
         if(fabsf(offset.x) <= 1) {
-            [cable send:@"motors,%d,%d", 0, 0];
+            [cable send:@"motors,%d,%d,%d", 0, 0, 0];
             [cable send:@"compass"];
             [imageRecognition stop];
         }
