@@ -46,7 +46,7 @@
 }
 
 - (void)viewDidUnload {
-    [[forage cable] send:@"motors,0,0"];
+    [[forage cable] send:@"motors,0,0,0"];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewDidUnload];
 }
