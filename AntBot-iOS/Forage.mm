@@ -55,8 +55,13 @@
 }
 
 - (void)turnDone {
-    [forage delay:.02f];
-    [forage drive:[forage searchStepSize]];
+    if ([Utilities randomFloat] < [forage searchGiveUpProbability]) {
+        [forage setState:[forage returning]];
+    }
+    else {
+        [forage delay:.02f];
+        [forage drive:[forage searchStepSize]];
+    }
 }
 
 - (void)driveDone {
