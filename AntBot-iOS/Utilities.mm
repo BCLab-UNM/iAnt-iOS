@@ -76,7 +76,7 @@
 + (Cartesian)pol2cart:(Polar)pol {
 	if ((pol.theta == 90.0) || (pol.theta == 270.0))
 		return (Cartesian(0,pol.r*sin([self deg2rad:pol.theta])));
-	else if ((pol.theta == 90.0) || (pol.theta == 270.0))
+	else if ((pol.theta == 0.0) || (pol.theta == 180.0))
 		return (Cartesian(pol.r*cos([self deg2rad:pol.theta]),0));
 	else
 		return (Cartesian(pol.r*cos([self deg2rad:pol.theta]),pol.r*sin([self deg2rad:pol.theta])));
