@@ -32,7 +32,7 @@
 - (void)localizeDone {
     [forage serverSend:nil];
     path = [Utilities cart2pol:([forage nextDestination] - [forage position])];
-    [forage turn:path.theta];
+    [forage turnTo:path.theta];
 }
 
 - (void)turnDone {
@@ -87,13 +87,17 @@
     [forage turn:10];
 }
 
+- (void)tag:(int)code {
+    tags++;
+    [[forage distinctTags] setObject:[NSNumber numberWithBool:YES] forKey:[NSNumber numberWithInt:code]];
+    [[forage.debug data] setObject:[NSNumber numberWithInt:(int)[forage.distinctTags count]] forKey:@"unique"];
+    [[forage.debug data] setObject:[NSNumber numberWithInt:([[[forage.debug data] objectForKey:@"total"] intValue] + 1)] forKey:@"total"];
+    [[forage.debug table] reloadData];
+}
+
 - (void)turnDone {
     if(++turns >= 36) {
-        NSNumber* tag = [NSNumber numberWithInt:[forage tag]];
-        NSNumber* neighbors = [NSNumber numberWithInt:tags];
-        [forage serverSend:[NSArray arrayWithObjects:@"tag", tag, neighbors, nil]];
-        [forage setLastNeighbors:tags];
-        [forage setState:[forage returning]];
+        [forage localize];
     }
     else {
         [forage delay:.2f];
@@ -101,12 +105,12 @@
     }
 }
 
-- (void)tag:(int)code {
-    tags++;
-    [[forage distinctTags] setObject:[NSNumber numberWithBool:YES] forKey:[NSNumber numberWithInt:code]];
-    [[forage.debug data] setObject:[NSNumber numberWithInt:(int)[forage.distinctTags count]] forKey:@"unique"];
-    [[forage.debug data] setObject:[NSNumber numberWithInt:([[[forage.debug data] objectForKey:@"total"] intValue] + 1)] forKey:@"total"];
-    [[forage.debug table] reloadData];
+- (void)localizeDone {
+    NSNumber* tag = [NSNumber numberWithInt:[forage tag]];
+    NSNumber* neighbors = [NSNumber numberWithInt:tags];
+    [forage serverSend:[NSArray arrayWithObjects:@"tag", tag, neighbors, nil]];
+    [forage setLastNeighbors:tags];
+    [forage setState:[forage returning]];
 }
 @end
 
@@ -120,7 +124,7 @@
 
 - (void)localizeDone {
     path = [Utilities cart2pol:(Cartesian(0,0) - [forage position])];
-    [forage turn:path.theta];
+    [forage turnTo:path.theta];
 }
 
 - (void)turnDone {
@@ -205,7 +209,7 @@
         float result = [[data objectAtIndex:0] floatValue];
         
         if(localizing) {
-            position = [Utilities pol2cart:Polar(result, heading)];
+            position = Cartesian(0, 0) - [Utilities pol2cart:Polar(result, heading)];
             localizing = NO;
             CALL(localizeDone);
         }
@@ -306,7 +310,11 @@
 }
 
 - (void)turn:(float)degrees {
-    heading = heading + degrees;
+    [self turnTo:(heading + degrees)];
+}
+
+- (void)turnTo:(float)trajectory {
+    heading = trajectory;
     
     [[debug data] setObject:[NSNumber numberWithInt:heading] forKey:@"heading"];
     [[debug table] reloadData];
@@ -342,8 +350,6 @@
     
     // Fence bias
     if(distance > fenceRadius) {
-        //float correction = [Utilities angleFrom:(heading + result) to:(heading - 180)];
-        //result += [Utilities poissonCDF:(distance - fenceRadius) / 100.0f lambda:3] * correction;
         Polar p = [Utilities cart2pol:position];
         result = (p.theta + 180) - heading;
     }

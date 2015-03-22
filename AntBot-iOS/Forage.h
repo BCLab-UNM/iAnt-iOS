@@ -68,6 +68,7 @@ typedef NS_ENUM(NSInteger, RobotInformedStatus) {
 - (void)localize;
 - (void)drive:(float)distance;
 - (void)turn:(float)degrees;
+- (void)turnTo:(float)trajectory;
 - (void)delay:(float)seconds;
 - (float)dTheta:(int)searchTime;
 - (Cartesian)nextDestination;
