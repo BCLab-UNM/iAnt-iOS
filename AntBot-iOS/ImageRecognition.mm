@@ -403,9 +403,9 @@ const int NEST_THRESHOLD = 240;
                         //Update estimate of distance from nest
                         nestDistance = 1481 * pow([meanCenter getArea], -0.5127) - 50;
                         
-                        // Notify delegate
+                        // Notify delegate, assuming session is currently running
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            if(delegate && [delegate respondsToSelector:@selector(didReceiveAlignInfo:)]) {
+                            if([session isRunning] && delegate && [delegate respondsToSelector:@selector(didReceiveAlignInfo:)]) {
                                 [delegate didReceiveAlignInfo:[NSValue valueWithCGPoint:CGPointMake(FRONT_REZ_HOR / 2 - [meanCenter getX], 0)]];
                             }
                         });
@@ -415,9 +415,9 @@ const int NEST_THRESHOLD = 240;
                         data[0] = -(BACK_REZ_HOR/2 - [meanCenter getX]);
                         data[1] = BACK_REZ_VERT/2 - [meanCenter getY];
                         
-                        // Notify delegate
+                        // Notify delegate, assuming session is currently running
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            if(delegate && [delegate respondsToSelector:@selector(didReceiveAlignInfo:)]) {
+                            if([session isRunning] && delegate && [delegate respondsToSelector:@selector(didReceiveAlignInfo:)]) {
                                 [delegate didReceiveAlignInfo:[NSValue valueWithCGPoint:CGPointMake(-(BACK_REZ_HOR/2 - [meanCenter getX]), BACK_REZ_VERT/2 - [meanCenter getY])]];
                             }
                         });
