@@ -70,7 +70,6 @@
 }
 
 - (void)tag:(int)code {
-    [forage setLastTagLocation:[forage position]];
     [forage setTag:code];
     [forage setState:[forage neighbors]];
 }
@@ -109,6 +108,7 @@
     NSNumber* tag = [NSNumber numberWithInt:[forage tag]];
     NSNumber* neighbors = [NSNumber numberWithInt:tags];
     [forage serverSend:[NSArray arrayWithObjects:@"tag", tag, neighbors, nil]];
+    [forage setLastTagLocation:[forage position]];
     [forage setLastNeighbors:tags];
     [forage setState:[forage returning]];
 }
