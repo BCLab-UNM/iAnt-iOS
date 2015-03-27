@@ -42,7 +42,6 @@ static const Cartesian NullPoint = Cartesian(INFINITY, INFINITY);
 @end
 @interface ForageStateNeighbors : NSObject <ForageState> {
     int turns;
-    int tags;
 }
 @end
 @interface ForageStateReturning : NSObject <ForageState> {
@@ -78,14 +77,18 @@ typedef NS_ENUM(NSInteger, RobotInformedStatus) {
 @property float heading;
 @property RobotInformedStatus informedStatus;
 @property int tag;
-@property int lastNeighbors;
 @property Cartesian lastTagLocation;
 @property Cartesian pheromone;
 @property BOOL localizing;
 
-// Behavior Parameters
+// Physical Constraints
 @property float fenceRadius;
 @property float searchStepSize;
+@property float nestRadius;
+@property float robotRadius;
+@property float collisionDistance;
+
+// Behavior Parameters
 @property float travelGiveUpProbability;
 @property float searchGiveUpProbability;
 
@@ -117,6 +120,6 @@ typedef NS_ENUM(NSInteger, RobotInformedStatus) {
 @property ForageStateNeighbors* neighbors;
 @property ForageStateReturning* returning;
 
-@property NSMutableDictionary* distinctTags;
+@property NSMutableSet* distinctTags;
 
 @end

@@ -81,14 +81,13 @@
 
 - (void)enter:(id<ForageState>)previous {
     turns = 0;
-    tags = 1;
+    [forage setDistinctTags:[[NSMutableSet alloc] init]];
     [[forage camera] startPipeline:[forage fiducialPipeline]];
     [forage turn:10];
 }
 
 - (void)tag:(int)code {
-    tags++;
-    [[forage distinctTags] setObject:[NSNumber numberWithBool:YES] forKey:[NSNumber numberWithInt:code]];
+    [[forage distinctTags] addObject:[NSNumber numberWithInt:code]];
     [[forage.debug data] setObject:[NSNumber numberWithInt:(int)[forage.distinctTags count]] forKey:@"unique"];
     [[forage.debug data] setObject:[NSNumber numberWithInt:([[[forage.debug data] objectForKey:@"total"] intValue] + 1)] forKey:@"total"];
     [[forage.debug table] reloadData];
@@ -106,10 +105,9 @@
 
 - (void)localizeDone {
     NSNumber* tag = [NSNumber numberWithInt:[forage tag]];
-    NSNumber* neighbors = [NSNumber numberWithInt:tags];
+    NSNumber* neighbors = [NSNumber numberWithInteger:[[forage distinctTags] count]];
     [forage serverSend:[NSArray arrayWithObjects:@"tag", tag, neighbors, nil]];
     [forage setLastTagLocation:[forage position]];
-    [forage setLastNeighbors:tags];
     [forage setState:[forage returning]];
 }
 @end
@@ -123,12 +121,9 @@
 }
 
 - (void)localizeDone {
-    path = [Utilities cart2pol:(Cartesian(0,0) - [forage position])];
+    float theta = [Utilities cart2pol:[forage position]].theta;
+    path = [Utilities cart2pol:(Cartesian([forage nestRadius] + ([forage collisionDistance] * 2), theta) - [forage position])];
     [forage turnTo:path.theta];
-}
-
-- (void)turnDone {
-    [forage drive:path.r];
 }
 
 - (void)driveDone {
@@ -143,8 +138,9 @@
 // "Controller"
 @implementation Forage
 
-@synthesize position, heading, informedStatus, tag, lastNeighbors, lastTagLocation, pheromone, localizing;
-@synthesize fenceRadius, searchStepSize, travelGiveUpProbability, searchGiveUpProbability;
+@synthesize position, heading, informedStatus, tag, lastTagLocation, pheromone, localizing;
+@synthesize fenceRadius, searchStepSize, nestRadius, robotRadius, collisionDistance;
+@synthesize travelGiveUpProbability, searchGiveUpProbability;
 @synthesize uninformedSearchCorrelation, informedSearchCorrelationDecayRate;
 @synthesize pheromoneDecayRate, pheromoneLayingRate, siteFidelityRate;
 @synthesize driveEnabled, turnEnabled;
@@ -210,6 +206,7 @@
         
         if(localizing) {
             position = Cartesian(0, 0) - [Utilities pol2cart:Polar(result, heading)];
+            position += [Utilities pol2cart:Polar(nestRadius, heading)] + [Utilities pol2cart:Polar(robotRadius, heading)];
             localizing = NO;
             CALL(localizeDone);
         }
@@ -249,17 +246,21 @@
     heading = 0;
     informedStatus = RobotInformedStatusNone;
     tag = -1;
-    lastNeighbors = 0;
     lastTagLocation = NullPoint;
     pheromone = NullPoint;
     localizing = NO;
+    
+    // Physical constraints
+    fenceRadius = 500;
+    searchStepSize = 8.15;
+    nestRadius = 8.0;
+    robotRadius = 10.5;
+    collisionDistance = 30;
     
     /**
      * Default parameter settings
      **/
     // Behavior parameters
-    fenceRadius = 200;
-    searchStepSize = 8.15;
     travelGiveUpProbability = 0.322792589664459;
     searchGiveUpProbability = 0.000770092010498047;
     
@@ -273,8 +274,6 @@
     // Image recognition pipelines
     fiducialPipeline = [[FiducialPipeline alloc] init];
     [fiducialPipeline setDelegate:self];
-
-    distinctTags = [[NSMutableDictionary alloc] init];
     
     return self;
 }
@@ -358,7 +357,8 @@
 }
 
 - (Cartesian)nextDestination {
-    BOOL useSiteFidelity = [Utilities randomFloat] < [Utilities poissonCDF:lastNeighbors lambda:siteFidelityRate];
+    int neighborCount = (int)[[self distinctTags] count];
+    BOOL useSiteFidelity = [Utilities randomFloat] < [Utilities poissonCDF:neighborCount lambda:siteFidelityRate];
     if ((lastTagLocation != NullPoint) && useSiteFidelity) {
         informedStatus = RobotInformedStatusMemory;
         return lastTagLocation;
