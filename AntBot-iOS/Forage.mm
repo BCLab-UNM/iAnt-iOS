@@ -71,6 +71,8 @@
 
 - (void)tag:(int)code {
     [forage setTag:code];
+    [forage setDistinctTags:[[NSMutableSet alloc] init]];
+    [[forage distinctTags] addObject:[NSNumber numberWithInt:code]];
     [forage setState:[forage neighbors]];
 }
 @end
@@ -81,7 +83,6 @@
 
 - (void)enter:(id<ForageState>)previous {
     turns = 0;
-    [forage setDistinctTags:[[NSMutableSet alloc] init]];
     [[forage camera] startPipeline:[forage fiducialPipeline]];
     [forage turn:10];
 }
@@ -121,9 +122,13 @@
 }
 
 - (void)localizeDone {
-    float theta = [Utilities cart2pol:[forage position]].theta;
-    path = [Utilities cart2pol:(Cartesian([forage nestRadius] + ([forage collisionDistance] * 2), theta) - [forage position])];
+    Cartesian dropDestination = [Utilities pol2cart:Polar([forage nestRadius] + ([forage collisionDistance] * 2), [Utilities cart2pol:[forage position]].theta)];
+    path = [Utilities cart2pol:(dropDestination - [forage position])];
     [forage turnTo:path.theta];
+}
+
+- (void)turnDone {
+    [forage drive:path.r];
 }
 
 - (void)driveDone {
@@ -138,7 +143,7 @@
 // "Controller"
 @implementation Forage
 
-@synthesize position, heading, informedStatus, tag, lastTagLocation, pheromone, localizing;
+@synthesize position, heading, informedStatus, tag, lastTagLocation, pheromone, localizing, nestCentered;
 @synthesize fenceRadius, searchStepSize, nestRadius, robotRadius, collisionDistance;
 @synthesize travelGiveUpProbability, searchGiveUpProbability;
 @synthesize uninformedSearchCorrelation, informedSearchCorrelationDecayRate;
@@ -202,16 +207,18 @@
     }];
     
     [cable handle:@"ultrasound" callback:^(NSArray* data) {
-        float result = [[data objectAtIndex:0] floatValue];
+        float distance = [[data objectAtIndex:0] floatValue];
         
         if(localizing) {
-            position = Cartesian(0, 0) - [Utilities pol2cart:Polar(result, heading)];
-            position += [Utilities pol2cart:Polar(nestRadius, heading)] + [Utilities pol2cart:Polar(robotRadius, heading)];
+            position = Cartesian(0, 0) - [Utilities pol2cart:Polar(distance, heading)];
+            float theta = [Utilities cart2pol:position].theta;
+            position += [Utilities pol2cart:Polar(nestRadius, theta)] + [Utilities pol2cart:Polar(robotRadius, theta)];
             localizing = NO;
+            nestCentered = NO;
             CALL(localizeDone);
         }
         
-        CALL(ultrasound, result);
+        CALL(ultrasound, distance);
     }];
     
     // Server callbacks
@@ -249,6 +256,7 @@
     lastTagLocation = NullPoint;
     pheromone = NullPoint;
     localizing = NO;
+    nestCentered = NO;
     
     // Physical constraints
     fenceRadius = 500;
@@ -260,9 +268,9 @@
     /**
      * Default parameter settings
      **/
-    // Behavior parameters
-    travelGiveUpProbability = 0.322792589664459;
+    // Behavior parameters    travelGiveUpProbability = 0.322792589664459;
     searchGiveUpProbability = 0.000770092010498047;
+
     
     // Random walk parameters
     uninformedSearchCorrelation = 0.279912143945694;
@@ -368,15 +376,15 @@
         return pheromone;
     }
     else {
-        float distance = 0;
-        for(distance = 0; distance < fenceRadius; distance += searchStepSize) {
+        float distance = nestRadius + (collisionDistance * 2);
+        for(; distance < fenceRadius; distance += searchStepSize) {
             if([Utilities randomFloat] < travelGiveUpProbability) {
                 break;
             }
         }
         
-        informedStatus = RobotInformedStatusNone;
-        return [Utilities pol2cart:Polar(distance, [Utilities randomFloat:360])];
+        informedStatus = RobotInformedStatusNone;        return [Utilities pol2cart:Polar(distance, [Utilities randomFloat:360])];
+
     }
 }
 
@@ -387,9 +395,14 @@
     CGPoint offset = [info CGPointValue];
     if(localizing) {
         if(fabsf(offset.x) <= 1) {
-            [cable send:@"motors,%d,%d,%d", 0, 0, 0];
-            [cable send:@"compass"];
-            [imageRecognition stop];
+            if (nestCentered) {
+                [cable send:@"compass"];
+                [imageRecognition stop];
+            }
+            else {
+                nestCentered = YES;
+                [cable send:@"motors,%d,%d,%d", 0, 0, 0];
+            }
         }
         else {
             [cable send:@"motors,%d,%d,%d", (int)offset.x, (int)offset.y, MIN(MAX((int)fabsf(offset.x), 5), 150)];

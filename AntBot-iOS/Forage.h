@@ -80,6 +80,7 @@ typedef NS_ENUM(NSInteger, RobotInformedStatus) {
 @property Cartesian lastTagLocation;
 @property Cartesian pheromone;
 @property BOOL localizing;
+@property BOOL nestCentered;
 
 // Physical Constraints
 @property float fenceRadius;
