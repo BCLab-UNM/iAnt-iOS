@@ -144,7 +144,7 @@
 @implementation Forage
 
 @synthesize position, heading, informedStatus, tag, lastTagLocation, pheromone, localizing, nestCentered;
-@synthesize fenceRadius, searchStepSize, nestRadius, robotRadius, collisionDistance;
+@synthesize fenceRadius, searchStepSize, nestRadius, robotRadius, collisionDistance, usMaxRange;
 @synthesize travelGiveUpProbability, searchGiveUpProbability;
 @synthesize uninformedSearchCorrelation, informedSearchCorrelationDecayRate;
 @synthesize pheromoneDecayRate, pheromoneLayingRate, siteFidelityRate;
@@ -210,6 +210,9 @@
         float distance = [[data objectAtIndex:0] floatValue];
         
         if(localizing) {
+            if (distance == usMaxRange) {
+                distance = [imageRecognition nestDistance];
+            }
             position = Cartesian(0, 0) - [Utilities pol2cart:Polar(distance, heading)];
             float theta = [Utilities cart2pol:position].theta;
             position += [Utilities pol2cart:Polar(nestRadius, theta)] + [Utilities pol2cart:Polar(robotRadius, theta)];
@@ -264,6 +267,7 @@
     nestRadius = 8.0;
     robotRadius = 10.5;
     collisionDistance = 30;
+    usMaxRange = 300;
     
     /**
      * Default parameter settings
@@ -314,7 +318,7 @@
 
 - (void)localize {
     localizing = YES;
-    [imageRecognition startWithTarget:ImageRecognitionTargetNest];
+    [imageRecognition start];
 }
 
 - (void)turn:(float)degrees {

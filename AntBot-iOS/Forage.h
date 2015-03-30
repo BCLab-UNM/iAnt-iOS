@@ -88,6 +88,7 @@ typedef NS_ENUM(NSInteger, RobotInformedStatus) {
 @property float nestRadius;
 @property float robotRadius;
 @property float collisionDistance;
+@property float usMaxRange;
 
 // Behavior Parameters
 @property float travelGiveUpProbability;
