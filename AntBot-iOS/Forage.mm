@@ -268,7 +268,8 @@
     /**
      * Default parameter settings
      **/
-    // Behavior parameters    travelGiveUpProbability = 0.322792589664459;
+    // Behavior parameters
+    travelGiveUpProbability = 0.322792589664459;
     searchGiveUpProbability = 0.000770092010498047;
 
     
@@ -383,7 +384,8 @@
             }
         }
         
-        informedStatus = RobotInformedStatusNone;        return [Utilities pol2cart:Polar(distance, [Utilities randomFloat:360])];
+        informedStatus = RobotInformedStatusNone;
+        return [Utilities pol2cart:Polar(distance, [Utilities randomFloat:360])];
 
     }
 }
