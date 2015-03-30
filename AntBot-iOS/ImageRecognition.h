@@ -8,32 +8,16 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "Conversions.h"
-#import "FinderPattern.h"
-#import "ThresholdRange.h"
-
-#import <Decoder.h>
-#import <QRCodeReader.h>
-#import "TwoDDecoderResult.h"
-
-typedef NS_ENUM(NSInteger, ImageRecognitionTarget) {
-    ImageRecognitionTargetTag,
-    ImageRecognitionTargetNeighbors,
-    ImageRecognitionTargetNest
-};
 
 @interface NSObject(ImageRecognitionDelegate)
     -(void) didReceiveAlignInfo:(NSValue*)info;
-    -(void) didReadQRCode:(int)qrCode;
 @end
 
-@interface ImageRecognition: NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, DecoderDelegate> {
+@interface ImageRecognition: NSObject <AVCaptureVideoDataOutputSampleBufferDelegate> {
     Conversions *converter;
     IplImage *imgGray;
     IplImage *imgGrayBGRA;
     IplImage *maskIpl;
-    
-    Decoder *qrDecoder;
-    int qrCode;
     
     AVCaptureVideoDataOutput *videoDataOutput;
     AVCaptureVideoPreviewLayer *previewLayer;
@@ -43,14 +27,12 @@ typedef NS_ENUM(NSInteger, ImageRecognitionTarget) {
 
 - (UIImage*)getImgThresholdUI;
 
-- (NSMutableArray*)findColorCentroidIn:(CMSampleBufferRef)buffer usingThreshold:(int)threshold;
-- (NSMutableArray*)locateQRFinderPatternsIn:(CMSampleBufferRef)buffer;
+- (BOOL)findColorCentroid:(CvRect&)centroid in:(CMSampleBufferRef)buffer usingThreshold:(int)threshold;
 
-- (void)startWithTarget:(ImageRecognitionTarget)target;
+- (void)start;
 - (void)stop;
 
 @property id delegate;
-@property (nonatomic) ImageRecognitionTarget target;
 @property UIView* view;
 
 @property float nestDistance;
