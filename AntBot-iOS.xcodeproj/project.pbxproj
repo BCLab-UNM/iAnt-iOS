@@ -528,10 +528,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AntBot-iOS/AntBot-iOS-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/AntBot-iOS/zxing/cpp\"",
-					"\"$(SRCROOT)/AntBot-iOS/zxing/objc\"",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/AntBot-iOS/AntBot-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/AntBot-iOS/lib\"";
@@ -558,10 +555,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AntBot-iOS/AntBot-iOS-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/AntBot-iOS/zxing/cpp\"",
-					"\"$(SRCROOT)/AntBot-iOS/zxing/objc\"",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/AntBot-iOS/AntBot-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/AntBot-iOS/lib\"";
