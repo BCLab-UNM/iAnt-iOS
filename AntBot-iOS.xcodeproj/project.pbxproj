@@ -30,11 +30,7 @@
 		420CC92D151639A6003B29D3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 420CC92C151639A6003B29D3 /* CoreLocation.framework */; };
 		421743851514D0830003BF49 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 421743831514D0830003BF49 /* InfoPlist.strings */; };
 		4221A9BD162246020055C9C8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4221A9BB162245F60055C9C8 /* AudioToolbox.framework */; };
-		42388E7515EF1FC4009F0D7E /* FinderPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 42388E7015EF1C6C009F0D7E /* FinderPattern.m */; };
-		42388E7615EF1FC4009F0D7E /* LineSegment2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 42388E7215EF1C6C009F0D7E /* LineSegment2D.m */; };
-		42388E7715EF1FC4009F0D7E /* Rect2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 42388E7415EF1C6C009F0D7E /* Rect2D.m */; };
 		423B0EA415EF216C00DC71CD /* Conversions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 423B0EA315EF216C00DC71CD /* Conversions.mm */; };
-		423B0EA815EF250300DC71CD /* ThresholdRange.mm in Sources */ = {isa = PBXBuildFile; fileRef = 423B0EA715EF250300DC71CD /* ThresholdRange.mm */; };
 		423B95971530E65B00A26A03 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423B95961530E65B00A26A03 /* AVFoundation.framework */; };
 		423B959A1530E6CF00A26A03 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423B95991530E6CF00A26A03 /* CoreVideo.framework */; };
 		423B959C1530EFC100A26A03 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423B959B1530EFC100A26A03 /* CoreMedia.framework */; };
@@ -47,7 +43,6 @@
 		4256FE841579559E008FC425 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4256FE831579559E008FC425 /* QuartzCore.framework */; };
 		4257B683159808A10072054D /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4257B682159808A10072054D /* MainStoryboard.storyboard */; };
 		425975B217FCB415002B1BA9 /* libRscMgrUniv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 425975B017FCB415002B1BA9 /* libRscMgrUniv.a */; };
-		425975B317FCB415002B1BA9 /* libZXingWidget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 425975B117FCB415002B1BA9 /* libZXingWidget.a */; };
 		425975BC17FCB430002B1BA9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 425975B517FCB430002B1BA9 /* Default-568h@2x.png */; };
 		425975BD17FCB430002B1BA9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 425975B617FCB430002B1BA9 /* Default.png */; };
 		425975BE17FCB430002B1BA9 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 425975B717FCB430002B1BA9 /* Default@2x.png */; };
@@ -111,16 +106,8 @@
 		420CC92C151639A6003B29D3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		421743841514D0830003BF49 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "AntBot-iOS/en.lproj/InfoPlist.strings"; sourceTree = SOURCE_ROOT; };
 		4221A9BB162245F60055C9C8 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		42388E6F15EF1C6C009F0D7E /* FinderPattern.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FinderPattern.h; path = "AntBot-iOS/IR Utilities/FinderPattern.h"; sourceTree = SOURCE_ROOT; };
-		42388E7015EF1C6C009F0D7E /* FinderPattern.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = FinderPattern.m; path = "AntBot-iOS/IR Utilities/FinderPattern.m"; sourceTree = SOURCE_ROOT; };
-		42388E7115EF1C6C009F0D7E /* LineSegment2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LineSegment2D.h; path = "AntBot-iOS/IR Utilities/LineSegment2D.h"; sourceTree = SOURCE_ROOT; };
-		42388E7215EF1C6C009F0D7E /* LineSegment2D.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LineSegment2D.m; path = "AntBot-iOS/IR Utilities/LineSegment2D.m"; sourceTree = SOURCE_ROOT; };
-		42388E7315EF1C6C009F0D7E /* Rect2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Rect2D.h; path = "AntBot-iOS/IR Utilities/Rect2D.h"; sourceTree = SOURCE_ROOT; };
-		42388E7415EF1C6C009F0D7E /* Rect2D.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Rect2D.m; path = "AntBot-iOS/IR Utilities/Rect2D.m"; sourceTree = SOURCE_ROOT; };
 		423B0EA215EF216C00DC71CD /* Conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Conversions.h; path = "AntBot-iOS/IR Utilities/Conversions.h"; sourceTree = SOURCE_ROOT; };
 		423B0EA315EF216C00DC71CD /* Conversions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Conversions.mm; path = "AntBot-iOS/IR Utilities/Conversions.mm"; sourceTree = SOURCE_ROOT; };
-		423B0EA615EF250300DC71CD /* ThresholdRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThresholdRange.h; path = "AntBot-iOS/IR Utilities/ThresholdRange.h"; sourceTree = SOURCE_ROOT; };
-		423B0EA715EF250300DC71CD /* ThresholdRange.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ThresholdRange.mm; path = "AntBot-iOS/IR Utilities/ThresholdRange.mm"; sourceTree = SOURCE_ROOT; };
 		423B95961530E65B00A26A03 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		423B95991530E6CF00A26A03 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		423B959B1530EFC100A26A03 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -136,7 +123,6 @@
 		4256FE831579559E008FC425 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4257B682159808A10072054D /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainStoryboard.storyboard; path = "AntBot-iOS/MainStoryboard.storyboard"; sourceTree = SOURCE_ROOT; };
 		425975B017FCB415002B1BA9 /* libRscMgrUniv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRscMgrUniv.a; path = "AntBot-iOS/lib/libRscMgrUniv.a"; sourceTree = SOURCE_ROOT; };
-		425975B117FCB415002B1BA9 /* libZXingWidget.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZXingWidget.a; path = "AntBot-iOS/lib/libZXingWidget.a"; sourceTree = SOURCE_ROOT; };
 		425975B517FCB430002B1BA9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		425975B617FCB430002B1BA9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		425975B717FCB430002B1BA9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -168,7 +154,6 @@
 				4221A9BD162246020055C9C8 /* AudioToolbox.framework in Frameworks */,
 				42D1C2191618FFDC00A7A8E7 /* GameKit.framework in Frameworks */,
 				4269662A15B9D07B00BF7597 /* SystemConfiguration.framework in Frameworks */,
-				425975B317FCB415002B1BA9 /* libZXingWidget.a in Frameworks */,
 				427F3C0B15B4A60600C2CB85 /* libz.dylib in Frameworks */,
 				4256FE841579559E008FC425 /* QuartzCore.framework in Frameworks */,
 				4256FE811579550C008FC425 /* libiconv.dylib in Frameworks */,
@@ -225,14 +210,6 @@
 				409DCD731977161500EA9258 /* libfidtrack */,
 				423B0EA215EF216C00DC71CD /* Conversions.h */,
 				423B0EA315EF216C00DC71CD /* Conversions.mm */,
-				42388E6F15EF1C6C009F0D7E /* FinderPattern.h */,
-				42388E7015EF1C6C009F0D7E /* FinderPattern.m */,
-				42388E7115EF1C6C009F0D7E /* LineSegment2D.h */,
-				42388E7215EF1C6C009F0D7E /* LineSegment2D.m */,
-				42388E7315EF1C6C009F0D7E /* Rect2D.h */,
-				42388E7415EF1C6C009F0D7E /* Rect2D.m */,
-				423B0EA615EF250300DC71CD /* ThresholdRange.h */,
-				423B0EA715EF250300DC71CD /* ThresholdRange.mm */,
 			);
 			name = "IR Utilities";
 			sourceTree = "<group>";
@@ -348,7 +325,6 @@
 			isa = PBXGroup;
 			children = (
 				425975B017FCB415002B1BA9 /* libRscMgrUniv.a */,
-				425975B117FCB415002B1BA9 /* libZXingWidget.a */,
 			);
 			name = lib;
 			path = ../lib;
@@ -450,13 +426,9 @@
 				409DCD911977161500EA9258 /* tiled_bernsen_threshold.c in Sources */,
 				409DCD8B1977161500EA9258 /* dump_graph.c in Sources */,
 				409DCD8D1977161500EA9258 /* fidtrackX.c in Sources */,
-				42388E7515EF1FC4009F0D7E /* FinderPattern.m in Sources */,
 				4075742319A372FB00CDACEC /* DebugView.mm in Sources */,
-				42388E7615EF1FC4009F0D7E /* LineSegment2D.m in Sources */,
-				42388E7715EF1FC4009F0D7E /* Rect2D.m in Sources */,
 				062C18F31975F9CE00B3A604 /* Camera.m in Sources */,
 				423B0EA415EF216C00DC71CD /* Conversions.mm in Sources */,
-				423B0EA815EF250300DC71CD /* ThresholdRange.mm in Sources */,
 				42BEFEC216BC7FE80095EE7C /* Utilities.mm in Sources */,
 				409DCD901977161500EA9258 /* threshold.c in Sources */,
 			);
