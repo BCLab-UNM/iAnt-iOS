@@ -262,7 +262,7 @@
     nestCentered = NO;
     
     // Physical constraints
-    fenceRadius = 500;
+    fenceRadius = 450;
     searchStepSize = 8.15;
     nestRadius = 8.0;
     robotRadius = 10.5;
@@ -376,7 +376,7 @@
         informedStatus = RobotInformedStatusMemory;
         return lastTagLocation;
     }
-    else if ((lastTagLocation != NullPoint) && !useSiteFidelity) {
+    else if ((pheromone != NullPoint) && !useSiteFidelity) {
         informedStatus = RobotInformedStatusPheromone;
         return pheromone;
     }
@@ -400,7 +400,7 @@
 - (void)didReceiveAlignInfo:(NSValue*)info {
     CGPoint offset = [info CGPointValue];
     if(localizing) {
-        if(fabsf(offset.x) <= 1) {
+        if(fabsf(offset.x) <= 0.1) {
             if (nestCentered) {
                 [cable send:@"compass"];
                 [imageRecognition stop];
