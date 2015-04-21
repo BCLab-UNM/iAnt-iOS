@@ -12,7 +12,7 @@
 @implementation Camera
 
 @synthesize pipeline, view;
-@synthesize previewLayer;
+@synthesize previewLayer, shapeLayer;
 
 - (void)startPipeline:(id<CameraPipeline>)_pipeline {
     pipeline = _pipeline;
@@ -29,6 +29,8 @@
 
 - (void)stop {
     if([session isRunning]) {
+        [previewLayer removeFromSuperlayer];
+        [shapeLayer removeFromSuperlayer];
         [session stopRunning];
     }
 }
@@ -72,7 +74,16 @@
     previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:session];
 	[previewLayer setBackgroundColor:[[UIColor blackColor] CGColor]];
 	[previewLayer setVideoGravity:AVLayerVideoGravityResize];
-    [view setPreviewLayer:previewLayer];
+    [previewLayer setFrame:[[view layer] frame]];
+    [[view layer] addSublayer:previewLayer];
+    
+    // Create empty shape layer; set up to display red frame
+    shapeLayer = [[CAShapeLayer alloc] init];
+    [shapeLayer setFrame:[[view layer] frame]];
+    [shapeLayer setStrokeColor:[[UIColor redColor] CGColor]];
+    [shapeLayer setFillColor:[[UIColor clearColor] CGColor]];
+    [shapeLayer setLineWidth:2.0];
+    [[view layer] addSublayer:shapeLayer];
     
     // Serial GCD queue for processing frames
     queue = dispatch_queue_create("VideoDataOutputQueue", DISPATCH_QUEUE_SERIAL);

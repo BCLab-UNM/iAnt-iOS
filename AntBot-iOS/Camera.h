@@ -35,5 +35,6 @@
 @property id<CameraPipeline> pipeline;
 @property CameraView* view;
 @property AVCaptureVideoPreviewLayer* previewLayer;
+@property CAShapeLayer* shapeLayer;
 
 @end
