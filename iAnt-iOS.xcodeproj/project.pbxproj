@@ -63,24 +63,24 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0618ACB61938F9F300AE30B6 /* Router.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Router.h; path = "AntBot-iOS/Router.h"; sourceTree = SOURCE_ROOT; };
-		0618ACB71938F9F300AE30B6 /* Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Router.m; path = "AntBot-iOS/Router.m"; sourceTree = SOURCE_ROOT; };
-		0618ACB91939010C00AE30B6 /* RouterCable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouterCable.h; path = "AntBot-iOS/RouterCable.h"; sourceTree = SOURCE_ROOT; };
-		0618ACBA1939010C00AE30B6 /* RouterCable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RouterCable.m; path = "AntBot-iOS/RouterCable.m"; sourceTree = SOURCE_ROOT; };
-		0618ACBC193905B400AE30B6 /* RouterServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouterServer.h; path = "AntBot-iOS/RouterServer.h"; sourceTree = SOURCE_ROOT; };
-		0618ACBD193905B400AE30B6 /* RouterServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RouterServer.m; path = "AntBot-iOS/RouterServer.m"; sourceTree = SOURCE_ROOT; };
-		062C18F11975F9CE00B3A604 /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Camera.h; path = "AntBot-iOS/Camera.h"; sourceTree = SOURCE_ROOT; };
-		062C18F21975F9CE00B3A604 /* Camera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Camera.m; path = "AntBot-iOS/Camera.m"; sourceTree = SOURCE_ROOT; };
-		06B0800E194A251D001DFC01 /* MotionCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MotionCapture.h; path = "AntBot-iOS/MotionCapture.h"; sourceTree = SOURCE_ROOT; };
-		06B0800F194A251D001DFC01 /* MotionCapture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MotionCapture.mm; path = "AntBot-iOS/MotionCapture.mm"; sourceTree = SOURCE_ROOT; };
-		06BFD92B1940EE8D0040034E /* Forage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Forage.h; path = "AntBot-iOS/Forage.h"; sourceTree = SOURCE_ROOT; };
-		06BFD92C1940EE8D0040034E /* Forage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Forage.mm; path = "AntBot-iOS/Forage.mm"; sourceTree = SOURCE_ROOT; };
-		406BB6991986DE4F0023A95B /* CameraView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraView.h; path = "AntBot-iOS/CameraView.h"; sourceTree = SOURCE_ROOT; };
-		406BB69A1986DE4F0023A95B /* CameraView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CameraView.m; path = "AntBot-iOS/CameraView.m"; sourceTree = SOURCE_ROOT; };
-		4075742119A372FB00CDACEC /* DebugView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugView.h; path = "AntBot-iOS/DebugView.h"; sourceTree = SOURCE_ROOT; };
-		4075742219A372FB00CDACEC /* DebugView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = DebugView.mm; path = "AntBot-iOS/DebugView.mm"; sourceTree = SOURCE_ROOT; };
-		409DCD7019770DF300EA9258 /* FiducialPipeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FiducialPipeline.h; path = "AntBot-iOS/FiducialPipeline.h"; sourceTree = SOURCE_ROOT; };
-		409DCD7119770DF300EA9258 /* FiducialPipeline.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FiducialPipeline.mm; path = "AntBot-iOS/FiducialPipeline.mm"; sourceTree = SOURCE_ROOT; };
+		0618ACB61938F9F300AE30B6 /* Router.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Router.h; path = "iAnt-iOS/Router.h"; sourceTree = SOURCE_ROOT; };
+		0618ACB71938F9F300AE30B6 /* Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Router.m; path = "iAnt-iOS/Router.m"; sourceTree = SOURCE_ROOT; };
+		0618ACB91939010C00AE30B6 /* RouterCable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouterCable.h; path = "iAnt-iOS/RouterCable.h"; sourceTree = SOURCE_ROOT; };
+		0618ACBA1939010C00AE30B6 /* RouterCable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RouterCable.m; path = "iAnt-iOS/RouterCable.m"; sourceTree = SOURCE_ROOT; };
+		0618ACBC193905B400AE30B6 /* RouterServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouterServer.h; path = "iAnt-iOS/RouterServer.h"; sourceTree = SOURCE_ROOT; };
+		0618ACBD193905B400AE30B6 /* RouterServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RouterServer.m; path = "iAnt-iOS/RouterServer.m"; sourceTree = SOURCE_ROOT; };
+		062C18F11975F9CE00B3A604 /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Camera.h; path = "iAnt-iOS/Camera.h"; sourceTree = SOURCE_ROOT; };
+		062C18F21975F9CE00B3A604 /* Camera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Camera.m; path = "iAnt-iOS/Camera.m"; sourceTree = SOURCE_ROOT; };
+		06B0800E194A251D001DFC01 /* MotionCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MotionCapture.h; path = "iAnt-iOS/MotionCapture.h"; sourceTree = SOURCE_ROOT; };
+		06B0800F194A251D001DFC01 /* MotionCapture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MotionCapture.mm; path = "iAnt-iOS/MotionCapture.mm"; sourceTree = SOURCE_ROOT; };
+		06BFD92B1940EE8D0040034E /* Forage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Forage.h; path = "iAnt-iOS/Forage.h"; sourceTree = SOURCE_ROOT; };
+		06BFD92C1940EE8D0040034E /* Forage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Forage.mm; path = "iAnt-iOS/Forage.mm"; sourceTree = SOURCE_ROOT; };
+		406BB6991986DE4F0023A95B /* CameraView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraView.h; path = "iAnt-iOS/CameraView.h"; sourceTree = SOURCE_ROOT; };
+		406BB69A1986DE4F0023A95B /* CameraView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CameraView.m; path = "iAnt-iOS/CameraView.m"; sourceTree = SOURCE_ROOT; };
+		4075742119A372FB00CDACEC /* DebugView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugView.h; path = "iAnt-iOS/DebugView.h"; sourceTree = SOURCE_ROOT; };
+		4075742219A372FB00CDACEC /* DebugView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = DebugView.mm; path = "iAnt-iOS/DebugView.mm"; sourceTree = SOURCE_ROOT; };
+		409DCD7019770DF300EA9258 /* FiducialPipeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FiducialPipeline.h; path = "iAnt-iOS/FiducialPipeline.h"; sourceTree = SOURCE_ROOT; };
+		409DCD7119770DF300EA9258 /* FiducialPipeline.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FiducialPipeline.mm; path = "iAnt-iOS/FiducialPipeline.mm"; sourceTree = SOURCE_ROOT; };
 		409DCD741977161500EA9258 /* all.trees */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = all.trees; sourceTree = "<group>"; };
 		409DCD751977161500EA9258 /* changelog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = changelog.txt; sourceTree = "<group>"; };
 		409DCD761977161500EA9258 /* default_trees.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = default_trees.h; sourceTree = "<group>"; };
@@ -102,25 +102,25 @@
 		409DCD861977161500EA9258 /* topologysearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = topologysearch.h; sourceTree = "<group>"; };
 		409DCD871977161500EA9258 /* treeidmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = treeidmap.cpp; sourceTree = "<group>"; };
 		409DCD881977161500EA9258 /* treeidmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = treeidmap.h; sourceTree = "<group>"; };
-		42042CEE156E78780053FC41 /* OpenCV.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCV.framework; path = "AntBot-iOS/OpenCV.framework"; sourceTree = "<group>"; };
+		42042CEE156E78780053FC41 /* OpenCV.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCV.framework; path = "iAnt-iOS/OpenCV.framework"; sourceTree = "<group>"; };
 		420CC92C151639A6003B29D3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		421743841514D0830003BF49 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "AntBot-iOS/en.lproj/InfoPlist.strings"; sourceTree = SOURCE_ROOT; };
+		421743841514D0830003BF49 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "iAnt-iOS/en.lproj/InfoPlist.strings"; sourceTree = SOURCE_ROOT; };
 		4221A9BB162245F60055C9C8 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		423B0EA215EF216C00DC71CD /* Conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Conversions.h; path = "AntBot-iOS/IR Utilities/Conversions.h"; sourceTree = SOURCE_ROOT; };
-		423B0EA315EF216C00DC71CD /* Conversions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Conversions.mm; path = "AntBot-iOS/IR Utilities/Conversions.mm"; sourceTree = SOURCE_ROOT; };
+		423B0EA215EF216C00DC71CD /* Conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Conversions.h; path = "iAnt-iOS/IR Utilities/Conversions.h"; sourceTree = SOURCE_ROOT; };
+		423B0EA315EF216C00DC71CD /* Conversions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Conversions.mm; path = "iAnt-iOS/IR Utilities/Conversions.mm"; sourceTree = SOURCE_ROOT; };
 		423B95961530E65B00A26A03 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		423B95991530E6CF00A26A03 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		423B959B1530EFC100A26A03 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		423B959D1530EFEC00A26A03 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
-		423D2E131514CFEB00B5231E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "AntBot-iOS/AppDelegate.h"; sourceTree = SOURCE_ROOT; };
-		423D2E141514CFEB00B5231E /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = "AntBot-iOS/AppDelegate.m"; sourceTree = SOURCE_ROOT; };
-		423D2E171514CFEB00B5231E /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainController.h; path = "AntBot-iOS/MainController.h"; sourceTree = SOURCE_ROOT; };
-		423D2E181514CFEB00B5231E /* MainController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MainController.mm; path = "AntBot-iOS/MainController.mm"; sourceTree = SOURCE_ROOT; };
-		423D2E231514D04700B5231E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "AntBot-iOS/main.m"; sourceTree = SOURCE_ROOT; };
+		423D2E131514CFEB00B5231E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "iAnt-iOS/AppDelegate.h"; sourceTree = SOURCE_ROOT; };
+		423D2E141514CFEB00B5231E /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = "iAnt-iOS/AppDelegate.m"; sourceTree = SOURCE_ROOT; };
+		423D2E171514CFEB00B5231E /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainController.h; path = "iAnt-iOS/MainController.h"; sourceTree = SOURCE_ROOT; };
+		423D2E181514CFEB00B5231E /* MainController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MainController.mm; path = "iAnt-iOS/MainController.mm"; sourceTree = SOURCE_ROOT; };
+		423D2E231514D04700B5231E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "iAnt-iOS/main.m"; sourceTree = SOURCE_ROOT; };
 		4256FE801579550C008FC425 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		4256FE831579559E008FC425 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		4257B682159808A10072054D /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainStoryboard.storyboard; path = "AntBot-iOS/MainStoryboard.storyboard"; sourceTree = SOURCE_ROOT; };
-		425975B017FCB415002B1BA9 /* libRscMgrUniv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRscMgrUniv.a; path = "AntBot-iOS/lib/libRscMgrUniv.a"; sourceTree = SOURCE_ROOT; };
+		4257B682159808A10072054D /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainStoryboard.storyboard; path = "iAnt-iOS/MainStoryboard.storyboard"; sourceTree = SOURCE_ROOT; };
+		425975B017FCB415002B1BA9 /* libRscMgrUniv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRscMgrUniv.a; path = "iAnt-iOS/lib/libRscMgrUniv.a"; sourceTree = SOURCE_ROOT; };
 		425975B517FCB430002B1BA9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		425975B617FCB430002B1BA9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		425975B717FCB430002B1BA9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -129,20 +129,20 @@
 		425975BA17FCB430002B1BA9 /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mask.png; sourceTree = "<group>"; };
 		425975BB17FCB430002B1BA9 /* squarePNG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = squarePNG.png; sourceTree = "<group>"; };
 		4269662715B9D06300BF7597 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		426E73B716E9680600868D29 /* AntBot-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "AntBot-iOS-Info.plist"; path = "AntBot-iOS/AntBot-iOS-Info.plist"; sourceTree = SOURCE_ROOT; };
-		426E73B816E9680600868D29 /* AntBot-iOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "AntBot-iOS-Prefix.pch"; path = "AntBot-iOS/AntBot-iOS-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		426E73B716E9680600868D29 /* iAnt-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "iAnt-iOS-Info.plist"; path = "iAnt-iOS/iAnt-iOS-Info.plist"; sourceTree = SOURCE_ROOT; };
+		426E73B816E9680600868D29 /* iAnt-iOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "iAnt-iOS-Prefix.pch"; path = "iAnt-iOS/iAnt-iOS-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		427F3C0A15B4A60600C2CB85 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		427F3C0E15B4A8DB00C2CB85 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
-		427F4A9F14A57E2B003F3E53 /* AntBot-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AntBot-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		427F4A9F14A57E2B003F3E53 /* iAnt-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iAnt-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		427F4AA314A57E2B003F3E53 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		427F4AA514A57E2B003F3E53 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		427F4AA714A57E2B003F3E53 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		427F4ADE14A58048003F3E53 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
-		42A0A3CA1AE6DAB900B42867 /* LocalizationPipeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalizationPipeline.h; path = "AntBot-iOS/LocalizationPipeline.h"; sourceTree = SOURCE_ROOT; };
-		42A0A3CB1AE6DAB900B42867 /* LocalizationPipeline.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = LocalizationPipeline.mm; path = "AntBot-iOS/LocalizationPipeline.mm"; sourceTree = SOURCE_ROOT; };
+		42A0A3CA1AE6DAB900B42867 /* LocalizationPipeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalizationPipeline.h; path = "iAnt-iOS/LocalizationPipeline.h"; sourceTree = SOURCE_ROOT; };
+		42A0A3CB1AE6DAB900B42867 /* LocalizationPipeline.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = LocalizationPipeline.mm; path = "iAnt-iOS/LocalizationPipeline.mm"; sourceTree = SOURCE_ROOT; };
 		42BC34DB14A98D5600692DDE /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		42BEFEC016BC7FE80095EE7C /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utilities.h; path = "AntBot-iOS/Utilities.h"; sourceTree = SOURCE_ROOT; };
-		42BEFEC116BC7FE80095EE7C /* Utilities.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Utilities.mm; path = "AntBot-iOS/Utilities.mm"; sourceTree = SOURCE_ROOT; };
+		42BEFEC016BC7FE80095EE7C /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utilities.h; path = "iAnt-iOS/Utilities.h"; sourceTree = SOURCE_ROOT; };
+		42BEFEC116BC7FE80095EE7C /* Utilities.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Utilities.mm; path = "iAnt-iOS/Utilities.mm"; sourceTree = SOURCE_ROOT; };
 		42D1C2171618FFB200A7A8E7 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -201,7 +201,7 @@
 				409DCD881977161500EA9258 /* treeidmap.h */,
 			);
 			name = libfidtrack;
-			path = "AntBot-iOS/libfidtrack";
+			path = "iAnt-iOS/libfidtrack";
 			sourceTree = SOURCE_ROOT;
 		};
 		42388E6515EF1974009F0D7E /* IR Utilities */ = {
@@ -226,13 +226,13 @@
 				425975BB17FCB430002B1BA9 /* squarePNG.png */,
 			);
 			name = images;
-			path = "AntBot-iOS/images";
+			path = "iAnt-iOS/images";
 			sourceTree = SOURCE_ROOT;
 		};
 		427F4A9414A57E2B003F3E53 = {
 			isa = PBXGroup;
 			children = (
-				427F4AA914A57E2B003F3E53 /* AntBot-iOS */,
+				427F4AA914A57E2B003F3E53 /* iAnt-iOS */,
 				427F4AA214A57E2B003F3E53 /* Frameworks */,
 				427F4AA014A57E2B003F3E53 /* Products */,
 			);
@@ -241,7 +241,7 @@
 		427F4AA014A57E2B003F3E53 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				427F4A9F14A57E2B003F3E53 /* AntBot-iOS.app */,
+				427F4A9F14A57E2B003F3E53 /* iAnt-iOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -271,7 +271,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		427F4AA914A57E2B003F3E53 /* AntBot-iOS */ = {
+		427F4AA914A57E2B003F3E53 /* iAnt-iOS */ = {
 			isa = PBXGroup;
 			children = (
 				423D2E131514CFEB00B5231E /* AppDelegate.h */,
@@ -304,7 +304,7 @@
 				42388E6515EF1974009F0D7E /* IR Utilities */,
 				427F4AAA14A57E2B003F3E53 /* Supporting Files */,
 			);
-			name = "AntBot-iOS";
+			name = "iAnt-iOS";
 			path = Arduino;
 			sourceTree = "<group>";
 		};
@@ -313,8 +313,8 @@
 			children = (
 				427F4ADB14A58001003F3E53 /* lib */,
 				425975B417FCB430002B1BA9 /* images */,
-				426E73B716E9680600868D29 /* AntBot-iOS-Info.plist */,
-				426E73B816E9680600868D29 /* AntBot-iOS-Prefix.pch */,
+				426E73B716E9680600868D29 /* iAnt-iOS-Info.plist */,
+				426E73B816E9680600868D29 /* iAnt-iOS-Prefix.pch */,
 				421743831514D0830003BF49 /* InfoPlist.strings */,
 				423D2E231514D04700B5231E /* main.m */,
 			);
@@ -333,9 +333,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		427F4A9E14A57E2B003F3E53 /* AntBot-iOS */ = {
+		427F4A9E14A57E2B003F3E53 /* iAnt-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 427F4AD214A57E2B003F3E53 /* Build configuration list for PBXNativeTarget "AntBot-iOS" */;
+			buildConfigurationList = 427F4AD214A57E2B003F3E53 /* Build configuration list for PBXNativeTarget "iAnt-iOS" */;
 			buildPhases = (
 				427F4A9C14A57E2B003F3E53 /* Frameworks */,
 				427F4A9B14A57E2B003F3E53 /* Sources */,
@@ -345,9 +345,9 @@
 			);
 			dependencies = (
 			);
-			name = "AntBot-iOS";
+			name = "iAnt-iOS";
 			productName = Arduino;
-			productReference = 427F4A9F14A57E2B003F3E53 /* AntBot-iOS.app */;
+			productReference = 427F4A9F14A57E2B003F3E53 /* iAnt-iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -363,7 +363,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 427F4A9914A57E2B003F3E53 /* Build configuration list for PBXProject "AntBot-iOS" */;
+			buildConfigurationList = 427F4A9914A57E2B003F3E53 /* Build configuration list for PBXProject "iAnt-iOS" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -376,7 +376,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				427F4A9E14A57E2B003F3E53 /* AntBot-iOS */,
+				427F4A9E14A57E2B003F3E53 /* iAnt-iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -526,21 +526,21 @@
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/AntBot-iOS\"";
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/iAnt-iOS\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AntBot-iOS/AntBot-iOS-Prefix.pch";
+				GCC_PREFIX_HEADER = "iAnt-iOS/iAnt-iOS-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "$(SRCROOT)/AntBot-iOS/AntBot-iOS-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/iAnt-iOS/iAnt-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/AntBot-iOS/lib\"";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/iAnt-iOS/lib\"";
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "AntBot-iOS";
+				PRODUCT_NAME = "iAnt-iOS";
 				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/AntBot-iOS/rsc\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/iAnt-iOS/rsc\"";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -553,21 +553,21 @@
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/AntBot-iOS\"";
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/iAnt-iOS\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AntBot-iOS/AntBot-iOS-Prefix.pch";
+				GCC_PREFIX_HEADER = "iAnt-iOS/iAnt-iOS-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "$(SRCROOT)/AntBot-iOS/AntBot-iOS-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/iAnt-iOS/iAnt-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/AntBot-iOS/lib\"";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/iAnt-iOS/lib\"";
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "AntBot-iOS";
+				PRODUCT_NAME = "iAnt-iOS";
 				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/AntBot-iOS/rsc\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/iAnt-iOS/rsc\"";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -575,7 +575,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		427F4A9914A57E2B003F3E53 /* Build configuration list for PBXProject "AntBot-iOS" */ = {
+		427F4A9914A57E2B003F3E53 /* Build configuration list for PBXProject "iAnt-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				427F4AD014A57E2B003F3E53 /* Debug */,
@@ -584,7 +584,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		427F4AD214A57E2B003F3E53 /* Build configuration list for PBXNativeTarget "AntBot-iOS" */ = {
+		427F4AD214A57E2B003F3E53 /* Build configuration list for PBXNativeTarget "iAnt-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				427F4AD314A57E2B003F3E53 /* Debug */,
