@@ -17,7 +17,7 @@
 @interface FiducialPipeline : NSObject <CameraPipeline> {
     BOOL initialized;
     FidtrackerX fidtrackerx;
-    FiducialX *fiducials;
+    FiducialX fiducial;
     Segmenter segmenter;
     TreeIdMap treeidmap;
     TiledBernsenThresholder *thresholder;
