@@ -39,7 +39,6 @@
     // Logic
     //motionCapture = [[MotionCapture alloc] initWithCable:cable server:server];
     forage = [[Forage alloc] initWithCable:cable server:server camera:camera];
-    [[forage imageRecognition] setView:cameraView];
     
     [forage setDebug:debugView];
     [debugView setForage:forage];

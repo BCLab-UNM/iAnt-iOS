@@ -165,9 +165,45 @@
     
     driveEnabled =
     turnEnabled = YES;
-
+    
+    // Image recognition pipelines
     imageRecognition = [[ImageRecognition alloc] init];
     [imageRecognition setDelegate:self];
+    fiducialPipeline = [[FiducialPipeline alloc] init];
+    [fiducialPipeline setDelegate:self];
+    
+    // State data
+    position = Cartesian(0, 0);
+    heading = 0;
+    informedStatus = RobotInformedStatusNone;
+    tag = -1;
+    lastTagLocation = NullPoint;
+    pheromone = NullPoint;
+    localizing = NO;
+    nestCentered = NO;
+    
+    // Physical constraints
+    fenceRadius = 450;
+    searchStepSize = 8.15;
+    nestRadius = 8.0;
+    robotRadius = 10.5;
+    collisionDistance = 30;
+    usMaxRange = 300;
+    
+    /**
+     * Default parameter settings
+     **/
+    // Behavior parameters
+    travelGiveUpProbability = 0.322792589664459;
+    searchGiveUpProbability = 0.000770092010498047;
+    
+    
+    // Random walk parameters
+    uninformedSearchCorrelation = 0.279912143945694;
+    informedSearchCorrelationDecayRate = 0.251652657985687;
+    
+    // Information parameters
+    siteFidelityRate = 3.53300333023071;
     
     // Init states
     NSArray* states = [NSArray arrayWithObjects:@"departing", @"searching", @"neighbors", @"returning", nil];
@@ -250,43 +286,6 @@
             CALL(tag, [[data objectAtIndex:0] intValue]);
         }
     }];
-
-    // State data
-    position = Cartesian(0, 0);
-    heading = 0;
-    informedStatus = RobotInformedStatusNone;
-    tag = -1;
-    lastTagLocation = NullPoint;
-    pheromone = NullPoint;
-    localizing = NO;
-    nestCentered = NO;
-    
-    // Physical constraints
-    fenceRadius = 450;
-    searchStepSize = 8.15;
-    nestRadius = 8.0;
-    robotRadius = 10.5;
-    collisionDistance = 30;
-    usMaxRange = 300;
-    
-    /**
-     * Default parameter settings
-     **/
-    // Behavior parameters
-    travelGiveUpProbability = 0.322792589664459;
-    searchGiveUpProbability = 0.000770092010498047;
-
-    
-    // Random walk parameters
-    uninformedSearchCorrelation = 0.279912143945694;
-    informedSearchCorrelationDecayRate = 0.251652657985687;
-    
-    // Information parameters
-    siteFidelityRate = 3.53300333023071;
-    
-    // Image recognition pipelines
-    fiducialPipeline = [[FiducialPipeline alloc] init];
-    [fiducialPipeline setDelegate:self];
     
     return self;
 }
@@ -318,7 +317,7 @@
 
 - (void)localize {
     localizing = YES;
-    [imageRecognition start];
+    [camera startPipeline:imageRecognition];
 }
 
 - (void)turn:(float)degrees {
@@ -397,13 +396,18 @@
 /**
  * Delegate methods
  */
-- (void)didReceiveAlignInfo:(NSValue*)info {
-    CGPoint offset = [info CGPointValue];
-    if(localizing) {
+
+- (void)pipeline:(id)pipeline didProcessFrame:(id)result {
+    if([pipeline isMemberOfClass:[FiducialPipeline class]]) {
+        [server send:[NSString stringWithFormat:@"%@,%@", [Utilities getMacAddress], [result stringValue], nil]];
+    }
+    else if([pipeline isMemberOfClass:[ImageRecognition class]]) {
+        CGPoint offset = [result CGPointValue];
+        printf("%f,%f",offset.x, offset.y);
         if(fabsf(offset.x) <= 0.1) {
             if (nestCentered) {
                 [cable send:@"compass"];
-                [imageRecognition stop];
+                [camera stop];
             }
             else {
                 nestCentered = YES;
@@ -413,14 +417,7 @@
         else {
             [cable send:@"motors,%d,%d,%d", (int)offset.x, (int)offset.y, MIN(MAX((int)fabsf(offset.x), 5), 150)];
         }
-    }
-    
-    CALL(alignInfo, offset);
-}
-
-- (void)pipeline:(id)pipeline didProcessFrame:(NSNumber*)result {
-    if([pipeline isMemberOfClass:[FiducialPipeline class]]) {
-        [server send:[NSString stringWithFormat:@"%@,%@", [Utilities getMacAddress], [result stringValue], nil]];
+        CALL(alignInfo, offset);
     }
 }
 
