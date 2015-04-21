@@ -38,7 +38,6 @@
 		423D2E1A1514CFEB00B5231E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 423D2E141514CFEB00B5231E /* AppDelegate.m */; };
 		423D2E1C1514CFEB00B5231E /* MainController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 423D2E181514CFEB00B5231E /* MainController.mm */; };
 		423D2E251514D04700B5231E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 423D2E231514D04700B5231E /* main.m */; };
-		423F66A0152237A70001F9D3 /* ImageRecognition.mm in Sources */ = {isa = PBXBuildFile; fileRef = 423F669F152237A70001F9D3 /* ImageRecognition.mm */; };
 		4256FE811579550C008FC425 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4256FE801579550C008FC425 /* libiconv.dylib */; };
 		4256FE841579559E008FC425 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4256FE831579559E008FC425 /* QuartzCore.framework */; };
 		4257B683159808A10072054D /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4257B682159808A10072054D /* MainStoryboard.storyboard */; };
@@ -57,6 +56,7 @@
 		427F4AA614A57E2B003F3E53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4AA514A57E2B003F3E53 /* Foundation.framework */; };
 		427F4AA814A57E2B003F3E53 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4AA714A57E2B003F3E53 /* CoreGraphics.framework */; };
 		427F4ADF14A58048003F3E53 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427F4ADE14A58048003F3E53 /* ExternalAccessory.framework */; };
+		42A0A3CC1AE6DAB900B42867 /* LocalizationPipeline.mm in Sources */ = {isa = PBXBuildFile; fileRef = 42A0A3CB1AE6DAB900B42867 /* LocalizationPipeline.mm */; };
 		42BC34DC14A98D5700692DDE /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42BC34DB14A98D5600692DDE /* CoreMotion.framework */; };
 		42BEFEC216BC7FE80095EE7C /* Utilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 42BEFEC116BC7FE80095EE7C /* Utilities.mm */; };
 		42D1C2191618FFDC00A7A8E7 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D1C2171618FFB200A7A8E7 /* GameKit.framework */; };
@@ -117,8 +117,6 @@
 		423D2E171514CFEB00B5231E /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainController.h; path = "AntBot-iOS/MainController.h"; sourceTree = SOURCE_ROOT; };
 		423D2E181514CFEB00B5231E /* MainController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MainController.mm; path = "AntBot-iOS/MainController.mm"; sourceTree = SOURCE_ROOT; };
 		423D2E231514D04700B5231E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "AntBot-iOS/main.m"; sourceTree = SOURCE_ROOT; };
-		423F669E152237A70001F9D3 /* ImageRecognition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageRecognition.h; path = "AntBot-iOS/ImageRecognition.h"; sourceTree = SOURCE_ROOT; };
-		423F669F152237A70001F9D3 /* ImageRecognition.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ImageRecognition.mm; path = "AntBot-iOS/ImageRecognition.mm"; sourceTree = SOURCE_ROOT; };
 		4256FE801579550C008FC425 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		4256FE831579559E008FC425 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4257B682159808A10072054D /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainStoryboard.storyboard; path = "AntBot-iOS/MainStoryboard.storyboard"; sourceTree = SOURCE_ROOT; };
@@ -140,6 +138,8 @@
 		427F4AA514A57E2B003F3E53 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		427F4AA714A57E2B003F3E53 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		427F4ADE14A58048003F3E53 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		42A0A3CA1AE6DAB900B42867 /* LocalizationPipeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalizationPipeline.h; path = "AntBot-iOS/LocalizationPipeline.h"; sourceTree = SOURCE_ROOT; };
+		42A0A3CB1AE6DAB900B42867 /* LocalizationPipeline.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = LocalizationPipeline.mm; path = "AntBot-iOS/LocalizationPipeline.mm"; sourceTree = SOURCE_ROOT; };
 		42BC34DB14A98D5600692DDE /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		42BEFEC016BC7FE80095EE7C /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utilities.h; path = "AntBot-iOS/Utilities.h"; sourceTree = SOURCE_ROOT; };
 		42BEFEC116BC7FE80095EE7C /* Utilities.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Utilities.mm; path = "AntBot-iOS/Utilities.mm"; sourceTree = SOURCE_ROOT; };
@@ -286,8 +286,8 @@
 				409DCD7119770DF300EA9258 /* FiducialPipeline.mm */,
 				06BFD92B1940EE8D0040034E /* Forage.h */,
 				06BFD92C1940EE8D0040034E /* Forage.mm */,
-				423F669E152237A70001F9D3 /* ImageRecognition.h */,
-				423F669F152237A70001F9D3 /* ImageRecognition.mm */,
+				42A0A3CA1AE6DAB900B42867 /* LocalizationPipeline.h */,
+				42A0A3CB1AE6DAB900B42867 /* LocalizationPipeline.mm */,
 				423D2E171514CFEB00B5231E /* MainController.h */,
 				423D2E181514CFEB00B5231E /* MainController.mm */,
 				06B0800E194A251D001DFC01 /* MotionCapture.h */,
@@ -414,11 +414,11 @@
 				423D2E1A1514CFEB00B5231E /* AppDelegate.m in Sources */,
 				409DCD921977161500EA9258 /* topologysearch.c in Sources */,
 				409DCD7219770DF300EA9258 /* FiducialPipeline.mm in Sources */,
+				42A0A3CC1AE6DAB900B42867 /* LocalizationPipeline.mm in Sources */,
 				0618ACB81938F9F300AE30B6 /* Router.m in Sources */,
 				0618ACBE193905B400AE30B6 /* RouterServer.m in Sources */,
 				409DCD8F1977161500EA9258 /* segment.c in Sources */,
 				406BB69B1986DE4F0023A95B /* CameraView.m in Sources */,
-				423F66A0152237A70001F9D3 /* ImageRecognition.mm in Sources */,
 				06BFD92D1940EE8D0040034E /* Forage.mm in Sources */,
 				423D2E1C1514CFEB00B5231E /* MainController.mm in Sources */,
 				409DCD931977161500EA9258 /* treeidmap.cpp in Sources */,

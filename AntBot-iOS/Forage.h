@@ -12,7 +12,7 @@
 
 static const Cartesian NullPoint = Cartesian(INFINITY, INFINITY);
 
-@class Forage, ImageRecognition, RouterCable, RouterServer, FiducialPipeline, DebugView;
+@class Forage, RouterCable, RouterServer, FiducialPipeline, LocalizationPipeline, DebugView;
 
 // ForageState protocol
 @protocol ForageState
@@ -105,12 +105,12 @@ typedef NS_ENUM(NSInteger, RobotInformedStatus) {
 
 // Image Recognition Pipelines
 @property FiducialPipeline* fiducialPipeline;
+@property LocalizationPipeline* localizationPipeline;
 
 // Debug Data
 @property BOOL driveEnabled;
 @property BOOL turnEnabled;
 
-@property ImageRecognition* imageRecognition;
 @property RouterCable* cable;
 @property RouterServer* server;
 @property Camera* camera;

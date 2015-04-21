@@ -12,7 +12,7 @@
 #import "CameraView.h"
 #import "DebugView.h"
 #import "Forage.h"
-#import "ImageRecognition.h"
+#import "LocalizationPipeline.h"
 #import "MotionCapture.h"
 #import "RouterServer.h"
 #import "RouterCable.h"

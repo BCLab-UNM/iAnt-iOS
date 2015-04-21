@@ -1,21 +1,21 @@
 //
-//  ImageRecognition.mm
+//  LocalizationPipeline.mm
 //  AntBot-iOS
 //
 //  Created by Joshua Hecker
 //  Moses Lab, Department of Computer Science, University of New Mexico
 //
 
-#import "ImageRecognition.h"
+#import "LocalizationPipeline.h"
 
 const int FRONT_REZ_VERT = 192;
 const int FRONT_REZ_HOR = 144;
 const int NEST_THRESHOLD = 240;
 #define QUALITY AVCaptureSessionPresetLow
 
-#pragma mark - ImageRecognition interface
+#pragma mark - LocalizationPipeline interface
 
-@implementation ImageRecognition
+@implementation LocalizationPipeline
 
 @synthesize devicePosition, quality, delegate;
 @synthesize nestDistance;

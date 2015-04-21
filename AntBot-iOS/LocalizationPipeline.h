@@ -1,5 +1,5 @@
 //
-//  ImageRecognition.h
+//  LocalizationPipeline.h
 //  AntBot-iOS
 //
 //  Created by Joshua Hecker
@@ -11,7 +11,7 @@
 #import "CameraView.h"
 #import "Conversions.h"
 
-@interface ImageRecognition: NSObject <CameraPipeline> {
+@interface LocalizationPipeline: NSObject <CameraPipeline> {
     Conversions *converter;
     IplImage *imgGray;
     IplImage *imgGrayBGRA;

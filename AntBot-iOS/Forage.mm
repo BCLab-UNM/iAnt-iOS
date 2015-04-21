@@ -9,11 +9,11 @@
 #import "Forage.h"
 #import "RouterCable.h"
 #import "RouterServer.h"
-#import "ImageRecognition.h"
 #import "DebugView.h"
 
 #import "Camera.h"
 #import "FiducialPipeline.h"
+#import "LocalizationPipeline.h"
 
 // Set up a CALL macro for running a selector on the current forage state (with an optional argument).
 #define CALL1(X) if([state respondsToSelector:@selector(X)]){[state X];}
@@ -149,8 +149,8 @@
 @synthesize uninformedSearchCorrelation, informedSearchCorrelationDecayRate;
 @synthesize pheromoneDecayRate, pheromoneLayingRate, siteFidelityRate;
 @synthesize driveEnabled, turnEnabled;
-@synthesize fiducialPipeline;
-@synthesize imageRecognition, cable, server, camera, debug;
+@synthesize fiducialPipeline, localizationPipeline;
+@synthesize cable, server, camera, debug;
 @synthesize state, departing, searching, neighbors, returning;
 @synthesize distinctTags;
 
@@ -167,10 +167,10 @@
     turnEnabled = YES;
     
     // Image recognition pipelines
-    imageRecognition = [[ImageRecognition alloc] init];
-    [imageRecognition setDelegate:self];
     fiducialPipeline = [[FiducialPipeline alloc] init];
     [fiducialPipeline setDelegate:self];
+    localizationPipeline = [[LocalizationPipeline alloc] init];
+    [localizationPipeline setDelegate:self];
     
     // State data
     position = Cartesian(0, 0);
@@ -247,7 +247,7 @@
         
         if(localizing) {
             if (distance == usMaxRange) {
-                distance = [imageRecognition nestDistance];
+                distance = [localizationPipeline nestDistance];
             }
             position = Cartesian(0, 0) - [Utilities pol2cart:Polar(distance, heading)];
             float theta = [Utilities cart2pol:position].theta;
@@ -317,7 +317,7 @@
 
 - (void)localize {
     localizing = YES;
-    [camera startPipeline:imageRecognition];
+    [camera startPipeline:localizationPipeline];
 }
 
 - (void)turn:(float)degrees {
@@ -401,7 +401,7 @@
     if([pipeline isMemberOfClass:[FiducialPipeline class]]) {
         [server send:[NSString stringWithFormat:@"%@,%@", [Utilities getMacAddress], [result stringValue], nil]];
     }
-    else if([pipeline isMemberOfClass:[ImageRecognition class]]) {
+    else if([pipeline isMemberOfClass:[LocalizationPipeline class]]) {
         CGPoint offset = [result CGPointValue];
         printf("%f,%f",offset.x, offset.y);
         if(fabsf(offset.x) <= 0.1) {
