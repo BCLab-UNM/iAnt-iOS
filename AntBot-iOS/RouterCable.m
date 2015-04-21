@@ -1,11 +1,3 @@
-//
-//  RouterCable.m
-//  AntBot-iOS
-//
-//  Created by Bjorn Swenson on 5/30/14.
-//
-//
-
 #import "RouterCable.h"
 
 @implementation RouterCable

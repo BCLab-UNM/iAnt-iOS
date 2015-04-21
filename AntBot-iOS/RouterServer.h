@@ -1,11 +1,3 @@
-//
-//  RouterServer.h
-//  AntBot-iOS
-//
-//  Created by Bjorn Swenson on 5/30/14.
-//
-//
-
 #include <arpa/inet.h>
 #import <Foundation/Foundation.h>
 #import <GameKit/GameKit.h>

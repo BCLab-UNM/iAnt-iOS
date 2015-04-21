@@ -1,11 +1,3 @@
-//
-//  MainController.h
-//  AntBot-iOS
-//
-//  Created by Joshua Hecker
-//  Moses Lab, Department of Computer Science, University of New Mexico
-//
-
 @class Camera, CameraView, DebugView, Forage, MotionCapture, RouterCable, RouterServer;
 
 @interface MainController : UIViewController {

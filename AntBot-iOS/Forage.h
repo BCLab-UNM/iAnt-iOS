@@ -1,11 +1,3 @@
-//
-//  Forage.h
-//  AntBot-iOS
-//
-//  Created by Bjorn Swenson on 6/5/14.
-//
-//
-
 #import <Foundation/Foundation.h>
 #import "Camera.h"
 #import "Utilities.h"

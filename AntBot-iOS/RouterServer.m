@@ -1,11 +1,3 @@
-//
-//  RouterServer.m
-//  AntBot-iOS
-//
-//  Created by Bjorn Swenson on 5/30/14.
-//
-//
-
 #import "RouterServer.h"
 
 const int MAX_RX_BUFFER_SIZE = 100;

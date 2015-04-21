@@ -1,11 +1,3 @@
-//
-//  MotionCapture.m
-//  AntBot-iOS
-//
-//  Created by Bjorn Swenson on 6/12/14.
-//
-//
-
 #import "MotionCapture.h"
 
 #import "RouterCable.h"

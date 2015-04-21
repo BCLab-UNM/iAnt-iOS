@@ -1,11 +1,3 @@
-//
-//  MotionCapture.h
-//  AntBot-iOS
-//
-//  Created by Bjorn Swenson on 6/12/14.
-//
-//
-
 #import <Foundation/Foundation.h>
 
 @class RouterCable, RouterServer;

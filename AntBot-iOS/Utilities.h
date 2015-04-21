@@ -1,11 +1,3 @@
-//
-//  Utilities.h
-//  AntBot
-//
-//  Created by Joshua Hecker on 2/1/13.
-//
-//
-
 #import <Foundation/Foundation.h>
 #import <math.h>
 

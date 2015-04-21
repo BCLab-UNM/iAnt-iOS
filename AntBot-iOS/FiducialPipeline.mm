@@ -1,11 +1,3 @@
-//
-//  FiducialPipeline.m
-//  AntBot-iOS
-//
-//  Created by Bjorn Swenson on 7/16/14.
-//
-//
-
 #import "FiducialPipeline.h"
 
 // Knobs to turn

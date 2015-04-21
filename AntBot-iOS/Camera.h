@@ -1,11 +1,3 @@
-//
-//  Camera.h
-//  AntBot-iOS
-//
-//  Created by Bjorn Swenson on 7/15/14.
-//
-//
-
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 

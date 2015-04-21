@@ -1,11 +1,3 @@
-//
-//  LocalizationPipeline.mm
-//  AntBot-iOS
-//
-//  Created by Joshua Hecker
-//  Moses Lab, Department of Computer Science, University of New Mexico
-//
-
 #import "LocalizationPipeline.h"
 
 const int FRONT_REZ_VERT = 192;

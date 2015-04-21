@@ -1,11 +1,3 @@
-//
-//  MainController.mm
-//  AntBot-iOS
-//
-//  Created by Joshua Hecker
-//  Moses Lab, Department of Computer Science, University of New Mexico
-//
-
 #import "MainController.h"
 
 #import "Camera.h"

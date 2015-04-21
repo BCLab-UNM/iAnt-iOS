@@ -1,11 +1,3 @@
-//
-//  FiducialPipeline.h
-//  AntBot-iOS
-//
-//  Created by Bjorn Swenson on 7/16/14.
-//
-//
-
 #import <Foundation/Foundation.h>
 #import "Camera.h"
 #import "CameraView.h"

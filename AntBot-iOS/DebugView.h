@@ -1,11 +1,3 @@
-//
-//  DebugView.h
-//  AntBot-iOS
-//
-//  Created by Bjorn Swenson on 8/19/14.
-//
-//
-
 #import <UIKit/UIKit.h>
 
 @class Forage;

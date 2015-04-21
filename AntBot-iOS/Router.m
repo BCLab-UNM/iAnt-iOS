@@ -1,11 +1,3 @@
-//
-//  Router.m
-//  AntBot-iOS
-//
-//  Created by Bjorn Swenson on 5/30/14.
-//
-//
-
 #import "Router.h"
 
 @implementation Router

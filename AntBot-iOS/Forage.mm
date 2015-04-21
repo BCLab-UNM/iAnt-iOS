@@ -1,11 +1,3 @@
-//
-//  Forage.m
-//  AntBot-iOS
-//
-//  Created by Bjorn Swenson on 6/5/14.
-//
-//
-
 #import "Forage.h"
 #import "RouterCable.h"
 #import "RouterServer.h"

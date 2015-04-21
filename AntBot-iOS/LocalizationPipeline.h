@@ -1,11 +1,3 @@
-//
-//  LocalizationPipeline.h
-//  AntBot-iOS
-//
-//  Created by Joshua Hecker
-//  Moses Lab, Department of Computer Science, University of New Mexico
-//
-
 #import <AVFoundation/AVFoundation.h>
 #import "Camera.h"
 #import "CameraView.h"

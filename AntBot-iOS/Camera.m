@@ -1,11 +1,3 @@
-//
-//  Camera.m
-//  AntBot-iOS
-//
-//  Created by Bjorn Swenson on 7/15/14.
-//
-//
-
 #import "Camera.h"
 #import "CameraView.h"
 

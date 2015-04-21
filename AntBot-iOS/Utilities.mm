@@ -1,11 +1,3 @@
-//
-//  Utilities.m
-//  AntBot
-//
-//  Created by Joshua Hecker on 2/1/13.
-//
-//
-
 #import "Utilities.h"
 #include <sys/sysctl.h>
 #include <net/if.h>
