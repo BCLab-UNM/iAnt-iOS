@@ -1,4 +1,4 @@
-AntBot-iOS
+iAnt-iOS
 ==========
 
-Required iOS libraries for AntBot project
+Required iOS libraries for iAnt project
