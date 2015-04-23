@@ -144,4 +144,112 @@ const int NEST_THRESHOLD = 240;
     return centroidExists;
 }
 
+- (NSMutableArray*) findLightLandmarkIn:(CMSampleBufferRef)buffer usingThreshold:(int)threshold {
+    //Create output array
+    NSMutableArray* lightHeadings = [[NSMutableArray alloc] init];
+    
+    //Convert input buffer to OpenCV image container
+    [converter createIplImageFromCMSampleBuffer:buffer];
+    
+    //Flip, transpose, flip
+    cvFlip([converter imgIpl],[converter imgIpl],1);
+    IplImage *t = cvCreateImage(cvSize([converter imgIpl]->height,[converter imgIpl]->width), IPL_DEPTH_8U, 4);
+    cvTranspose([converter imgIpl],t);
+    cvFlip(t,t,1);
+    
+    //Convert input image to grayscale
+    cvCvtColor(t, imgGray, CV_BGRA2GRAY);
+    
+    cvReleaseImage(&t);
+    //Apply Gaussian blur to smooth out inconsistencies
+    cvSmooth(imgGray, imgGray, CV_GAUSSIAN, 9, 9, 9);
+    
+    //Find circles using circular Hough transform
+    CvMemStorage* storage = cvCreateMemStorage(0);
+    CvSeq* circles = cvHoughCircles(imgGray, storage, CV_HOUGH_GRADIENT, 1, 20, 100, 50, 160, 180);
+    
+    //Get first circle in output sequence (if available)
+    CvPoint center = cvPoint(imgGray->width/2, imgGray->height/2);
+    int radius;
+    if (circles->total > 0) {
+        float* p = (float*) cvGetSeqElem(circles, 0);
+        center = cvPoint(p[0], p[1]);
+        radius = p[2] - 53; //magic number used here to shrink to size of inner circle
+    }
+    else {
+        NSLog(@"Hough circle transform did not find any circles in this image");
+        return lightHeadings;
+    }
+    
+    //Create mask using circle
+    IplImage* mask = cvCreateImage(cvGetSize(imgGray), IPL_DEPTH_8U, 1);
+    cvSet(mask, cvScalar(0));
+    cvCircle(mask, center, radius, cvScalar(255), -1); //negative line thickness generates filled circle
+    
+    //Apply mask
+    IplImage *temp = cvCreateImage(cvGetSize(imgGray), IPL_DEPTH_8U, 1);
+    cvCopy(imgGray, temp);
+    cvSet(imgGray, cvScalar(0));
+    cvCopy(temp, imgGray, mask);
+    
+    //Threshold image
+    IplImage* imgThreshold = cvCreateImage(cvGetSize(imgGray), IPL_DEPTH_8U, 1);
+    cvThreshold(imgGray, imgThreshold, threshold, 255, CV_THRESH_BINARY);
+    
+    //convert thresholded image back to BGRA for display
+    if (imgGrayBGRA != nil) {
+        cvReleaseImage(&imgGrayBGRA);
+    }
+    imgGrayBGRA = cvCreateImage(cvGetSize(imgThreshold), IPL_DEPTH_8U, 4);
+    cvCvtColor(imgThreshold, imgGrayBGRA, CV_GRAY2BGRA);
+    
+    //convert IplImage to UIImage and store
+    [converter createUIImageFromIplImage:imgGrayBGRA];
+    
+    //Free memory
+    cvReleaseImage(&temp);
+    cvReleaseImage(&mask);
+    
+    //Find contours
+    CvSeq *contour = nil;
+    if (cvFindContours(imgThreshold, storage, &contour, sizeof(CvContour))) {
+        double largestAreas [2] = {0,0};
+        CvSeq largestContours[2];
+        for (; contour != 0; contour = contour->h_next) {
+            double contourArea = cvContourArea(contour);
+            if (contourArea > largestAreas[0]) {
+                largestAreas[1] = largestAreas[0];
+                largestContours[1] = largestContours[0];
+                largestAreas[0] = contourArea;
+                largestContours[0] = *contour;
+            }
+            else if (contourArea > largestAreas[1]) {
+                largestAreas[1] = contourArea;
+                largestContours[1] = *contour;
+            }
+        }
+        
+        //Find centroids
+        CvMoments* moments = (CvMoments*)malloc(sizeof(CvMoments));
+        for (int i = 0; i < 2; i++) {
+            cvMoments(&largestContours[i], moments);
+            Polar lightVector = [Utilities cart2pol:Cartesian(moments->m10/moments->m00 - center.x, center.y - moments->m01/moments->m00)];
+            float angle = [Utilities angleFrom:0.0 to:lightVector.theta];
+            [lightHeadings addObject: [NSNumber numberWithFloat:angle]];
+        }
+        //Sort array
+        [lightHeadings sortUsingSelector:@selector(compare:)];
+        //Free memory
+        free(moments);
+    }
+    
+    //Free memory
+    cvReleaseMemStorage(&storage);
+    
+    //Free memory
+    cvReleaseImage(&imgThreshold);
+    
+    return lightHeadings;
+}
+
 @end

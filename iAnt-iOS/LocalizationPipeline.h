@@ -2,6 +2,7 @@
 #import "Camera.h"
 #import "CameraView.h"
 #import "Conversions.h"
+#import "Utilities.h"
 
 @interface LocalizationPipeline: NSObject <CameraPipeline> {
     Conversions *converter;
@@ -12,6 +13,7 @@
 
 - (UIImage*)getImgThresholdUI;
 - (BOOL)findColorCentroid:(CvRect&)centroid in:(CMSampleBufferRef)buffer usingThreshold:(int)threshold;
+- (NSMutableArray*)findLightLandmarkIn:(CMSampleBufferRef)buffer usingThreshold:(int)threshold;
 
 @property float nestDistance;
 
