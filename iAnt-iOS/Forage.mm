@@ -381,7 +381,6 @@
         
         informedStatus = RobotInformedStatusNone;
         return [Utilities pol2cart:Polar(distance, [Utilities randomFloat:360])];
-
     }
 }
 
@@ -396,7 +395,7 @@
     else if([pipeline isMemberOfClass:[LocalizationPipeline class]]) {
         CGPoint offset = [result CGPointValue];
         printf("%f,%f",offset.x, offset.y);
-        if(fabsf(offset.x) <= 0.1) {
+        if(std::fabs(offset.x) <= 0.1) {
             if (nestCentered) {
                 [cable send:@"compass"];
                 [camera stop];
@@ -407,7 +406,7 @@
             }
         }
         else {
-            [cable send:@"motors,%d,%d,%d", (int)offset.x, (int)offset.y, MIN(MAX((int)fabsf(offset.x), 5), 150)];
+            [cable send:@"motors,%d,%d,%d", (int)offset.x, (int)offset.y, MIN(MAX(std::abs(offset.x), 5), 150)];
         }
         CALL(alignInfo, offset);
     }
