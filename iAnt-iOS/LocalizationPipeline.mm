@@ -212,10 +212,12 @@ const int NEST_THRESHOLD = 240;
     
     //Find contours
     CvSeq *contour = nil;
+    int contoursCount = 0;
     if (cvFindContours(imgThreshold, storage, &contour, sizeof(CvContour))) {
         double largestAreas [2] = {0,0};
         CvSeq largestContours[2];
         for (; contour != 0; contour = contour->h_next) {
+            contoursCount++;
             double contourArea = cvContourArea(contour);
             if (contourArea > largestAreas[0]) {
                 largestAreas[1] = largestAreas[0];
@@ -231,11 +233,11 @@ const int NEST_THRESHOLD = 240;
         
         //Find centroids
         CvMoments* moments = (CvMoments*)malloc(sizeof(CvMoments));
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < MIN(2, contoursCount); i++) {
             cvMoments(&largestContours[i], moments);
             Polar lightVector = [Utilities cart2pol:Cartesian(moments->m10/moments->m00 - center.x, center.y - moments->m01/moments->m00)];
-            float angle = [Utilities angleFrom:0.0 to:lightVector.theta];
-            [lightHeadings addObject: [NSNumber numberWithFloat:angle]];
+            float heading = [Utilities pmod:(-lightVector.theta + 90) :360.0]; //convert polar heading to compass heading
+            [lightHeadings addObject: [NSNumber numberWithFloat:heading]];
         }
         //Sort array
         [lightHeadings sortUsingSelector:@selector(compare:)];
