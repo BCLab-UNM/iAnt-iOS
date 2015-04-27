@@ -18,11 +18,19 @@
 }
 
 /**
- *	Calculates angle between two compass headings in degrees
- *	Return value is bounded between -180 and 180
+ *	Limits input value x between min and max
  **/
 + (float)clamp:(float)x min:(float)min max:(float)max {
     return MAX(min, MIN(max, x));
+}
+
+/**
+ *	Mod function that behaves as in MATLAB, i.e. returns only positive results
+ **/
++ (float)pmod:(float)dividend :(float)divisor {
+    float temp = fmod(dividend,divisor);
+    while (temp < 0) temp += divisor;
+    return temp;
 }
 
 /**
