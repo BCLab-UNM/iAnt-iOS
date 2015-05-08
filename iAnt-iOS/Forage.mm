@@ -124,7 +124,9 @@
 }
 
 - (void)driveDone {
-    [forage serverSend:[NSArray arrayWithObject:@"home"]];
+	[forage serverSend:[NSArray arrayWithObject:@"home"]];
+	// Drop the tag
+	[cable send@"drop"];
 }
 
 - (void)pheromone {
@@ -223,6 +225,12 @@
         CALL(turnDone);
     }];
     
+	// Pickup up tag call back - GMF 5-8
+	[cable handle:@"pickup" callback:^(NSArray* data) {
+		[server send:[NSString stringWithFormat:@"%@,%@", [Utilities getMacAddress], [result stringValue], nil]];
+		// Now back to the usual control flow
+	}];	
+
     [cable handle:@"compass" callback:^(NSArray* data) {
         float result = [[data objectAtIndex:0] floatValue];
         
@@ -390,7 +398,42 @@
 
 - (void)pipeline:(id)pipeline didProcessFrame:(id)result {
     if([pipeline isMemberOfClass:[FiducialPipeline class]]) {
-        [server send:[NSString stringWithFormat:@"%@,%@", [Utilities getMacAddress], [result stringValue], nil]];
+        
+	// GMF 5-8
+	// Gets called when a tag is detected
+	// Align gripper here
+	//if ([forage state] == [forage searching]) 
+	{        
+	CGPoint offset = [result CGPointValue];
+        printf(": %f,%f\n",offset.x, offset.y);
+        if(std::fabs(offset.x) <= 0.1) {
+            if (tagCentered) {
+		
+		[camera stop];
+		[cable send:@"motors,%d,%d,%d", 1, 0, rotate_time];	
+		[cable send:@"motors,%d,%d,%d", 0, 1, drive_time];
+		[cable send:@"pickup"];
+		
+            }
+            else {
+                tagCentered = YES;
+                [cable send:@"motors,%d,%d,%d", 0, 0, 0];
+            }
+        }
+        else {
+            [cable send:@"motors,%d,%d,%d", (int)offset.x, (int)offset.y, MIN(MAX(std::abs(offset.x), 5), 150)];
+        }
+        CALL(alignInfo, offset);
+		}
+	else [forage state] == [forage neighbors]
+	{
+		[server send:[NSString stringWithFormat:@"%@,%@", [Utilities getMacAddress], [result stringValue], nil]];
+	}
+	else
+	{
+	 printf("didProcessFrame: Error: Invalid State for didProcessFrame.\n");
+	}
+	
     }
     else if([pipeline isMemberOfClass:[LocalizationPipeline class]]) {
         CGPoint offset = [result CGPointValue];
