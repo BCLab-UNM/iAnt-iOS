@@ -394,7 +394,6 @@
     }
     else if([pipeline isMemberOfClass:[LocalizationPipeline class]]) {
         CGPoint offset = [result CGPointValue];
-        printf("%f,%f",offset.x, offset.y);
         if(std::fabs(offset.x) <= 0.1) {
             if (nestCentered) {
                 [cable send:@"compass"];
@@ -406,7 +405,7 @@
             }
         }
         else {
-            [cable send:@"motors,%d,%d,%d", (int)offset.x, (int)offset.y, MIN(MAX(std::abs(offset.x), 5), 150)];
+            [cable send:@"motors,%d,%d,%d", (int)offset.x, (int)offset.y, (int)MIN(MAX(std::abs(offset.x), 5), 150)];
         }
         CALL(alignInfo, offset);
     }
