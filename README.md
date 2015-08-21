@@ -1,4 +1,4 @@
 iAnt-iOS
 ==========
 
-Required iOS libraries for iAnt project
+Required iOS libraries for high-level iAnt control
